@@ -2,15 +2,17 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
-import {TestComponent} from './test/test.component';
 import {RouterModule} from '@angular/router';
 import {APP_ROUTES} from './app.routes';
 import {HttpClientModule} from '@angular/common/http';
+import {ClientService} from './services/client.service';
+import {NavigationService} from './services/navigation.service';
+import {ClientComponent} from './components/client/client.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TestComponent
+    ClientComponent
   ],
   imports: [
     BrowserModule,
@@ -20,7 +22,10 @@ import {HttpClientModule} from '@angular/common/http';
       onSameUrlNavigation: 'reload'
     }),
   ],
-  providers: [],
+  providers: [
+    ClientService,
+    NavigationService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
