@@ -3,8 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "update": "npm prune && npm install",
+    "serve": "ng serve --host 0.0.0.0 --disable-host-check",
+    "update-serve": "npm run update && npm run serve",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
