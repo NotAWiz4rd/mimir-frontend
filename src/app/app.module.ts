@@ -5,14 +5,14 @@ import {AppComponent} from './app.component';
 import {RouterModule} from '@angular/router';
 import {APP_ROUTES} from './app.routes';
 import {HttpClientModule} from '@angular/common/http';
-import {ClientService} from './services/client.service';
+import {LoginService} from './services/login.service';
 import {NavigationService} from './services/navigation.service';
-import {ClientComponent} from './components/client/client.component';
+import {LoginComponent} from './components/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ClientComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +23,7 @@ import {ClientComponent} from './components/client/client.component';
     }),
   ],
   providers: [
-    ClientService,
+    LoginService,
     NavigationService
   ],
   bootstrap: [AppComponent]

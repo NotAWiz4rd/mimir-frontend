@@ -1,9 +1,9 @@
-import {ClientComponent} from './components/client/client.component';
+import {LoginComponent} from './components/login/login.component';
 
 export const APP_ROUTES = [
   {
-    path: 'clients',
-    component: ClientComponent,
+    path: 'login',
+    component: LoginComponent,
     pathMatch: 'full'
-  }
+  },
 ];
