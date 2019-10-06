@@ -7,7 +7,7 @@ import {NavigationService} from './services/navigation.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'se-frontend-angular';
+  title = 'mimir-frontend';
 
   constructor(private navigationService: NavigationService) {
   }
