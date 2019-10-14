@@ -8,11 +8,15 @@ import {HttpClientModule} from '@angular/common/http';
 import {LoginService} from './services/login.service';
 import {NavigationService} from './services/navigation.service';
 import {LoginComponent} from './components/login/login.component';
+import {LanguageService} from './services/language.service';
+import {GetStaticTextPipe} from './pipes/get-static-text.pipe';
+import {Globals} from './util/Globals';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    GetStaticTextPipe
   ],
   imports: [
     BrowserModule,
@@ -24,7 +28,9 @@ import {LoginComponent} from './components/login/login.component';
   ],
   providers: [
     LoginService,
-    NavigationService
+    NavigationService,
+    LanguageService,
+    Globals
   ],
   bootstrap: [AppComponent]
 })

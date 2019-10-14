@@ -1,0 +1,12 @@
+[
+  {
+    "logicalName": "loginText",
+    "english": "Login",
+    "german": "Login"
+  },
+  {
+    "logicalName": "homeText",
+    "english": "Home",
+    "german": "Home"
+  }
+]
