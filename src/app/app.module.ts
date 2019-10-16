@@ -11,6 +11,7 @@ import {LoginComponent} from './components/login/login.component';
 import {LanguageService} from './services/language.service';
 import {GetStaticTextPipe} from './pipes/get-static-text.pipe';
 import {Globals} from './util/Globals';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import {Globals} from './util/Globals';
       scrollPositionRestoration: 'disabled',
       onSameUrlNavigation: 'reload'
     }),
+    BrowserAnimationsModule,
   ],
   providers: [
     LoginService,
