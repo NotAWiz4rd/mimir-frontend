@@ -12,12 +12,18 @@ import {LanguageService} from './services/language.service';
 import {GetStaticTextPipe} from './pipes/get-static-text.pipe';
 import {Globals} from './util/Globals';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ContentPageComponent} from './pages/content-page/content-page.component';
+import {SpaceBarComponent} from './components/space-bar/space-bar.component';
+import {HeaderBarComponent} from './components/header-bar/header-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    GetStaticTextPipe
+    GetStaticTextPipe,
+    ContentPageComponent,
+    SpaceBarComponent,
+    HeaderBarComponent
   ],
   imports: [
     BrowserModule,
