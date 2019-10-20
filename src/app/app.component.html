@@ -1,14 +1,1 @@
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-</div>
-
-<div>
-  <div class="clickable"
-       (click)="navigateToView('')">{{globals.staticTexts | getStaticText : 'homeText' : languageService.getLanguage()}}</div>
-  <div class="clickable" (click)="navigateToView('login')">{{globals.staticTexts | getStaticText : 'loginText' : languageService.getLanguage()}}</div>
-</div>
-
 <router-outlet></router-outlet>
-

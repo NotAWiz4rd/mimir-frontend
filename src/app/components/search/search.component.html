@@ -1,0 +1,10 @@
+<mat-form-field>
+  <label>
+    <input matInput placeholder="{{globals.staticTexts | getStaticText : 'searchText' : languageService.getLanguage()}}"
+           type="search" [formControl]="control" [matAutocomplete]="auto" (keyup.enter)="onEnter()"
+           [ngModel]="searchValue">
+  </label>
+  <mat-autocomplete #auto="matAutocomplete">
+    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">{{option}}</mat-option>
+  </mat-autocomplete>
+</mat-form-field>

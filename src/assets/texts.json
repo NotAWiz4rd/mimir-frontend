@@ -8,5 +8,10 @@
     "logicalName": "homeText",
     "english": "Home",
     "german": "Home"
+  },
+  {
+    "logicalName": "searchText",
+    "english": "Search...",
+    "german": "Suchen..."
   }
 ]

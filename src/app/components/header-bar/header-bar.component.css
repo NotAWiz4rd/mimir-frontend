@@ -1,0 +1,6 @@
+.clickable {
+  display: inline-block;
+  cursor: pointer;
+  margin: 15px;
+  color: blue;
+}

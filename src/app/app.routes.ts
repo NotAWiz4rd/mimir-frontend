@@ -1,5 +1,5 @@
-import {LoginComponent} from './components/login/login.component';
 import {ContentPageComponent} from './pages/content-page/content-page.component';
+import {LoginComponent} from './pages/login/login.component';
 
 export const APP_ROUTES = [
   {

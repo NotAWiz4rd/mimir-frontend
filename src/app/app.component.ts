@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {NavigationService} from './services/navigation.service';
 import {StaticText} from './classes/StaticText';
 import {HttpClient} from '@angular/common/http';
 import {Globals} from './util/Globals';
-import {LanguageService} from './services/language.service';
 
 const TEXTFILE_PATH = '../../../assets/texts.json';
 
@@ -13,12 +11,9 @@ const TEXTFILE_PATH = '../../../assets/texts.json';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'mimir-frontend';
 
   constructor(public globals: Globals,
-              public languageService: LanguageService,
-              private http: HttpClient,
-              private navigationService: NavigationService) {
+              private http: HttpClient) {
   }
 
   ngOnInit(): void {
@@ -32,9 +27,5 @@ export class AppComponent implements OnInit {
         this.globals.staticTexts = data as StaticText[];
         console.log('Loaded static texts.');
       });
-  }
-
-  navigateToView(view: string) {
-    this.navigationService.navigateToView(view);
   }
 }

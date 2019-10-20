@@ -1,3 +1,8 @@
-<p>
-  header-bar works!
-</p>
+<div>
+  <div class="clickable" (click)="navigateToView('')">
+    {{globals.staticTexts | getStaticText : 'homeText' : languageService.getLanguage()}}
+  </div>
+  <div class="clickable" (click)="navigateToView('login')">
+    {{globals.staticTexts | getStaticText : 'loginText' : languageService.getLanguage()}}
+  </div>
+</div>

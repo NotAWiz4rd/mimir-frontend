@@ -7,7 +7,6 @@ import {APP_ROUTES} from './app.routes';
 import {HttpClientModule} from '@angular/common/http';
 import {LoginService} from './services/login.service';
 import {NavigationService} from './services/navigation.service';
-import {LoginComponent} from './components/login/login.component';
 import {LanguageService} from './services/language.service';
 import {GetStaticTextPipe} from './pipes/get-static-text.pipe';
 import {Globals} from './util/Globals';
@@ -15,6 +14,12 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ContentPageComponent} from './pages/content-page/content-page.component';
 import {SpaceBarComponent} from './components/space-bar/space-bar.component';
 import {HeaderBarComponent} from './components/header-bar/header-bar.component';
+import {LoginComponent} from './pages/login/login.component';
+import {ActionBarComponent} from './components/action-bar/action-bar.component';
+import {MatAutocompleteModule, MatFormFieldModule, MatInputModule, MatSidenavModule} from '@angular/material';
+import {ReactiveFormsModule} from '@angular/forms';
+import {SearchComponent} from './components/search/search.component';
+import {SearchService} from './services/search.service';
 
 @NgModule({
   declarations: [
@@ -23,7 +28,9 @@ import {HeaderBarComponent} from './components/header-bar/header-bar.component';
     GetStaticTextPipe,
     ContentPageComponent,
     SpaceBarComponent,
-    HeaderBarComponent
+    HeaderBarComponent,
+    ActionBarComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,11 +40,17 @@ import {HeaderBarComponent} from './components/header-bar/header-bar.component';
       onSameUrlNavigation: 'reload'
     }),
     BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSidenavModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
   ],
   providers: [
     LoginService,
     NavigationService,
     LanguageService,
+    SearchService,
     Globals
   ],
   bootstrap: [AppComponent]

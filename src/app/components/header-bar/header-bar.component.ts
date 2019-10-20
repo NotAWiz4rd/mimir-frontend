@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {Globals} from '../../util/Globals';
+import {LanguageService} from '../../services/language.service';
+import {HttpClient} from '@angular/common/http';
+import {NavigationService} from '../../services/navigation.service';
 
 @Component({
   selector: 'app-header-bar',
@@ -7,9 +11,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderBarComponent implements OnInit {
 
-  constructor() { }
+  constructor(public globals: Globals,
+              public languageService: LanguageService,
+              private http: HttpClient,
+              private navigationService: NavigationService) { }
 
   ngOnInit() {
   }
 
+  navigateToView(view: string) {
+    this.navigationService.navigateToView(view);
+  }
 }
