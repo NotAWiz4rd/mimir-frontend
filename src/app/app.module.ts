@@ -16,7 +16,7 @@ import {SpaceBarComponent} from './components/space-bar/space-bar.component';
 import {HeaderBarComponent} from './components/header-bar/header-bar.component';
 import {LoginComponent} from './pages/login/login.component';
 import {ActionBarComponent} from './components/action-bar/action-bar.component';
-import {MatAutocompleteModule, MatFormFieldModule, MatInputModule, MatSidenavModule} from '@angular/material';
+import {MatAutocompleteModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSidenavModule} from '@angular/material';
 import {ReactiveFormsModule} from '@angular/forms';
 import {SearchComponent} from './components/search/search.component';
 import {SearchService} from './services/search.service';
@@ -45,6 +45,7 @@ import {SearchService} from './services/search.service';
     MatSidenavModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
+    MatButtonModule,
   ],
   providers: [
     LoginService,

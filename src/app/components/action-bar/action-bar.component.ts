@@ -11,4 +11,12 @@ export class ActionBarComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  onCreateFolderClick() {
+    // todo implement me
+  }
+
+  onUploadFileClick() {
+    // todo implement me
+  }
 }
