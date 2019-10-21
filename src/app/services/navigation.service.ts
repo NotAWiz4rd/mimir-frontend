@@ -13,6 +13,14 @@ export class NavigationService {
     this.router.navigateByUrl(view);
   }
 
+  navigateHome() {
+    this.router.navigateByUrl('');
+  }
+
+  navigateToSettings() {
+    this.router.navigateByUrl('settings');
+  }
+
   navigateBack() {
     console.log('Navigating to previous page');
     this.location.back();

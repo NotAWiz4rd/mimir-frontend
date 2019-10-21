@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Globals} from '../../util/Globals';
 import {LanguageService} from '../../services/language.service';
+import {NavigationService} from '../../services/navigation.service';
 
 @Component({
   selector: 'app-header-bar',
@@ -10,7 +11,8 @@ import {LanguageService} from '../../services/language.service';
 export class HeaderBarComponent implements OnInit {
 
   constructor(public globals: Globals,
-              public languageService: LanguageService) {
+              public languageService: LanguageService,
+              private navigationService: NavigationService) {
   }
 
   ngOnInit() {
@@ -25,6 +27,6 @@ export class HeaderBarComponent implements OnInit {
   }
 
   openSettings() {
-    // todo implement me
+    this.navigationService.navigateToSettings();
   }
 }

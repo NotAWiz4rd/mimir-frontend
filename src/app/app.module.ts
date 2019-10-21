@@ -21,6 +21,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {SearchComponent} from './components/search/search.component';
 import {SearchService} from './services/search.service';
 import {PathComponent} from './components/path/path.component';
+import {SettingsPageComponent} from './pages/settings-page/settings-page.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import {PathComponent} from './components/path/path.component';
     ActionBarComponent,
     SearchComponent,
     PathComponent,
+    SettingsPageComponent,
   ],
   imports: [
     BrowserModule,
