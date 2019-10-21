@@ -1,8 +1,8 @@
 <div>
   <div class="clickable" (click)="navigateToView('')">
-    {{globals.staticTexts | getStaticText : 'homeText' : languageService.getLanguage()}}
+    {{globals.staticTexts | getStaticText : 'home' : languageService.getLanguage()}}
   </div>
   <div class="clickable" (click)="navigateToView('login')">
-    {{globals.staticTexts | getStaticText : 'loginText' : languageService.getLanguage()}}
+    {{globals.staticTexts | getStaticText : 'login' : languageService.getLanguage()}}
   </div>
 </div>

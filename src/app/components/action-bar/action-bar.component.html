@@ -1,3 +1,7 @@
-<button mat-raised-button color="primary" (click)="onCreateFolderClick()">Create Folder</button>
-<button mat-raised-button color="primary" (click)="onUploadFileClick()">Upload File</button>
+<button mat-raised-button color="primary" (click)="onCreateFolderClick()">
+  {{globals.staticTexts | getStaticText : 'createFolder' : languageService.getLanguage()}}
+</button>
+<button mat-raised-button color="primary" (click)="onUploadFileClick()">
+  {{globals.staticTexts | getStaticText : 'uploadFile' : languageService.getLanguage()}}
+</button>
 <app-search></app-search>

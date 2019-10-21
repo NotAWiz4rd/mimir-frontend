@@ -1,17 +1,27 @@
 [
   {
-    "logicalName": "loginText",
+    "logicalName": "login",
     "english": "Login",
     "german": "Login"
   },
   {
-    "logicalName": "homeText",
+    "logicalName": "home",
     "english": "Home",
     "german": "Home"
   },
   {
-    "logicalName": "searchText",
+    "logicalName": "search",
     "english": "Search...",
     "german": "Suchen..."
+  },
+  {
+    "logicalName": "uploadFile",
+    "english": "Upload File",
+    "german": "Datei hochladen"
+  },
+  {
+    "logicalName": "createFolder",
+    "english": "Create Folder",
+    "german": "Ordner erstellen"
   }
 ]

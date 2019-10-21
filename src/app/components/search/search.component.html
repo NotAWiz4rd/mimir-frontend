@@ -1,6 +1,6 @@
 <mat-form-field>
   <label>
-    <input matInput placeholder="{{globals.staticTexts | getStaticText : 'searchText' : languageService.getLanguage()}}"
+    <input matInput placeholder="{{globals.staticTexts | getStaticText : 'search' : languageService.getLanguage()}}"
            type="search" [formControl]="control" [matAutocomplete]="auto" (keyup.enter)="onEnter()"
            [ngModel]="searchValue">
   </label>
