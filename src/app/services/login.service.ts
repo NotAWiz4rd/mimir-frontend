@@ -17,6 +17,7 @@ export class LoginService {
   }
 
   login(user: User): Observable<boolean> {
+    // todo implement me properly
     return this.http.post<boolean>(TEST_URL, user, httpOptions);
   }
 }

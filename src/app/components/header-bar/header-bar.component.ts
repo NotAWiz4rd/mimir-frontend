@@ -23,4 +23,8 @@ export class HeaderBarComponent implements OnInit {
   onLogoutButtonClick() {
     // todo implement me
   }
+
+  openSettings() {
+    // todo implement me
+  }
 }

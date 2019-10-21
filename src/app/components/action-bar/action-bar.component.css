@@ -6,3 +6,7 @@ app-search {
   float: right;
   margin-right: 50px;
 }
+
+.container{
+  border-bottom: 1px solid darkgray;
+}

@@ -1,4 +1,4 @@
-<div>
+<div class="container">
   <button mat-raised-button color="accent" (click)="onBackButtonClick()">
     {{globals.staticTexts | getStaticText : 'back' : languageService.getLanguage()}}
   </button>
@@ -7,5 +7,11 @@
 
   <button mat-raised-button color="accent" (click)="onLogoutButtonClick()" class="logout">
     {{globals.staticTexts | getStaticText : 'logout' : languageService.getLanguage()}}
+  </button>
+
+  <button mat-icon-button (click)="openSettings()" class="settings-button" color="primary">
+    <i class="material-icons">
+      settings_applications
+    </i>
   </button>
 </div>

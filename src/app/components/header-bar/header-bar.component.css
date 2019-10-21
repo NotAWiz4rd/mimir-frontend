@@ -2,7 +2,15 @@ button {
   margin: 10px;
 }
 
-.logout {
+.logout, .settings-button {
   margin-right: 50px;
   float: right;
+}
+
+.container {
+  border-bottom: 1px solid darkgray;
+}
+
+.material-icons {
+  font-size: 40px;
 }
