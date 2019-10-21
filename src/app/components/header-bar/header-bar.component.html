@@ -1,8 +1,11 @@
 <div>
-  <div class="clickable" (click)="navigateToView('')">
-    {{globals.staticTexts | getStaticText : 'home' : languageService.getLanguage()}}
-  </div>
-  <div class="clickable" (click)="navigateToView('login')">
-    {{globals.staticTexts | getStaticText : 'login' : languageService.getLanguage()}}
-  </div>
+  <button mat-raised-button color="accent" (click)="onBackButtonClick()">
+    {{globals.staticTexts | getStaticText : 'back' : languageService.getLanguage()}}
+  </button>
+
+  <app-path></app-path>
+
+  <button mat-raised-button color="accent" (click)="onLogoutButtonClick()" class="logout">
+    {{globals.staticTexts | getStaticText : 'logout' : languageService.getLanguage()}}
+  </button>
 </div>

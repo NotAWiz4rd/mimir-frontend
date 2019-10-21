@@ -2,7 +2,7 @@
   {
     "logicalName": "login",
     "english": "Login",
-    "german": "Login"
+    "german": "Einloggen"
   },
   {
     "logicalName": "home",
@@ -23,5 +23,15 @@
     "logicalName": "createFolder",
     "english": "Create Folder",
     "german": "Ordner erstellen"
+  },
+  {
+    "logicalName": "logout",
+    "english": "Logout",
+    "german": "Ausloggen"
+  },
+  {
+    "logicalName": "back",
+    "english": "Back",
+    "german": "Zurück"
   }
 ]

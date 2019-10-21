@@ -20,6 +20,7 @@ import {MatAutocompleteModule, MatButtonModule, MatFormFieldModule, MatInputModu
 import {ReactiveFormsModule} from '@angular/forms';
 import {SearchComponent} from './components/search/search.component';
 import {SearchService} from './services/search.service';
+import {PathComponent} from './components/path/path.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import {SearchService} from './services/search.service';
     HeaderBarComponent,
     ActionBarComponent,
     SearchComponent,
+    PathComponent,
   ],
   imports: [
     BrowserModule,
