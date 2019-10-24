@@ -9,6 +9,7 @@ import {NavigationService} from '../../services/navigation.service';
   styleUrls: ['./header-bar.component.css']
 })
 export class HeaderBarComponent implements OnInit {
+  currentPath: string;
 
   constructor(public globals: Globals,
               public languageService: LanguageService,

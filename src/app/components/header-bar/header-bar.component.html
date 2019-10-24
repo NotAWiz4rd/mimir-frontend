@@ -3,7 +3,7 @@
     {{globals.staticTexts | getStaticText : 'back' : languageService.getLanguage()}}
   </button>
 
-  <app-path></app-path>
+  <app-path [path]="currentPath"></app-path>
 
   <button mat-raised-button color="accent" (click)="onLogoutButtonClick()" class="logout">
     {{globals.staticTexts | getStaticText : 'logout' : languageService.getLanguage()}}
