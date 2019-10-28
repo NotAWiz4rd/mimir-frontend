@@ -1,12 +1,12 @@
 <div class="container">
   <button mat-raised-button color="accent" (click)="onBackButtonClick()">
-    {{globals.staticTexts | getStaticText : 'back' : languageService.getLanguage()}}
+    {{staticTextService.staticTexts | getStaticText : 'back' : languageService.getLanguage()}}
   </button>
 
   <app-path [path]="currentPath"></app-path>
 
   <button mat-raised-button color="accent" (click)="onLogoutButtonClick()" class="logout">
-    {{globals.staticTexts | getStaticText : 'logout' : languageService.getLanguage()}}
+    {{staticTextService.staticTexts | getStaticText : 'logout' : languageService.getLanguage()}}
   </button>
 
   <button mat-icon-button (click)="openSettings()" class="settings-button" color="primary">

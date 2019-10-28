@@ -1,9 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {StaticText} from './classes/StaticText';
-import {HttpClient} from '@angular/common/http';
-import {Globals} from './util/Globals';
+import {StaticTextService} from './services/static-text.service';
 
-const TEXTFILE_PATH = '../../../assets/texts.json';
 
 @Component({
   selector: 'app-root',
@@ -12,20 +9,10 @@ const TEXTFILE_PATH = '../../../assets/texts.json';
 })
 export class AppComponent implements OnInit {
 
-  constructor(public globals: Globals,
-              private http: HttpClient) {
+  constructor(public staticTextService: StaticTextService) {
   }
 
   ngOnInit(): void {
-    this.loadTexts();
-  }
-
-  loadTexts() {
-    // load file with static texts
-    this.http.get(TEXTFILE_PATH)
-      .subscribe(data => {
-        this.globals.staticTexts = data as StaticText[];
-        console.log('Loaded static texts.');
-      });
+    this.staticTextService.loadStaticTexts();
   }
 }

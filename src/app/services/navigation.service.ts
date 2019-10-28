@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {Location} from '@angular/common';
-import {Globals} from '../util/Globals';
+import {SpaceService} from './space.service';
 
 @Injectable()
 export class NavigationService {
   constructor(private router: Router,
               private location: Location,
-              private globals: Globals) {
+              private spaceService: SpaceService) {
   }
 
   navigateToView(view: string) {
@@ -29,7 +29,7 @@ export class NavigationService {
   }
 
   navigateWithinSpace(pathWithinSpace: string) {
-    console.log('Navigating to ' + this.globals.currentSpace + '/' + pathWithinSpace);
-    this.router.navigateByUrl(this.globals.currentSpace + '/' + pathWithinSpace);
+    console.log('Navigating to ' + this.spaceService.currentSpace + '/' + pathWithinSpace);
+    this.router.navigateByUrl(this.spaceService.currentSpace + '/' + pathWithinSpace);
   }
 }

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {LanguageService} from '../../services/language.service';
-import {Globals} from '../../util/Globals';
+import {StaticTextService} from '../../services/static-text.service';
 
 @Component({
   selector: 'app-action-bar',
@@ -8,7 +8,7 @@ import {Globals} from '../../util/Globals';
   styleUrls: ['./action-bar.component.css']
 })
 export class ActionBarComponent implements OnInit {
-  constructor(public globals: Globals,
+  constructor(public staticTextService: StaticTextService,
               public languageService: LanguageService) {
   }
 

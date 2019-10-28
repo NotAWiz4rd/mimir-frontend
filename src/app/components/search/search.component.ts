@@ -2,9 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {map, startWith} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {FormControl} from '@angular/forms';
-import {Globals} from '../../util/Globals';
 import {LanguageService} from '../../services/language.service';
 import {SearchService} from '../../services/search.service';
+import {StaticTextService} from '../../services/static-text.service';
 
 @Component({
   selector: 'app-search',
@@ -17,7 +17,7 @@ export class SearchComponent implements OnInit {
   control = new FormControl();
   searchValue: string = '';
 
-  constructor(public globals: Globals,
+  constructor(public staticTextService: StaticTextService,
               public languageService: LanguageService,
               private searchService: SearchService) {
   }

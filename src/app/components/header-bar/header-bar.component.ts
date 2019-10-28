@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Globals} from '../../util/Globals';
 import {LanguageService} from '../../services/language.service';
 import {NavigationService} from '../../services/navigation.service';
+import {StaticTextService} from '../../services/static-text.service';
 
 @Component({
   selector: 'app-header-bar',
@@ -11,7 +11,7 @@ import {NavigationService} from '../../services/navigation.service';
 export class HeaderBarComponent implements OnInit {
   currentPath: string;
 
-  constructor(public globals: Globals,
+  constructor(public staticTextService: StaticTextService,
               public languageService: LanguageService,
               private navigationService: NavigationService) {
   }
