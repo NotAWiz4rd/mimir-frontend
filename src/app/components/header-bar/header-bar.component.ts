@@ -9,6 +9,7 @@ import {StaticTextService} from '../../services/static-text.service';
   styleUrls: ['./header-bar.component.css']
 })
 export class HeaderBarComponent implements OnInit {
+  // the path within the current space
   currentPath: string;
 
   constructor(public staticTextService: StaticTextService,
@@ -20,7 +21,7 @@ export class HeaderBarComponent implements OnInit {
   }
 
   onBackButtonClick() {
-    // todo implement me
+    this.navigationService.navigateUp(this.currentPath);
   }
 
   onLogoutButtonClick() {

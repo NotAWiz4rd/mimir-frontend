@@ -32,4 +32,13 @@ export class NavigationService {
     console.log('Navigating to ' + this.spaceService.currentSpace + '/' + pathWithinSpace);
     this.router.navigateByUrl(this.spaceService.currentSpace + '/' + pathWithinSpace);
   }
+
+  navigateUp(currentPath: string) {
+    let pathParts = currentPath.split('/');
+    let newPath = '';
+    for (let i = 0; i < pathParts.length - 1; i++) {
+      newPath += pathParts[i];
+    }
+    this.navigateWithinSpace(newPath);
+  }
 }
