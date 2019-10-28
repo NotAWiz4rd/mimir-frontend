@@ -3,7 +3,7 @@ export class File {
   name: string;
   author: string;
   type: string;
-  thumbnailPath: string;
+  thumbnailId: number;
   creationDate: number;
   comments: Comment[];
 }
