@@ -10,7 +10,7 @@ import {StaticTextService} from '../../services/static-text.service';
 })
 export class HeaderBarComponent implements OnInit {
   // the path within the current space
-  currentPath: string;
+  currentPath: string = '';
 
   constructor(public staticTextService: StaticTextService,
               public languageService: LanguageService,
@@ -18,10 +18,15 @@ export class HeaderBarComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.navigationService.namePath$.subscribe(path => {
+      this.currentPath = path;
+    });
   }
 
   onBackButtonClick() {
-    this.navigationService.navigateUp(this.currentPath);
+    if (this.currentPath.length > 1) {
+      this.navigationService.navigateBack();
+    }
   }
 
   onLogoutButtonClick() {

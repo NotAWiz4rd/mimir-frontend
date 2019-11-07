@@ -3,4 +3,5 @@ export class Folder {
   name: string;
   files: File[];
   folders: Folder[];
+  parentId: number;
 }

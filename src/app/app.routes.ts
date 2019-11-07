@@ -13,7 +13,12 @@ export const APP_ROUTES = [
     component: SettingsPageComponent,
   },
   {
-    path: '',
+    path: 'space/:spaceId/folder/:folderId',
     component: ContentPageComponent,
+  },
+  {
+    path: '',
+    component: LoginComponent,
+    pathMatch: 'full'
   },
 ];

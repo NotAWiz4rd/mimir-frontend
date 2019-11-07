@@ -2,13 +2,23 @@ import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {SpaceService} from './space.service';
+import {Folder} from '../classes/Folder';
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable()
 export class NavigationService {
   constructor(private router: Router,
               private location: Location,
               private spaceService: SpaceService) {
+    this.spaceService.currentSpace$.subscribe(space => {
+      if (space != undefined && this.namePath$.value.length < 1) {
+        this.namePath$.next(space.root.name);
+      }
+    });
   }
+
+  idPath: string = '';
+  namePath$: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   navigateToView(view: string) {
     console.log('Changed view to ' + view);
@@ -28,17 +38,14 @@ export class NavigationService {
     this.location.back();
   }
 
-  navigateWithinSpace(pathWithinSpace: string) {
-    console.log('Navigating to ' + this.spaceService.currentSpace + '/' + pathWithinSpace);
-    this.router.navigateByUrl(this.spaceService.currentSpace + '/' + pathWithinSpace);
+  navigateWithinSpace(folder: Folder) {
+    this.figureOutPaths(folder);
+    this.router.navigateByUrl('space/' + this.spaceService.currentSpace.id + '/folder/' + folder.id);
   }
 
-  navigateUp(currentPath: string) {
-    let pathParts = currentPath.split('/');
-    let newPath = '';
-    for (let i = 0; i < pathParts.length - 1; i++) {
-      newPath += pathParts[i];
-    }
-    this.navigateWithinSpace(newPath);
+  figureOutPaths(folder: Folder) {
+    let paths: { idPath: string, namePath: string } = this.spaceService.convertFolderToPaths(folder);
+    this.idPath = paths.idPath;
+    this.namePath$.next(paths.namePath);
   }
 }

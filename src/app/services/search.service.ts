@@ -8,6 +8,9 @@ export class SearchService {
   }
 
   getSearchablesForPath(path: string): string[] {
+    if (this.spaceService.currentSpace == undefined) {
+      return [];
+    }
     const folder: Folder = this.spaceService.convertPathToFolder(path);
     return this.getAllSearchables(folder);
   }

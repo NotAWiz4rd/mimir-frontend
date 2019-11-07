@@ -23,6 +23,8 @@ import {PathComponent} from './components/path/path.component';
 import {SettingsPageComponent} from './pages/settings-page/settings-page.component';
 import {SpaceService} from './services/space.service';
 import {StaticTextService} from './services/static-text.service';
+import {ThumbnailComponent} from './components/thumbnail/thumbnail.component';
+import {ThumbnailService} from './services/thumbnail.service';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import {StaticTextService} from './services/static-text.service';
     SearchComponent,
     PathComponent,
     SettingsPageComponent,
+    ThumbnailComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,7 +61,8 @@ import {StaticTextService} from './services/static-text.service';
     LanguageService,
     SearchService,
     SpaceService,
-    StaticTextService
+    StaticTextService,
+    ThumbnailService,
   ],
   bootstrap: [AppComponent]
 })
