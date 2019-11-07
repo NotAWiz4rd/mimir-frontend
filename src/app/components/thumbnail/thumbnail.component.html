@@ -1,5 +1,4 @@
-<img [src]="thumbnailImage"
-     *ngIf="thumbnailImage != null"
+<img [src]="'assets/thumbnails/' + thumbnailId + '.png'"
      alt="file thumbnail">
 <p>
   {{filename}}

@@ -6,7 +6,7 @@
     <app-header-bar></app-header-bar>
     <app-action-bar></app-action-bar>
 
-    <app-thumbnail *ngFor="let folder of currentRoot?.folders"  [filename]="folder.name" (click)="navigateToFolder(folder.id)"></app-thumbnail>
+    <app-thumbnail *ngFor="let folder of currentRoot?.folders"  [filename]="folder.name" [thumbnailId]="1" (click)="navigateToFolder(folder.id)"></app-thumbnail>
     <app-thumbnail *ngFor="let file of currentRoot?.files" [thumbnailId]="file.thumbnailId" [filename]="file.name"></app-thumbnail>
 
   </mat-sidenav-content>

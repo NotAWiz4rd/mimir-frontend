@@ -24,7 +24,6 @@ import {SettingsPageComponent} from './pages/settings-page/settings-page.compone
 import {SpaceService} from './services/space.service';
 import {StaticTextService} from './services/static-text.service';
 import {ThumbnailComponent} from './components/thumbnail/thumbnail.component';
-import {ThumbnailService} from './services/thumbnail.service';
 
 @NgModule({
   declarations: [
@@ -62,7 +61,6 @@ import {ThumbnailService} from './services/thumbnail.service';
     SearchService,
     SpaceService,
     StaticTextService,
-    ThumbnailService,
   ],
   bootstrap: [AppComponent]
 })

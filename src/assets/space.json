@@ -18,7 +18,7 @@
             "name": "testfile",
             "author": 15,
             "type": "pdf",
-            "thumbnailId": 25,
+            "thumbnailId": 1,
             "creationDate": 17,
             "comments": []
           },
@@ -27,7 +27,7 @@
             "name": "testfile2",
             "author": 15,
             "type": "pdf",
-            "thumbnailId": 25,
+            "thumbnailId": 1,
             "creationDate": 17,
             "comments": []
           },
@@ -36,7 +36,7 @@
             "name": "testfile3",
             "author": 15,
             "type": "pdf",
-            "thumbnailId": 25,
+            "thumbnailId": 1,
             "creationDate": 17,
             "comments": []
           },
@@ -45,7 +45,7 @@
             "name": "testfile4",
             "author": 15,
             "type": "pdf",
-            "thumbnailId": 25,
+            "thumbnailId": 1,
             "creationDate": 17,
             "comments": []
           },
@@ -54,7 +54,7 @@
             "name": "testfile5",
             "author": 15,
             "type": "pdf",
-            "thumbnailId": 25,
+            "thumbnailId": 1,
             "creationDate": 17,
             "comments": []
           }
@@ -70,7 +70,7 @@
                 "name": "testfile3",
                 "author": 15,
                 "type": "pdf",
-                "thumbnailId": 25,
+                "thumbnailId": 1,
                 "creationDate": 17,
                 "comments": []
               }
@@ -89,7 +89,7 @@
             "name": "testfile",
             "author": 15,
             "type": "pdf",
-            "thumbnailId": 25,
+            "thumbnailId": 1,
             "creationDate": 17,
             "comments": []
           },
@@ -98,7 +98,7 @@
             "name": "testfile2",
             "author": 15,
             "type": "pdf",
-            "thumbnailId": 25,
+            "thumbnailId": 1,
             "creationDate": 17,
             "comments": []
           },
@@ -107,7 +107,7 @@
             "name": "testfile3",
             "author": 15,
             "type": "pdf",
-            "thumbnailId": 25,
+            "thumbnailId": 1,
             "creationDate": 17,
             "comments": []
           },
@@ -116,7 +116,7 @@
             "name": "testfile4",
             "author": 15,
             "type": "pdf",
-            "thumbnailId": 25,
+            "thumbnailId": 1,
             "creationDate": 17,
             "comments": []
           },
@@ -125,7 +125,7 @@
             "name": "testfile5",
             "author": 15,
             "type": "pdf",
-            "thumbnailId": 25,
+            "thumbnailId": 1,
             "creationDate": 17,
             "comments": []
           }
@@ -139,6 +139,5 @@
   "users": [
     11,
     13
-  ],
-  "thumbnailId": 5
+  ]
 }

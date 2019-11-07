@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ThumbnailService} from '../../services/thumbnail.service';
 
 @Component({
   selector: 'app-thumbnail',
@@ -13,14 +12,9 @@ export class ThumbnailComponent implements OnInit {
   @Input()
   thumbnailId: number;
 
-  thumbnailImage: any;
-
-  constructor(private thumbnailService: ThumbnailService) {
+  constructor() {
   }
 
   ngOnInit() {
-    this.thumbnailService.loadThumbnail(this.thumbnailId).subscribe(data => {
-      this.thumbnailImage = this.thumbnailService.createImageFromBlob(data);
-    });
   }
 }
