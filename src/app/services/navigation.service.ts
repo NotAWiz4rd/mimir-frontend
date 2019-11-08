@@ -11,7 +11,7 @@ export class NavigationService {
               private location: Location,
               private spaceService: SpaceService) {
     this.spaceService.currentSpace$.subscribe(space => {
-      if (space != undefined && this.namePath$.value.length < 1) {
+      if (space != undefined) {
         this.namePath$.next(space.root.name);
       }
     });
@@ -40,7 +40,11 @@ export class NavigationService {
 
   navigateWithinSpace(folder: Folder) {
     this.figureOutPaths(folder);
-    this.router.navigateByUrl('space/' + this.spaceService.currentSpace.id + '/folder/' + folder.id);
+    if (this.spaceService.currentSpace.id != undefined) {
+      this.router.navigateByUrl('space/' + this.spaceService.currentSpace.id + '/folder/' + folder.id);
+    } else {
+      this.router.navigateByUrl('folder/' + folder.id);
+    }
   }
 
   figureOutPaths(folder: Folder) {

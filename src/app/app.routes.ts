@@ -17,6 +17,14 @@ export const APP_ROUTES = [
     component: ContentPageComponent,
   },
   {
+    path: 'folder/:folderId',
+    component: ContentPageComponent,
+  },
+  {
+    path: 'file/:fileId',
+    component: ContentPageComponent,
+  },
+  {
     path: '',
     component: LoginComponent,
     pathMatch: 'full'

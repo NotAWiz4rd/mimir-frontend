@@ -24,6 +24,8 @@ import {SettingsPageComponent} from './pages/settings-page/settings-page.compone
 import {SpaceService} from './services/space.service';
 import {StaticTextService} from './services/static-text.service';
 import {ThumbnailComponent} from './components/thumbnail/thumbnail.component';
+import {FileViewComponent} from './components/file-view/file-view.component';
+import {FileService} from './services/file.service';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,7 @@ import {ThumbnailComponent} from './components/thumbnail/thumbnail.component';
     PathComponent,
     SettingsPageComponent,
     ThumbnailComponent,
+    FileViewComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,6 +64,7 @@ import {ThumbnailComponent} from './components/thumbnail/thumbnail.component';
     SearchService,
     SpaceService,
     StaticTextService,
+    FileService,
   ],
   bootstrap: [AppComponent]
 })

@@ -3,8 +3,10 @@
     <app-space-bar></app-space-bar>
   </mat-sidenav>
   <mat-sidenav-content>
-    <app-header-bar></app-header-bar>
-    <app-action-bar></app-action-bar>
+    <app-header-bar [backButtonDisabled]="fileId != undefined"></app-header-bar>
+
+    <ng-container *ngIf="folderId != undefined">
+      <app-action-bar></app-action-bar>
 
       <app-thumbnail *ngFor="let folder of currentRoot?.folders" [filename]="folder.name" [thumbnailType]="'folder'"
                      (click)="navigateToFolder(folder.id)"></app-thumbnail>
@@ -12,6 +14,9 @@
                      [filename]="file.name"></app-thumbnail>
     </ng-container>
 
+    <ng-container *ngIf="fileId != undefined">
+      <app-file-view></app-file-view>
+    </ng-container>
   </mat-sidenav-content>
 </mat-sidenav-container>
 

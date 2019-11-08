@@ -1,5 +1,5 @@
 <div class="container">
-  <button mat-raised-button color="accent" (click)="onBackButtonClick()">
+  <button mat-raised-button color="accent" (click)="onBackButtonClick()" [disabled]="backButtonDisabled">
     {{staticTextService.staticTexts | getStaticText : 'back' : languageService.getLanguage()}}
   </button>
 

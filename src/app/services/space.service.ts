@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 
 const SPACE_TEST_PATH = '../../../assets/space.json';
+const FOLDER_TEST_PATH = '../../../assets/folder.json';
 
 @Injectable()
 export class SpaceService {
@@ -15,16 +16,36 @@ export class SpaceService {
   }
 
   loadSpace(spaceId: number): Observable<Space> {
-    // todo make proper request
-    this.http.get<Space>(SPACE_TEST_PATH).subscribe(space => {
-      this.currentSpace = space;
+    if (spaceId != undefined) {
+      // todo make proper request
+      this.http.get<Space>(SPACE_TEST_PATH).subscribe(space => {
+        this.currentSpace = space;
+        this.currentSpace$.next(this.currentSpace);
+        console.log('loaded space: ' + spaceId);
+      });
+    }
+    return this.currentSpace$;
+  }
+
+  /**
+   * Loads a folder from the backend and puts it into a temporary space so everything still works properly.
+   * @param folderId
+   */
+  loadFolder(folderId: number): BehaviorSubject<Space> {
+    this.currentSpace = undefined;
+    this.currentSpace$.next(undefined);
+    this.http.get<Folder>(FOLDER_TEST_PATH).subscribe(folder => {
+      this.currentSpace = new Space();
+      this.currentSpace.root = folder;
+      this.currentSpace.root.parentId = 0;
+      this.currentSpace.name = 'temp';
       this.currentSpace$.next(this.currentSpace);
-      console.log('loaded space');
+      console.log('loaded folder: ' + folderId);
     });
     return this.currentSpace$;
   }
 
-  getFolder(id: number): Folder {
+  getFolderFromSpace(id: number): Folder {
     return SpaceService.searchForFolder(this.currentSpace.root, id);
   }
 
@@ -54,7 +75,7 @@ export class SpaceService {
     let paths = {idPath: folder.id + '', namePath: folder.name};
     let currentFolder = folder;
     while (currentFolder.parentId != 0) {
-      currentFolder = this.getFolder(currentFolder.parentId);
+      currentFolder = this.getFolderFromSpace(currentFolder.parentId);
       paths.idPath += '/' + currentFolder.id;
       paths.namePath += '/' + currentFolder.name;
     }
