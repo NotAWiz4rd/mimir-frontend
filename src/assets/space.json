@@ -11,6 +11,7 @@
       {
         "id": 2,
         "name": "Testfolder",
+        "owner": 2,
         "parentId": 1,
         "files": [
           {
@@ -18,7 +19,6 @@
             "name": "testfile",
             "author": 15,
             "type": "pdf",
-            "thumbnailId": 1,
             "creationDate": 17,
             "comments": []
           },
@@ -27,7 +27,6 @@
             "name": "testfile2",
             "author": 15,
             "type": "pdf",
-            "thumbnailId": 1,
             "creationDate": 17,
             "comments": []
           },
@@ -36,7 +35,6 @@
             "name": "testfile3",
             "author": 15,
             "type": "pdf",
-            "thumbnailId": 1,
             "creationDate": 17,
             "comments": []
           },
@@ -45,7 +43,6 @@
             "name": "testfile4",
             "author": 15,
             "type": "pdf",
-            "thumbnailId": 1,
             "creationDate": 17,
             "comments": []
           },
@@ -54,7 +51,6 @@
             "name": "testfile5",
             "author": 15,
             "type": "pdf",
-            "thumbnailId": 1,
             "creationDate": 17,
             "comments": []
           }
@@ -63,6 +59,7 @@
           {
             "id": 4,
             "name": "TestfolderBlub!",
+            "owner": 2,
             "parentId": 2,
             "files": [
               {
@@ -70,7 +67,6 @@
                 "name": "testfile3",
                 "author": 15,
                 "type": "pdf",
-                "thumbnailId": 1,
                 "creationDate": 17,
                 "comments": []
               }
@@ -83,13 +79,13 @@
         "id": 3,
         "name": "Testfolder2",
         "parentId": 1,
+        "owner": 2,
         "files": [
           {
             "id": 1,
             "name": "testfile",
             "author": 15,
             "type": "pdf",
-            "thumbnailId": 1,
             "creationDate": 17,
             "comments": []
           },
@@ -98,7 +94,6 @@
             "name": "testfile2",
             "author": 15,
             "type": "pdf",
-            "thumbnailId": 1,
             "creationDate": 17,
             "comments": []
           },
@@ -107,7 +102,6 @@
             "name": "testfile3",
             "author": 15,
             "type": "pdf",
-            "thumbnailId": 1,
             "creationDate": 17,
             "comments": []
           },
@@ -116,7 +110,6 @@
             "name": "testfile4",
             "author": 15,
             "type": "pdf",
-            "thumbnailId": 1,
             "creationDate": 17,
             "comments": []
           },
@@ -125,13 +118,11 @@
             "name": "testfile5",
             "author": 15,
             "type": "pdf",
-            "thumbnailId": 1,
             "creationDate": 17,
             "comments": []
           }
         ],
-        "folders": [
-        ]
+        "folders": []
       }
     ]
   },

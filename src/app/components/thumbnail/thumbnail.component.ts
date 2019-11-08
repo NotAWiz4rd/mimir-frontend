@@ -10,7 +10,7 @@ export class ThumbnailComponent implements OnInit {
   filename: string;
 
   @Input()
-  thumbnailId: number;
+  thumbnailType: string;
 
   constructor() {
   }
