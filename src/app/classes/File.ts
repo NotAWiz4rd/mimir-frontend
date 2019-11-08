@@ -5,7 +5,6 @@ export class File {
   name: string;
   author: number;
   type: string;
-  thumbnailId: number;
   creationDate: number;
   parentId: number;
   comments: Comment[];
