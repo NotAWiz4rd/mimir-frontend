@@ -4,29 +4,20 @@ import {Location} from '@angular/common';
 import {SpaceService} from './space.service';
 import {Folder} from '../classes/Folder';
 import {BehaviorSubject} from 'rxjs';
+import {File} from '../classes/File';
 
 @Injectable()
 export class NavigationService {
+  namePath$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+
   constructor(private router: Router,
               private location: Location,
               private spaceService: SpaceService) {
-    this.spaceService.currentSpace$.subscribe(space => {
-      if (space != undefined) {
-        this.namePath$.next(space.root.name);
-      }
-    });
   }
-
-  idPath: string = '';
-  namePath$: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   navigateToView(view: string) {
     console.log('Changed view to ' + view);
     this.router.navigateByUrl(view);
-  }
-
-  navigateHome() {
-    this.router.navigateByUrl('');
   }
 
   navigateToSettings() {
@@ -34,12 +25,10 @@ export class NavigationService {
   }
 
   navigateBack() {
-    console.log('Navigating to previous page');
     this.location.back();
   }
 
   navigateWithinSpace(folder: Folder) {
-    this.figureOutPaths(folder);
     if (this.spaceService.currentSpace.id != undefined) {
       this.router.navigateByUrl('space/' + this.spaceService.currentSpace.id + '/folder/' + folder.id);
     } else {
@@ -48,8 +37,16 @@ export class NavigationService {
   }
 
   figureOutPaths(folder: Folder) {
-    let paths: { idPath: string, namePath: string } = this.spaceService.convertFolderToPaths(folder);
-    this.idPath = paths.idPath;
-    this.namePath$.next(paths.namePath);
+    this.namePath$.next(this.spaceService.convertFolderToPaths(folder));
+  }
+
+  navigateToFile(file: File, folder: Folder) {
+    let path = this.spaceService.convertFolderToPaths(folder) + '/' + file.name + '.' + file.type;
+    this.namePath$.next(path);
+    if (this.spaceService.currentSpace.id != undefined) {
+      this.router.navigate(['space/' + this.spaceService.currentSpace.id + '/folder/' + file.parentId, {fileId: file.id}]);
+    } else {
+      this.router.navigate(['folder/' + file.parentId, {fileId: file.id}]);
+    }
   }
 }

@@ -22,6 +22,11 @@ export class PathComponent implements OnInit, OnChanges {
   }
 
   navigateToElement(index: number) {
+    if (index == this.pathElements.length - 1) {
+      // someone clicked onto the last element, ignore it cause that's where we're (hopefully) already are
+      return;
+    }
+
     let pathWithinSpace = '';
     for (let i = 0; i <= index; i++) {
       pathWithinSpace += this.pathElements[i];

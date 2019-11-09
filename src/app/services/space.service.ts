@@ -16,7 +16,7 @@ export class SpaceService {
   }
 
   loadSpace(spaceId: number): Observable<Space> {
-    if (spaceId != undefined) {
+    if (spaceId != undefined && (this.currentSpace == undefined || (this.currentSpace.id != spaceId))) {
       // todo make proper request
       this.http.get<Space>(SPACE_TEST_PATH).subscribe(space => {
         this.currentSpace = space;
@@ -32,8 +32,14 @@ export class SpaceService {
    * @param folderId
    */
   loadFolder(folderId: number): BehaviorSubject<Space> {
-    this.currentSpace = undefined;
-    this.currentSpace$.next(undefined);
+    if (this.currentSpace != undefined) {
+      for (let i = 0; i < this.currentSpace.root.folders.length; i++) {
+        if (this.currentSpace.root.folders[i].id === folderId) {
+          return this.currentSpace$;
+        }
+      }
+    }
+
     this.http.get<Folder>(FOLDER_TEST_PATH).subscribe(folder => {
       this.currentSpace = new Space();
       this.currentSpace.root = folder;
@@ -71,18 +77,15 @@ export class SpaceService {
     return null;
   }
 
-  convertFolderToPaths(folder: Folder): { idPath: string, namePath: string } {
-    let paths = {idPath: folder.id + '', namePath: folder.name};
+  convertFolderToPaths(folder: Folder): string {
+    let namePath = folder.name;
     let currentFolder = folder;
     while (currentFolder.parentId != 0) {
       currentFolder = this.getFolderFromSpace(currentFolder.parentId);
-      paths.idPath += '/' + currentFolder.id;
-      paths.namePath += '/' + currentFolder.name;
+      namePath += '/' + currentFolder.name;
     }
 
-    paths.idPath = SpaceService.reversePath(paths.idPath);
-    paths.namePath = SpaceService.reversePath(paths.namePath);
-    return paths;
+    return SpaceService.reversePath(namePath);
   }
 
   private static reversePath(str: string): string {
@@ -112,6 +115,12 @@ export class SpaceService {
         return this.lookForNextPathBitWithin(this.currentSpace.root.folders[i], pathBits.slice(1));
       }
     }
+    for (let i = 0; i < base.files.length; i++) {
+      if ((base.files[i].name + '.' + base.files[i].type).toLowerCase() === pathBits[0].toLowerCase()) {
+        return base;
+      }
+    }
+
     // we shall never arrive here. If we do, something went horribly wrong!
     console.error('Something went horribly wrong, trying to convert the following pathBits to a folder: '
       + pathBits + ' in the following base folder: ' + base.id);

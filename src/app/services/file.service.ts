@@ -12,11 +12,11 @@ export class FileService {
   constructor(private http: HttpClient) {
   }
 
-  loadFile(fileId: number): BehaviorSubject<File> {
+  loadFile(fileId: number) {
     // todo make proper request
     this.http.get<File>(FILE_TEST_PATH).subscribe(file => {
+      console.log('loaded file: ' + fileId);
       this.currentFile$.next(file);
     });
-    return this.currentFile$;
   }
 }
