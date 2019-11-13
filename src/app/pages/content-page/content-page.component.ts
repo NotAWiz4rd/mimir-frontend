@@ -18,6 +18,7 @@ export class ContentPageComponent implements OnInit {
   fileId: number;
 
   file: File;
+  searchValue: string;
 
   constructor(private spaceService: SpaceService,
               private navigationService: NavigationService,
@@ -29,7 +30,6 @@ export class ContentPageComponent implements OnInit {
       if (params['fileId'] != undefined && this.fileId != Number(params['fileId'])) {
         this.fileId = Number(params['fileId']);
         this.fileService.loadFile(this.fileId);
-        // todo path isnt recalculated when going back to a file via the back button
       } else if (params['fileId'] == undefined) {
         this.fileId = undefined;
         if (this.currentRoot != undefined) {
@@ -57,6 +57,17 @@ export class ContentPageComponent implements OnInit {
         }
       } else if (params['folderId'] == undefined) {
         this.folderId = undefined;
+      }
+
+      if (params['searchValue'] != undefined && this.searchValue != params['searchValue']) {
+        this.searchValue = params['searchValue'];
+        if(this.currentRoot != undefined){
+          const filesAndFolders: [File[], Folder[]] = ContentPageComponent.collectMatchingFilesAndFolders(this.currentRoot, this.searchValue);
+          this.currentRoot.files = filesAndFolders[0];
+          this.currentRoot.folders = filesAndFolders[1];
+        }
+      } else if (params['searchValue'] == undefined) {
+        this.searchValue = undefined;
       }
     });
   }
@@ -98,5 +109,27 @@ export class ContentPageComponent implements OnInit {
     if (this.fileId == undefined) {
       this.navigationService.figureOutPaths(this.currentRoot);
     }
+  }
+
+  private static collectMatchingFilesAndFolders(base: Folder, searchValue: string): [File[], Folder[]] {
+    let files: File[] = [];
+    let folders: Folder[] = [];
+
+    for (let i = 0; i < base.files.length; i++) {
+      if (base.files[i].name.toLowerCase().includes(searchValue.toLowerCase())) {
+        files.push(base.files[i]);
+      }
+    }
+
+    for (let i = 0; i < base.folders.length; i++) {
+      if (base.folders[i].name.toLowerCase().includes(searchValue.toLowerCase())) {
+        folders.push(base.folders[i]);
+      }
+      let filesAndFolders: [File[], Folder[]] = this.collectMatchingFilesAndFolders(base.folders[i], searchValue);
+      files.concat(filesAndFolders[0]);
+      folders.concat(filesAndFolders[1]);
+    }
+
+    return [files, folders];
   }
 }

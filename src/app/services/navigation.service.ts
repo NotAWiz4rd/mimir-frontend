@@ -49,4 +49,12 @@ export class NavigationService {
       this.router.navigate(['folder/' + file.parentId, {fileId: file.id}]);
     }
   }
+
+  navigateSearch(currentSearchFolder: Folder, searchValue: string) {
+    if (this.spaceService.currentSpace.id != undefined) {
+      this.router.navigate(['space/' + this.spaceService.currentSpace.id + '/folder/' + currentSearchFolder.id, {searchValue: searchValue}]);
+    } else {
+      this.router.navigate(['folder/', currentSearchFolder.id, {searchValue: searchValue}]);
+    }
+  }
 }

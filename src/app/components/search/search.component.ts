@@ -26,7 +26,10 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
     this.navigationService.namePath$.subscribe(path => {
-      this.searchOptions = this.searchService.getSearchablesForPath(path);
+      // don't look for searchables if we're in a file view
+      if (!path.includes('.')) {
+        this.searchOptions = this.searchService.getSearchablesForPath(path);
+      }
     });
 
     this.filteredOptions = this.control.valueChanges

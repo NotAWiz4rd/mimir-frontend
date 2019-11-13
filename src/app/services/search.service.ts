@@ -1,23 +1,26 @@
 import {Injectable} from '@angular/core';
 import {SpaceService} from './space.service';
 import {Folder} from '../classes/Folder';
+import {NavigationService} from './navigation.service';
 
 @Injectable()
 export class SearchService {
-  constructor(private spaceService: SpaceService) {
+  constructor(private spaceService: SpaceService,
+              private navigationService: NavigationService) {
   }
+
+  currentSearchFolder: Folder;
 
   getSearchablesForPath(path: string): string[] {
     if (this.spaceService.currentSpace == undefined) {
       return [];
     }
-    const folder: Folder = this.spaceService.convertPathToFolder(path);
-    return this.getAllSearchables(folder);
+    this.currentSearchFolder = this.spaceService.convertPathToFolder(path);
+    return this.getAllSearchables(this.currentSearchFolder);
   }
 
   search(searchValue: string) {
-    // todo implement me
-    console.log(searchValue);
+    this.navigationService.navigateSearch(this.currentSearchFolder, searchValue);
   }
 
   getAllSearchables(base: Folder): string[] {

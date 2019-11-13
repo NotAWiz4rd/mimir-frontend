@@ -1,8 +1,8 @@
 <div class="container">
-  <button mat-raised-button color="primary" (click)="onCreateFolderClick()">
+  <button mat-raised-button color="primary" (click)="onCreateFolderClick()" [disabled]="actionsDisabled">
     {{staticTextService.staticTexts | getStaticText : 'createFolder' : languageService.getLanguage()}}
   </button>
-  <button mat-raised-button color="primary" (click)="onUploadFileClick()">
+  <button mat-raised-button color="primary" (click)="onUploadFileClick()" [disabled]="actionsDisabled">
     {{staticTextService.staticTexts | getStaticText : 'uploadFile' : languageService.getLanguage()}}
   </button>
   <app-search></app-search>
