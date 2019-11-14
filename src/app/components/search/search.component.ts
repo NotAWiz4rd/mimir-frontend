@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {map, startWith} from 'rxjs/operators';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {FormControl} from '@angular/forms';
 import {LanguageService} from '../../services/language.service';
 import {SearchService} from '../../services/search.service';
@@ -12,11 +12,13 @@ import {NavigationService} from '../../services/navigation.service';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, OnDestroy {
   searchOptions: string[] = [];
   filteredOptions: Observable<string[]>;
   control = new FormControl();
   searchValue: string = '';
+
+  namePathSubscription: Subscription;
 
   constructor(public staticTextService: StaticTextService,
               public languageService: LanguageService,
@@ -25,7 +27,7 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.navigationService.namePath$.subscribe(path => {
+    this.namePathSubscription = this.navigationService.namePath$.subscribe(path => {
       // don't look for searchables if we're in a file view
       if (!path.includes('.')) {
         this.searchOptions = this.searchService.getSearchablesForPath(path);
@@ -49,5 +51,11 @@ export class SearchComponent implements OnInit {
 
   onEnter() {
     this.searchService.search(this.searchValue);
+  }
+
+  ngOnDestroy(): void {
+    if (this.namePathSubscription != undefined) {
+      this.namePathSubscription.unsubscribe();
+    }
   }
 }

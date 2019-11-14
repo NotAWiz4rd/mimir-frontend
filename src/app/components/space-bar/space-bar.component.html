@@ -1,3 +1,6 @@
-<p>
-  space-bar works!
-</p>
+<app-space-bubble *ngFor="let space of spaces" [spacename]="space.name"
+                  [thumbnailId]="space.thumbnailId"
+                  matTooltip="{{space.name}}"
+                  matTooltipClass="space-tooltip"
+                  [matTooltipPosition]="'right'"
+                  (click)="navigateToSpace(space.id)"></app-space-bubble>

@@ -26,42 +26,61 @@ export class ContentPageComponent implements OnInit {
               private fileService: FileService) {
 
     this.route.params.subscribe(params => {
+      let lastSpaceId: number = this.spaceId;
+      let lastFolderId: number = this.folderId;
+      let lastFileId: number = this.fileId;
 
-      if (params['fileId'] != undefined && this.fileId != Number(params['fileId'])) {
+      if (params['fileId'] != undefined) {
         this.fileId = Number(params['fileId']);
-        this.fileService.loadFile(this.fileId);
-      } else if (params['fileId'] == undefined) {
+      } else {
         this.fileId = undefined;
-        if (this.currentRoot != undefined) {
-          this.navigationService.figureOutPaths(this.currentRoot);
-        }
       }
 
-      if (params['spaceId'] != undefined && this.spaceId != Number(params['spaceId'])) {
+      if (params['folderId'] != undefined) {
+        this.folderId = Number(params['folderId']);
+      } else {
+        this.folderId = undefined;
+      }
+
+      if (params['spaceId'] != undefined) {
         this.spaceId = Number(params['spaceId']);
-        this.spaceService.loadSpace(params['spaceId']);
-      } else if (params['spaceId'] == undefined) {
+      } else {
         this.spaceId = undefined;
       }
 
-      if (params['folderId'] != undefined && this.folderId != Number(params['folderId']) && this.fileId == undefined) {
-        this.folderId = Number(params['folderId']);
-        if (this.currentRoot != undefined) {
-          this.setCurrentRoot(this.spaceService.getFolderFromSpace(this.folderId));
-        } else if (this.spaceId == undefined) {
-          this.spaceService.loadFolder(this.folderId).subscribe(tempSpace => {
-            if (tempSpace != undefined) {
-              this.setCurrentRoot(tempSpace.root);
+      if (this.fileId != undefined && this.spaceId == undefined && this.folderId == undefined) { // load file directly
+        this.fileService.loadFile(this.fileId);
+      } else if (this.fileId == undefined && this.currentRoot != undefined && lastFileId != undefined && this.spaceId == lastSpaceId) { // recalculate path if we go back from a file
+        this.navigationService.figureOutPaths(this.currentRoot);
+      }
+
+      if (this.spaceId != undefined && this.spaceId != lastSpaceId) {
+        if (this.spaceService.currentSpace == undefined || this.spaceService.currentSpace.id != this.spaceId) { // load new space
+          this.currentRoot = undefined;
+          this.spaceService.loadSpace(this.spaceId);
+          this.spaceService.currentSpace$.subscribe(space => {
+            if (space != undefined && space.id == this.spaceId) {
+              this.setCurrentRoot(this.spaceService.getFolderFromSpace(this.folderId));
             }
           });
+        } else {
+          this.setCurrentRoot(this.spaceService.getFolderFromSpace(this.folderId));
         }
-      } else if (params['folderId'] == undefined) {
-        this.folderId = undefined;
+      }
+
+      if (this.folderId != undefined && this.folderId != lastFolderId && this.currentRoot != undefined) {
+        this.setCurrentRoot(this.spaceService.getFolderFromSpace(this.folderId));
+      } else if (this.folderId != undefined && this.spaceId == undefined && this.folderId != lastFolderId) { // direct folder access
+        this.spaceService.loadFolder(this.folderId).subscribe(tempSpace => {
+          if (tempSpace != undefined) {
+            this.setCurrentRoot(tempSpace.root);
+          }
+        });
       }
 
       if (params['searchValue'] != undefined && this.searchValue != params['searchValue']) {
         this.searchValue = params['searchValue'];
-        if(this.currentRoot != undefined){
+        if (this.currentRoot != undefined) {
           const filesAndFolders: [File[], Folder[]] = ContentPageComponent.collectMatchingFilesAndFolders(this.currentRoot, this.searchValue);
           this.currentRoot.files = filesAndFolders[0];
           this.currentRoot.folders = filesAndFolders[1];
@@ -73,14 +92,6 @@ export class ContentPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.spaceId != undefined) {
-      this.spaceService.currentSpace$.subscribe(space => {
-        if (space != undefined) {
-          this.setCurrentRoot(this.spaceService.getFolderFromSpace(this.folderId));
-        }
-      });
-    }
-
     this.fileService.currentFile$.subscribe(file => {
       if (file != undefined) {
         this.file = file;

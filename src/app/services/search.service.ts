@@ -16,6 +16,9 @@ export class SearchService {
       return [];
     }
     this.currentSearchFolder = this.spaceService.convertPathToFolder(path);
+    if (this.currentSearchFolder == undefined) {
+      return [];
+    }
     return this.getAllSearchables(this.currentSearchFolder);
   }
 

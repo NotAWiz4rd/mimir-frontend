@@ -4,7 +4,7 @@ import {Space} from '../classes/Space';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 
-const SPACE_TEST_PATH = '../../../assets/space.json';
+const SPACE_TEST_PATH = '../../../assets/space-';
 const FOLDER_TEST_PATH = '../../../assets/folder.json';
 
 @Injectable()
@@ -18,10 +18,10 @@ export class SpaceService {
   loadSpace(spaceId: number): Observable<Space> {
     if (spaceId != undefined && (this.currentSpace == undefined || (this.currentSpace.id != spaceId))) {
       // todo make proper request
-      this.http.get<Space>(SPACE_TEST_PATH).subscribe(space => {
+      this.http.get<Space>(SPACE_TEST_PATH + spaceId + '.json').subscribe(space => {
         this.currentSpace = space;
-        this.currentSpace$.next(this.currentSpace);
         console.log('loaded space: ' + spaceId);
+        this.currentSpace$.next(this.currentSpace);
       });
     }
     return this.currentSpace$;

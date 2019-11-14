@@ -5,7 +5,7 @@ import {AppComponent} from './app.component';
 import {RouterModule} from '@angular/router';
 import {APP_ROUTES} from './app.routes';
 import {HttpClientModule} from '@angular/common/http';
-import {LoginService} from './services/login.service';
+import {UserService} from './services/user.service';
 import {NavigationService} from './services/navigation.service';
 import {LanguageService} from './services/language.service';
 import {GetStaticTextPipe} from './pipes/get-static-text.pipe';
@@ -15,7 +15,14 @@ import {SpaceBarComponent} from './components/space-bar/space-bar.component';
 import {HeaderBarComponent} from './components/header-bar/header-bar.component';
 import {LoginComponent} from './pages/login/login.component';
 import {ActionBarComponent} from './components/action-bar/action-bar.component';
-import {MatAutocompleteModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSidenavModule} from '@angular/material';
+import {
+  MatAutocompleteModule,
+  MatButtonModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatSidenavModule,
+  MatTooltipModule
+} from '@angular/material';
 import {ReactiveFormsModule} from '@angular/forms';
 import {SearchComponent} from './components/search/search.component';
 import {SearchService} from './services/search.service';
@@ -26,6 +33,7 @@ import {StaticTextService} from './services/static-text.service';
 import {ThumbnailComponent} from './components/thumbnail/thumbnail.component';
 import {FileViewComponent} from './components/file-view/file-view.component';
 import {FileService} from './services/file.service';
+import {SpaceBubbleComponent} from './components/space-bubble/space-bubble.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +49,8 @@ import {FileService} from './services/file.service';
     SettingsPageComponent,
     ThumbnailComponent,
     FileViewComponent,
+    SpaceBubbleComponent,
+    SpaceBubbleComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,9 +66,10 @@ import {FileService} from './services/file.service';
     MatAutocompleteModule,
     ReactiveFormsModule,
     MatButtonModule,
+    MatTooltipModule,
   ],
   providers: [
-    LoginService,
+    UserService,
     NavigationService,
     LanguageService,
     SearchService,

@@ -28,6 +28,19 @@ export class NavigationService {
     this.location.back();
   }
 
+  navigateToSpace(id: number) {
+    if (this.spaceService.currentSpace.id == id) {
+      return;
+    }
+
+    let spaceLoadingSubscription = this.spaceService.loadSpace(id).subscribe(space => {
+      if (space.id == id) {
+        this.navigateWithinSpace(space.root);
+        spaceLoadingSubscription.unsubscribe();
+      }
+    });
+  }
+
   navigateWithinSpace(folder: Folder) {
     if (this.spaceService.currentSpace.id != undefined) {
       this.router.navigateByUrl('space/' + this.spaceService.currentSpace.id + '/folder/' + folder.id);
