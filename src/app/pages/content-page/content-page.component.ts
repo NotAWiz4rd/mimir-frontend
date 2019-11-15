@@ -82,7 +82,7 @@ export class ContentPageComponent implements OnInit {
         this.searchValue = params['searchValue'];
         if (this.currentRoot != undefined) {
           const filesAndFolders: [File[], Folder[]] = ContentPageComponent.collectMatchingFilesAndFolders(this.currentRoot, this.searchValue);
-          this.currentRoot.files = filesAndFolders[0];
+          this.currentRoot.artifacts = filesAndFolders[0];
           this.currentRoot.folders = filesAndFolders[1];
         }
       } else if (params['searchValue'] == undefined) {
@@ -108,7 +108,7 @@ export class ContentPageComponent implements OnInit {
   }
 
   navigateToFile(id: number) {
-    this.currentRoot.files.forEach(file => {
+    this.currentRoot.artifacts.forEach(file => {
       if (file.id === id) {
         this.navigationService.navigateToFile(file, this.currentRoot);
       }
@@ -126,9 +126,9 @@ export class ContentPageComponent implements OnInit {
     let files: File[] = [];
     let folders: Folder[] = [];
 
-    for (let i = 0; i < base.files.length; i++) {
-      if (base.files[i].name.toLowerCase().includes(searchValue.toLowerCase())) {
-        files.push(base.files[i]);
+    for (let i = 0; i < base.artifacts.length; i++) {
+      if (base.artifacts[i].name.toLowerCase().includes(searchValue.toLowerCase())) {
+        files.push(base.artifacts[i]);
       }
     }
 
@@ -142,5 +142,9 @@ export class ContentPageComponent implements OnInit {
     }
 
     return [files, folders];
+  }
+
+  calculateName(file: File): string {
+    return file.name + '.' + file.contentType.split('/')[1];
   }
 }

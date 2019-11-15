@@ -31,8 +31,8 @@ export class SearchService {
     names.push(base.name);
 
     // get all filenames in base
-    for (let i = 0; i < base.files.length; i++) {
-      names.push(base.files[i].name);
+    for (let i = 0; i < base.artifacts.length; i++) {
+      names.push(base.artifacts[i].name);
     }
 
     // get all filenames in folders below base

@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 import {User} from '../classes/User';
 import {SpaceMetadata} from '../classes/SpaceMetadata';
 
-const TEST_URL = 'http://localhost:80/loginuser';
+const TEST_URL = 'https://se.pfuetsch.xyz/login/';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -32,8 +32,7 @@ export class UserService {
     this.currentUser$.next(user);
   }
 
-  login(user: User): Observable<boolean> {
+  login(user: User) {
     // todo implement me properly
-    return this.http.post<boolean>(TEST_URL, user, httpOptions);
   }
 }

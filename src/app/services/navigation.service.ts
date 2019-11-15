@@ -54,7 +54,7 @@ export class NavigationService {
   }
 
   navigateToFile(file: File, folder: Folder) {
-    let path = this.spaceService.convertFolderToPaths(folder) + '/' + file.name + '.' + file.type;
+    let path = this.spaceService.convertFolderToPaths(folder) + '/' + file.name + '.' + file.contentType.split("/")[1];
     this.namePath$.next(path);
     if (this.spaceService.currentSpace.id != undefined) {
       this.router.navigate(['space/' + this.spaceService.currentSpace.id + '/folder/' + file.parentId, {fileId: file.id}]);

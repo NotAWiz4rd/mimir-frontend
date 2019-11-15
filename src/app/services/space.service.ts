@@ -4,8 +4,8 @@ import {Space} from '../classes/Space';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 
-const SPACE_TEST_PATH = '../../../assets/space-';
-const FOLDER_TEST_PATH = '../../../assets/folder.json';
+const SPACE_TEST_PATH = 'https://se.pfuetsch.xyz/space/';
+const FOLDER_TEST_PATH = 'https://se.pfuetsch.xyz/folder/';
 
 @Injectable()
 export class SpaceService {
@@ -18,7 +18,7 @@ export class SpaceService {
   loadSpace(spaceId: number): Observable<Space> {
     if (spaceId != undefined && (this.currentSpace == undefined || (this.currentSpace.id != spaceId))) {
       // todo make proper request
-      this.http.get<Space>(SPACE_TEST_PATH + spaceId + '.json').subscribe(space => {
+      this.http.get<Space>(SPACE_TEST_PATH + spaceId).subscribe(space => {
         this.currentSpace = space;
         console.log('loaded space: ' + spaceId);
         this.currentSpace$.next(this.currentSpace);
@@ -80,7 +80,7 @@ export class SpaceService {
   convertFolderToPaths(folder: Folder): string {
     let namePath = folder.name;
     let currentFolder = folder;
-    while (currentFolder.parentId != 0) {
+    while (currentFolder.parentId != null) {
       currentFolder = this.getFolderFromSpace(currentFolder.parentId);
       namePath += '/' + currentFolder.name;
     }
@@ -115,8 +115,8 @@ export class SpaceService {
         return this.lookForNextPathBitWithin(this.currentSpace.root.folders[i], pathBits.slice(1));
       }
     }
-    for (let i = 0; i < base.files.length; i++) {
-      if ((base.files[i].name + '.' + base.files[i].type).toLowerCase() === pathBits[0].toLowerCase()) {
+    for (let i = 0; i < base.artifacts.length; i++) {
+      if ((base.artifacts[i].name + '.' + base.artifacts[i].contentType.split('/')[1]).toLowerCase() === pathBits[0].toLowerCase()) {
         return base;
       }
     }
