@@ -22,4 +22,14 @@ export class CreateFolderDialogComponent implements OnInit {
   onNoClick() {
     this.dialogRef.close();
   }
+
+  /**
+   * Checks whether wrong stuff (e.g. a '.') is used in a folders name.
+   */
+  wrongName() {
+    if (this.folderName == undefined) {
+      return false;
+    }
+    return this.folderName.includes('.'); // using '.' in a folders name would confuse the path and navigation
+  }
 }
