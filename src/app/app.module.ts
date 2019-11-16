@@ -18,12 +18,13 @@ import {ActionBarComponent} from './components/action-bar/action-bar.component';
 import {
   MatAutocompleteModule,
   MatButtonModule,
+  MatDialogModule,
   MatFormFieldModule,
   MatInputModule,
   MatSidenavModule,
   MatTooltipModule
 } from '@angular/material';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SearchComponent} from './components/search/search.component';
 import {SearchService} from './services/search.service';
 import {PathComponent} from './components/path/path.component';
@@ -34,6 +35,7 @@ import {ThumbnailComponent} from './components/thumbnail/thumbnail.component';
 import {FileViewComponent} from './components/file-view/file-view.component';
 import {FileService} from './services/file.service';
 import {SpaceBubbleComponent} from './components/space-bubble/space-bubble.component';
+import {CreateFolderDialogComponent} from './components/create-folder-dialog/create-folder-dialog.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,7 @@ import {SpaceBubbleComponent} from './components/space-bubble/space-bubble.compo
     FileViewComponent,
     SpaceBubbleComponent,
     SpaceBubbleComponent,
+    CreateFolderDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,6 +70,11 @@ import {SpaceBubbleComponent} from './components/space-bubble/space-bubble.compo
     ReactiveFormsModule,
     MatButtonModule,
     MatTooltipModule,
+    MatDialogModule,
+    FormsModule,
+  ],
+  entryComponents: [
+    CreateFolderDialogComponent,
   ],
   providers: [
     UserService,

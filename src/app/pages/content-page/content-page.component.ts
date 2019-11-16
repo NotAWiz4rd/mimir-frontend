@@ -5,6 +5,8 @@ import {NavigationService} from '../../services/navigation.service';
 import {ActivatedRoute} from '@angular/router';
 import {FileService} from '../../services/file.service';
 import {File} from '../../classes/File';
+import {CreateFolderDialogComponent} from '../../components/create-folder-dialog/create-folder-dialog.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-content-page',
@@ -12,7 +14,6 @@ import {File} from '../../classes/File';
   styleUrls: ['./content-page.component.css']
 })
 export class ContentPageComponent implements OnInit {
-  currentRoot: Folder;
   folderId: number;
   spaceId: number;
   fileId: number;
@@ -20,10 +21,11 @@ export class ContentPageComponent implements OnInit {
   file: File;
   searchValue: string;
 
-  constructor(private spaceService: SpaceService,
+  constructor(public spaceService: SpaceService,
               private navigationService: NavigationService,
               private route: ActivatedRoute,
-              private fileService: FileService) {
+              private fileService: FileService,
+              public dialog: MatDialog) {
 
     this.route.params.subscribe(params => {
       let lastSpaceId: number = this.spaceId;
@@ -50,40 +52,41 @@ export class ContentPageComponent implements OnInit {
 
       if (this.fileId != undefined && this.spaceId == undefined && this.folderId == undefined) { // load file directly
         this.fileService.loadFile(this.fileId);
-      } else if (this.fileId == undefined && this.currentRoot != undefined && lastFileId != undefined && this.spaceId == lastSpaceId) { // recalculate path if we go back from a file
-        this.navigationService.figureOutPaths(this.currentRoot);
+      } else if (this.fileId == undefined && this.spaceService.currentFolder != undefined && lastFileId != undefined && this.spaceId == lastSpaceId) { // recalculate path if we go back from a file
+        this.navigationService.figureOutPaths(this.spaceService.currentFolder);
       }
 
       if (this.spaceId != undefined && this.spaceId != lastSpaceId) {
         if (this.spaceService.currentSpace == undefined || this.spaceService.currentSpace.id != this.spaceId) { // load new space
-          this.currentRoot = undefined;
+          this.spaceService.currentFolder = undefined;
           this.spaceService.loadSpace(this.spaceId);
           this.spaceService.currentSpace$.subscribe(space => {
             if (space != undefined && space.id == this.spaceId) {
-              this.setCurrentRoot(this.spaceService.getFolderFromSpace(this.folderId));
+              this.setCurrentFolder(this.spaceService.getFolderFromSpace(this.folderId));
             }
           });
         } else {
-          this.setCurrentRoot(this.spaceService.getFolderFromSpace(this.folderId));
+          this.setCurrentFolder(this.spaceService.getFolderFromSpace(this.folderId));
         }
       }
 
-      if (this.folderId != undefined && this.folderId != lastFolderId && this.currentRoot != undefined) {
-        this.setCurrentRoot(this.spaceService.getFolderFromSpace(this.folderId));
+      if (this.folderId != undefined && this.folderId != lastFolderId && this.spaceService.currentFolder != undefined) {
+        this.setCurrentFolder(this.spaceService.getFolderFromSpace(this.folderId));
       } else if (this.folderId != undefined && this.spaceId == undefined && this.folderId != lastFolderId) { // direct folder access
         this.spaceService.loadFolder(this.folderId).subscribe(tempSpace => {
+          console.log(tempSpace)
           if (tempSpace != undefined) {
-            this.setCurrentRoot(tempSpace.root);
+            this.setCurrentFolder(tempSpace.root);
           }
         });
       }
 
       if (params['searchValue'] != undefined && this.searchValue != params['searchValue']) {
         this.searchValue = params['searchValue'];
-        if (this.currentRoot != undefined) {
-          const filesAndFolders: [File[], Folder[]] = ContentPageComponent.collectMatchingFilesAndFolders(this.currentRoot, this.searchValue);
-          this.currentRoot.artifacts = filesAndFolders[0];
-          this.currentRoot.folders = filesAndFolders[1];
+        if (this.spaceService.currentFolder != undefined) {
+          const filesAndFolders: [File[], Folder[]] = ContentPageComponent.collectMatchingFilesAndFolders(this.spaceService.currentFolder, this.searchValue);
+          this.spaceService.currentFolder.artifacts = filesAndFolders[0];
+          this.spaceService.currentFolder.folders = filesAndFolders[1];
         }
       } else if (params['searchValue'] == undefined) {
         this.searchValue = undefined;
@@ -100,7 +103,7 @@ export class ContentPageComponent implements OnInit {
   }
 
   navigateToFolder(id: number) {
-    this.currentRoot.folders.forEach(folder => {
+    this.spaceService.currentFolder.folders.forEach(folder => {
       if (folder.id === id) {
         this.navigationService.navigateWithinSpace(folder);
       }
@@ -108,17 +111,29 @@ export class ContentPageComponent implements OnInit {
   }
 
   navigateToFile(id: number) {
-    this.currentRoot.artifacts.forEach(file => {
+    this.spaceService.currentFolder.artifacts.forEach(file => {
       if (file.id === id) {
-        this.navigationService.navigateToFile(file, this.currentRoot);
+        this.navigationService.navigateToFile(file, this.spaceService.currentFolder);
       }
     });
   }
 
-  private setCurrentRoot(folder: Folder) {
-    this.currentRoot = folder;
+  createFolderDialog() {
+    const dialogRef = this.dialog.open(CreateFolderDialogComponent, {
+      width: '250px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != undefined) {
+        this.spaceService.createFolder(result, this.spaceService.currentFolder.id);
+      }
+    });
+  }
+
+  private setCurrentFolder(folder: Folder) {
+    this.spaceService.currentFolder = folder;
     if (this.fileId == undefined) {
-      this.navigationService.figureOutPaths(this.currentRoot);
+      this.navigationService.figureOutPaths(this.spaceService.currentFolder);
     }
   }
 

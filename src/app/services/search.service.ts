@@ -31,13 +31,17 @@ export class SearchService {
     names.push(base.name);
 
     // get all filenames in base
-    for (let i = 0; i < base.artifacts.length; i++) {
-      names.push(base.artifacts[i].name);
+    if (base.artifacts != null) {
+      for (let i = 0; i < base.artifacts.length; i++) {
+        names.push(base.artifacts[i].name);
+      }
     }
 
     // get all filenames in folders below base
-    for (let i = 0; i < base.folders.length; i++) {
-      names = names.concat(this.getAllSearchables(base.folders[i]));
+    if (base.folders != null) {
+      for (let i = 0; i < base.folders.length; i++) {
+        names = names.concat(this.getAllSearchables(base.folders[i]));
+      }
     }
 
     return names;

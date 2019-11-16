@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {LanguageService} from '../../services/language.service';
 import {StaticTextService} from '../../services/static-text.service';
 
@@ -12,6 +12,9 @@ export class ActionBarComponent implements OnInit {
   @Input()
   actionsDisabled: boolean = false;
 
+  @Output()
+  openCreateFolderDialog = new EventEmitter();
+
   constructor(public staticTextService: StaticTextService,
               public languageService: LanguageService) {
   }
@@ -20,7 +23,7 @@ export class ActionBarComponent implements OnInit {
   }
 
   onCreateFolderClick() {
-    // todo implement me
+    this.openCreateFolderDialog.emit();
   }
 
   onUploadFileClick() {

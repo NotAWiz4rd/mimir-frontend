@@ -5,12 +5,14 @@ import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 
 const SPACE_TEST_PATH = 'https://se.pfuetsch.xyz/space/';
-const FOLDER_TEST_PATH = 'https://se.pfuetsch.xyz/folder/';
+const FOLDER_TEST_PATH = 'https://se.pfuetsch.xyz/folder';
 
 @Injectable()
 export class SpaceService {
   currentSpace: Space;
   currentSpace$: BehaviorSubject<Space> = new BehaviorSubject<Space>(this.currentSpace);
+
+  currentFolder: Folder;
 
   constructor(private http: HttpClient) {
   }
@@ -28,6 +30,20 @@ export class SpaceService {
   }
 
   /**
+   * Creates a new folder within the folder that the user is currently in.
+   * @param name
+   * @param parentId
+   */
+  createFolder(name: string, parentId: number) {
+    this.http.post(FOLDER_TEST_PATH + '?name=' + name + '&parentId=' + parentId, {}).subscribe(result => {
+      let folder = result as Folder;
+      if (folder.name == name) {
+        this.currentFolder.folders.push(folder);
+      }
+    });
+  }
+
+  /**
    * Loads a folder from the backend and puts it into a temporary space so everything still works properly.
    * @param folderId
    */
@@ -40,7 +56,7 @@ export class SpaceService {
       }
     }
 
-    this.http.get<Folder>(FOLDER_TEST_PATH).subscribe(folder => {
+    this.http.get<Folder>(FOLDER_TEST_PATH + '/' + folderId).subscribe(folder => {
       this.currentSpace = new Space();
       this.currentSpace.root = folder;
       this.currentSpace.root.parentId = 0;
@@ -80,9 +96,11 @@ export class SpaceService {
   convertFolderToPaths(folder: Folder): string {
     let namePath = folder.name;
     let currentFolder = folder;
-    while (currentFolder.parentId != null) {
+    while (currentFolder != null && currentFolder.parentId != null) {
       currentFolder = this.getFolderFromSpace(currentFolder.parentId);
-      namePath += '/' + currentFolder.name;
+      if (currentFolder != null) {
+        namePath += '/' + currentFolder.name;
+      }
     }
 
     return SpaceService.reversePath(namePath);

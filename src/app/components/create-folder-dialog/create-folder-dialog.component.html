@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>
+  {{staticTextService.staticTexts | getStaticText : 'createFolder' : languageService.getLanguage()}}
+</h1>
+<div mat-dialog-content>
+  <p>
+    {{staticTextService.staticTexts | getStaticText : 'nameFolder' : languageService.getLanguage()}}
+  </p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="folderName" cdkFocusInitial>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">
+    {{staticTextService.staticTexts | getStaticText : 'noThanks' : languageService.getLanguage()}}
+  </button>
+  <button mat-button [mat-dialog-close]="folderName">
+    {{staticTextService.staticTexts | getStaticText : 'create' : languageService.getLanguage()}}
+  </button>
+</div>

@@ -33,5 +33,20 @@
     "logicalName": "back",
     "english": "Back",
     "german": "Zurück"
+  },
+  {
+    "logicalName": "create",
+    "english": "Create",
+    "german": "Erstellen"
+  },
+  {
+    "logicalName": "noThanks",
+    "english": "No Thanks",
+    "german": "Nein danke"
+  },
+  {
+    "logicalName": "nameFolder",
+    "english": "Please name the folder you want to create:",
+    "german": "Bitte geben sie den Namen des Ordners ein:"
   }
 ]
