@@ -33,7 +33,7 @@ export class PathComponent implements OnInit, OnChanges {
       pathWithinSpace += '/';
     }
     let folderGoal = this.spaceService.convertPathToFolder(pathWithinSpace.slice(0, pathWithinSpace.length - 1));
-    this.navigationService.navigateWithinSpace(folderGoal);
+    this.navigationService.navigateWithinSpace(folderGoal.id);
   }
 
   ngOnChanges(changes: SimpleChanges): void {

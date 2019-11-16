@@ -24,8 +24,13 @@ export class NavigationService {
     this.router.navigateByUrl('settings');
   }
 
-  navigateBack() {
-    this.location.back();
+  navigateUp(currentPath: string) {
+    let folder = this.spaceService.convertPathToFolder(currentPath);
+    if (folder.parentId == null || currentPath.includes('.')) { // check if we're either in the topmost folder or in a file
+      this.navigateWithinSpace(folder.id);
+    } else {
+      this.navigateWithinSpace(folder.parentId);
+    }
   }
 
   navigateToSpace(id: number) {
@@ -35,17 +40,17 @@ export class NavigationService {
 
     let spaceLoadingSubscription = this.spaceService.loadSpace(id).subscribe(space => {
       if (space.id == id) {
-        this.navigateWithinSpace(space.root);
+        this.navigateWithinSpace(space.root.id);
         spaceLoadingSubscription.unsubscribe();
       }
     });
   }
 
-  navigateWithinSpace(folder: Folder) {
+  navigateWithinSpace(folderId: number) {
     if (this.spaceService.currentSpace.id != undefined) {
-      this.router.navigateByUrl('space/' + this.spaceService.currentSpace.id + '/folder/' + folder.id);
+      this.router.navigateByUrl('space/' + this.spaceService.currentSpace.id + '/folder/' + folderId);
     } else {
-      this.router.navigateByUrl('folder/' + folder.id);
+      this.router.navigateByUrl('folder/' + folderId);
     }
   }
 
@@ -54,7 +59,7 @@ export class NavigationService {
   }
 
   navigateToFile(file: File, folder: Folder) {
-    let path = this.spaceService.convertFolderToPaths(folder) + '/' + file.name + '.' + file.contentType.split("/")[1];
+    let path = this.spaceService.convertFolderToPaths(folder) + '/' + file.name + '.' + file.contentType.split('/')[1];
     this.namePath$.next(path);
     if (this.spaceService.currentSpace.id != undefined) {
       this.router.navigate(['space/' + this.spaceService.currentSpace.id + '/folder/' + file.parentId, {fileId: file.id}]);

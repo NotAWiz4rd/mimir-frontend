@@ -133,6 +133,7 @@ export class SpaceService {
         return this.lookForNextPathBitWithin(this.currentSpace.root.folders[i], pathBits.slice(1));
       }
     }
+    // check if we're in a file
     for (let i = 0; i < base.artifacts.length; i++) {
       if ((base.artifacts[i].name + '.' + base.artifacts[i].contentType.split('/')[1]).toLowerCase() === pathBits[0].toLowerCase()) {
         return base;

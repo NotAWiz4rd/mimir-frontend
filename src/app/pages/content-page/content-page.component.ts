@@ -105,7 +105,7 @@ export class ContentPageComponent implements OnInit {
   navigateToFolder(id: number) {
     this.spaceService.currentFolder.folders.forEach(folder => {
       if (folder.id === id) {
-        this.navigationService.navigateWithinSpace(folder);
+        this.navigationService.navigateWithinSpace(folder.id);
       }
     });
   }

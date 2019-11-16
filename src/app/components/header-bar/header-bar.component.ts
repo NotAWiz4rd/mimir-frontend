@@ -27,9 +27,7 @@ export class HeaderBarComponent implements OnInit {
   }
 
   onBackButtonClick() {
-    if (this.currentPath.length > 1) {
-      this.navigationService.navigateBack();
-    }
+    this.navigationService.navigateUp(this.currentPath);
   }
 
   onLogoutButtonClick() {
@@ -38,5 +36,9 @@ export class HeaderBarComponent implements OnInit {
 
   openSettings() {
     this.navigationService.navigateToSettings();
+  }
+
+  pathTooShort() {
+    return this.currentPath.split('/').length < 2;
   }
 }
