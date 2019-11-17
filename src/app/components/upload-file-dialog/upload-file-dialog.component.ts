@@ -15,7 +15,6 @@ export class UploadFileDialogComponent implements OnInit {
   public files: Set<File> = new Set();
   progress;
   canBeClosed = true;
-  primaryButtonText = 'Upload';
   showCancelButton = true;
   uploading = false;
   uploadSuccessful = false;
@@ -61,9 +60,6 @@ export class UploadFileDialogComponent implements OnInit {
     }
 
     // Adjust the state variables
-
-    // The OK-button should have the text "Finish" now
-    this.primaryButtonText = 'Finish';
 
     // The dialog should not be closed while uploading
     this.canBeClosed = false;

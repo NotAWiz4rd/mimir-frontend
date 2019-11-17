@@ -50,6 +50,11 @@
     "german": "Bitte geben sie den Namen des Ordners ein:"
   },
   {
+    "logicalName": "uploadFile",
+    "english": "Upload File",
+    "german": "Datei Hochladen"
+  },
+  {
     "logicalName": "upload",
     "english": "Upload",
     "german": "Upload"
@@ -61,7 +66,7 @@
   },
   {
     "logicalName": "addFile",
-    "english": "add file",
+    "english": "Add file",
     "german": "Durchsuchen"
   }
 ]
