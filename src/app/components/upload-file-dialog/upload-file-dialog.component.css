@@ -1,19 +1,4 @@
-.add-files-btn {
-  float: right;
-}
-
-:host {
-  height: 100%;
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-}
-
-.actions {
-  justify-content: flex-end;
-  display:inline-block;
-}
-
-.container {
-  height: 100%;
+.in-progress-reminder {
+  height: 36px;
+  margin: 0;
 }

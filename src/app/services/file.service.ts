@@ -1,14 +1,7 @@
 import {Injectable} from '@angular/core';
-import {
-  HttpClient,
-  HttpRequest,
-  HttpEventType,
-  HttpResponse,} from '@angular/common/http';
+import {HttpClient, HttpEventType, HttpRequest, HttpResponse,} from '@angular/common/http';
 import {File} from '../classes/File';
-import {
-  BehaviorSubject,
-  Subject,
-  Observable} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 
 const FILE_TEST_PATH = '../../../assets/file.json';
 const url = 'http://localhost:8000/upload';
@@ -28,16 +21,14 @@ export class FileService {
     });
   }
 
-  public upload(files: Set<File>):
-    { [p: string]: { progress: Observable<number> } } {
-
+  public upload(files: Set<File>): { [p: string]: { progress: Observable<number> } } {
     // this will be the our resulting map
     const status: { [key: string]: { progress: Observable<number> } } = {};
 
     files.forEach(file => {
       // create a new multipart-form for every file
       const formData: FormData = new FormData();
-      formData.append('file', file.name, "I don't know");
+      formData.append('file', file.name, 'I don\'t know');
 
       // create a http-post request and pass the form
       // tell it to report the upload progress

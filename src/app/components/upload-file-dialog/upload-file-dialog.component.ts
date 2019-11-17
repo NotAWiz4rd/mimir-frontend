@@ -2,8 +2,8 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialogRef} from '@angular/material';
 import {StaticTextService} from '../../services/static-text.service';
 import {LanguageService} from '../../services/language.service';
-import {FileService} from "../../services/file.service";
-import {forkJoin} from "rxjs";
+import {FileService} from '../../services/file.service';
+import {forkJoin} from 'rxjs';
 
 @Component({
   selector: 'app-upload-file-dialog',
@@ -13,8 +13,8 @@ import {forkJoin} from "rxjs";
 export class UploadFileDialogComponent implements OnInit {
   @ViewChild('file') file;
   public files: Set<File> = new Set();
+
   progress;
-  canBeClosed = true;
   showCancelButton = true;
   uploading = false;
   uploadSuccessful = false;
@@ -22,7 +22,8 @@ export class UploadFileDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<UploadFileDialogComponent>,
               public uploadService: FileService,
               public staticTextService: StaticTextService,
-              public languageService: LanguageService) { }
+              public languageService: LanguageService) {
+  }
 
   ngOnInit() {
   }
@@ -40,7 +41,7 @@ export class UploadFileDialogComponent implements OnInit {
     }
   }
 
-  closeDialog() {
+  uploadFiles() {
     // if everything was uploaded already, just close the dialog
     if (this.uploadSuccessful) {
       return this.dialogRef.close();
@@ -62,24 +63,18 @@ export class UploadFileDialogComponent implements OnInit {
     // Adjust the state variables
 
     // The dialog should not be closed while uploading
-    this.canBeClosed = false;
     this.dialogRef.disableClose = true;
-
     // Hide the cancel-button
     this.showCancelButton = false;
 
     // When all progress-observables are completed...
     forkJoin(allProgressObservables).subscribe(end => {
       // ... the dialog can be closed again...
-      this.canBeClosed = true;
       this.dialogRef.disableClose = false;
-
       // ... the upload was successful...
       this.uploadSuccessful = true;
-
       // ... and the component is no longer uploading
       this.uploading = false;
     });
   }
-
 }

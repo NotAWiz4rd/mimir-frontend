@@ -51,8 +51,8 @@
   },
   {
     "logicalName": "uploadFile",
-    "english": "Upload File",
-    "german": "Datei Hochladen"
+    "english": "Upload File(s)",
+    "german": "Datei(en) Hochladen"
   },
   {
     "logicalName": "upload",
@@ -68,5 +68,10 @@
     "logicalName": "addFile",
     "english": "Add file",
     "german": "Durchsuchen"
+  },
+  {
+    "logicalName": "uploadProgress",
+    "english": "Upload in Progress...",
+    "german": "Dateien werden hochgeladen..."
   }
 ]

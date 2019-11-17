@@ -133,7 +133,7 @@ export class ContentPageComponent implements OnInit {
 
   uploadFileDialog(){
     const dialogRef = this.dialog.open(UploadFileDialogComponent, {
-      width: '300px'
+      width: '400px'
     });
   }
 
