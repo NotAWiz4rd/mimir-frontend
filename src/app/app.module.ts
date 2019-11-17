@@ -36,6 +36,9 @@ import {FileViewComponent} from './components/file-view/file-view.component';
 import {FileService} from './services/file.service';
 import {SpaceBubbleComponent} from './components/space-bubble/space-bubble.component';
 import {CreateFolderDialogComponent} from './components/create-folder-dialog/create-folder-dialog.component';
+import { UploadFileDialogComponent } from './components/upload-file-dialog/upload-file-dialog.component';
+import {MatListModule} from "@angular/material/list";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 @NgModule({
   declarations: [
@@ -54,6 +57,7 @@ import {CreateFolderDialogComponent} from './components/create-folder-dialog/cre
     SpaceBubbleComponent,
     SpaceBubbleComponent,
     CreateFolderDialogComponent,
+    UploadFileDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,9 +76,12 @@ import {CreateFolderDialogComponent} from './components/create-folder-dialog/cre
     MatTooltipModule,
     MatDialogModule,
     FormsModule,
+    MatListModule,
+    MatProgressBarModule,
   ],
   entryComponents: [
     CreateFolderDialogComponent,
+    UploadFileDialogComponent,
   ],
   providers: [
     UserService,

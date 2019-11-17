@@ -14,6 +14,8 @@ export class ActionBarComponent implements OnInit {
 
   @Output()
   openCreateFolderDialog = new EventEmitter();
+  @Output()
+  openUploadFileDialog = new EventEmitter();
 
   constructor(public staticTextService: StaticTextService,
               public languageService: LanguageService) {
@@ -27,6 +29,6 @@ export class ActionBarComponent implements OnInit {
   }
 
   onUploadFileClick() {
-    // todo implement me
+    this.openUploadFileDialog.emit();
   }
 }
