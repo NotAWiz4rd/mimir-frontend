@@ -11,3 +11,8 @@ app-space-bubble {
   font-size: 20px;
   background-color: black;
 }
+
+.space-creation-bubble {
+  position: absolute;
+  bottom: 0;
+}

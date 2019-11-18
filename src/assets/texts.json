@@ -48,5 +48,15 @@
     "logicalName": "nameFolder",
     "english": "Please name the folder you want to create:",
     "german": "Bitte geben sie den Namen des Ordners ein:"
+  },
+  {
+    "logicalName": "nameSpace",
+    "english": "Please name the space you want to create:",
+    "german": "Bitte geben sie den Namen des Spaces ein:"
+  },
+  {
+    "logicalName": "createSpace",
+    "english": "Create Space",
+    "german": "Space erstellen"
   }
 ]

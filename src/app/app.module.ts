@@ -36,6 +36,7 @@ import {FileViewComponent} from './components/file-view/file-view.component';
 import {FileService} from './services/file.service';
 import {SpaceBubbleComponent} from './components/space-bubble/space-bubble.component';
 import {CreateFolderDialogComponent} from './components/create-folder-dialog/create-folder-dialog.component';
+import {CreateSpaceDialogComponent} from './components/create-space-dialog/create-space-dialog.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import {CreateFolderDialogComponent} from './components/create-folder-dialog/cre
     SpaceBubbleComponent,
     SpaceBubbleComponent,
     CreateFolderDialogComponent,
+    CreateSpaceDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,6 +77,7 @@ import {CreateFolderDialogComponent} from './components/create-folder-dialog/cre
   ],
   entryComponents: [
     CreateFolderDialogComponent,
+    CreateSpaceDialogComponent,
   ],
   providers: [
     UserService,

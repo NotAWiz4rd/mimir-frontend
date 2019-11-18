@@ -31,7 +31,7 @@ export class SpaceService {
 
   createSpace(name: string) {
     if (name.length > 0) {
-      this.http.post<Space>(SPACE_TEST_PATH + '&name=' + name, {}).subscribe(space => {
+      this.http.post<Space>(SPACE_TEST_PATH, {name: name}).subscribe(space => {
         if (space != undefined) {
           this.currentSpace = space;
           this.currentFolder = space.root;
