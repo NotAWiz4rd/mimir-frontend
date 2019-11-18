@@ -29,6 +29,18 @@ export class SpaceService {
     return this.currentSpace$;
   }
 
+  createSpace(name: string) {
+    if (name.length > 0) {
+      this.http.post<Space>(SPACE_TEST_PATH + '&name=' + name, {}).subscribe(space => {
+        if (space != undefined) {
+          this.currentSpace = space;
+          console.log('created space: ' + space.id);
+          this.currentSpace$.next(this.currentSpace);
+        }
+      });
+    }
+  }
+
   /**
    * Creates a new folder within the folder that the user is currently in.
    * @param name
