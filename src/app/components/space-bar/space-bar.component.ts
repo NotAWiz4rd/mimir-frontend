@@ -16,7 +16,7 @@ import {CreateSpaceDialogComponent} from '../create-space-dialog/create-space-di
   encapsulation: ViewEncapsulation.None
 })
 export class SpaceBarComponent implements OnInit {
-  SPACE_CREATION_THUMBNAIL_ID: number = 1; // todo adjust this
+  SPACE_CREATION_THUMBNAIL_ID: number = -1;
 
   spaces: SpaceMetadata[] = [];
 
