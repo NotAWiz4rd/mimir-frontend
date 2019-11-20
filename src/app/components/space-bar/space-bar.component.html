@@ -4,3 +4,10 @@
                   matTooltipClass="space-tooltip"
                   [matTooltipPosition]="'right'"
                   (click)="navigateToSpace(space.id)"></app-space-bubble>
+
+<app-space-bubble class="space-creation-bubble"
+                  [thumbnailId]="SPACE_CREATION_THUMBNAIL_ID"
+                  matTooltip="{{staticTextService.staticTexts | getStaticText : 'createSpace' : languageService.getLanguage()}}"
+                  matTooltipClass="space-tooltip"
+                  [matTooltipPosition]="'right'"
+                  (click)="openSpaceCreation()"></app-space-bubble>
