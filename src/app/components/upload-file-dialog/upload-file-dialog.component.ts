@@ -2,8 +2,9 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialogRef} from '@angular/material';
 import {StaticTextService} from '../../services/static-text.service';
 import {LanguageService} from '../../services/language.service';
-import {FileService} from '../../services/file.service';
 import {forkJoin} from 'rxjs';
+import {UploadService} from '../../services/upload.service';
+import {SpaceService} from "../../services/space.service";
 
 @Component({
   selector: 'app-upload-file-dialog',
@@ -20,7 +21,8 @@ export class UploadFileDialogComponent implements OnInit {
   uploadSuccessful = false;
 
   constructor(public dialogRef: MatDialogRef<UploadFileDialogComponent>,
-              public uploadService: FileService,
+              public uploadService: UploadService,
+              public spaceService: SpaceService,
               public staticTextService: StaticTextService,
               public languageService: LanguageService) {
   }
@@ -51,8 +53,7 @@ export class UploadFileDialogComponent implements OnInit {
     this.uploading = true;
 
     // start the upload and save the progress map
-    //TODO
-    //this.progress = this.uploadService.upload(this.files);
+    this.progress = this.uploadService.upload(this.files, this.spaceService.currentFolder.id);
 
     // convert the progress map into an array
     let allProgressObservables = [];
@@ -75,6 +76,8 @@ export class UploadFileDialogComponent implements OnInit {
       this.uploadSuccessful = true;
       // ... and the component is no longer uploading
       this.uploading = false;
+      //close dialog
+      this.dialogRef.close(true);
     });
   }
 }

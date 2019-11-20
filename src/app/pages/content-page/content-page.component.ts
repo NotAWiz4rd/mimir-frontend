@@ -135,6 +135,12 @@ export class ContentPageComponent implements OnInit {
     const dialogRef = this.dialog.open(UploadFileDialogComponent, {
       width: '400px'
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result == true){
+        this.spaceService.loadSpace(this.spaceService.currentSpace.id, result);
+      }
+    });
   }
 
   private setCurrentFolder(folder: Folder) {

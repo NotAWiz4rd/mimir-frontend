@@ -39,6 +39,7 @@ import {CreateFolderDialogComponent} from './components/create-folder-dialog/cre
 import {UploadFileDialogComponent} from './components/upload-file-dialog/upload-file-dialog.component';
 import {MatListModule} from '@angular/material/list';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {UploadService} from "./services/upload.service";
 
 @NgModule({
   declarations: [
@@ -91,6 +92,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     SpaceService,
     StaticTextService,
     FileService,
+    UploadService,
   ],
   bootstrap: [AppComponent]
 })
