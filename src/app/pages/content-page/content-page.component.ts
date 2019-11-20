@@ -136,9 +136,9 @@ export class ContentPageComponent implements OnInit {
       width: '400px'
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if(result == true){
-        this.spaceService.loadSpace(this.spaceService.currentSpace.id, result);
+    dialogRef.afterClosed().subscribe(uploadSuccessful => {
+      if(uploadSuccessful == true){
+        this.spaceService.loadSpace(this.spaceService.currentSpace.id, uploadSuccessful);
       }
     });
   }

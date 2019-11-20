@@ -2,7 +2,7 @@ import {Observable, Subject} from 'rxjs';
 import {HttpClient, HttpEventType, HttpRequest, HttpResponse} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 
-const TEST_SERVER_URL = 'https://se.pfuetsch.xyz//artifact';
+const TEST_SERVER_URL = 'https://se.pfuetsch.xyz/artifact';
 
 @Injectable()
 export class UploadService {

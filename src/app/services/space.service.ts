@@ -17,7 +17,7 @@ export class SpaceService {
   constructor(private http: HttpClient) {
   }
 
-  loadSpace(spaceId: number, uploaded?: boolean): Observable<Space> {
+  loadSpace(spaceId: number, uploaded: boolean = false): Observable<Space> {
     if (spaceId != undefined && (this.currentSpace == undefined || (this.currentSpace.id != spaceId) || uploaded)) {
       // todo make proper request
       this.http.get<Space>(SPACE_TEST_PATH + spaceId).subscribe(space => {
