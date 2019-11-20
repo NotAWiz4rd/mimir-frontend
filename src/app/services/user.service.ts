@@ -5,6 +5,7 @@ import {User} from '../classes/User';
 import {SpaceMetadata} from '../classes/SpaceMetadata';
 
 const TEST_URL = 'https://se.pfuetsch.xyz/login/';
+const SPACE_TEST_URL = 'https://se.pfuetsch.xyz/spaces/';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -17,22 +18,24 @@ export class UserService {
   currentUser$: BehaviorSubject<User> = new BehaviorSubject<User>(undefined);
 
   constructor(private http: HttpClient) {
-    // todo remove this testdata
-    let user = new User();
-    let metaSpace = new SpaceMetadata();
-    metaSpace.name = 'testSpace1';
-    metaSpace.thumbnailId = 17;
-    metaSpace.id = 1;
-
-    let metaSpace2 = new SpaceMetadata();
-    metaSpace2.name = 'testSpace2';
-    metaSpace2.thumbnailId = 17;
-    metaSpace2.id = 2;
-    user.spaces = [metaSpace, metaSpace2, metaSpace, metaSpace2, metaSpace];
-    this.currentUser$.next(user);
+    this.http.get<SpaceMetadata[]>(SPACE_TEST_URL).subscribe(spaceMetadata => {
+      let spaces: SpaceMetadata[] = spaceMetadata;
+      let user = new User();
+      user.id = 42;
+      user.spaces = spaces;
+      this.currentUser$.next(user);
+    });
   }
 
   login(user: User) {
     // todo implement me properly
+  }
+
+  addSpaceToUser(space: SpaceMetadata) {
+    let spaces = this.currentUser$.value.spaces;
+    spaces.push(space);
+    let user = this.currentUser$.value;
+    user.spaces = spaces;
+    this.currentUser$.next(user);
   }
 }

@@ -26,12 +26,14 @@ export class SpaceBarComponent implements OnInit {
               public staticTextService: StaticTextService,
               public dialog: MatDialog,
               private spaceService: SpaceService) {
+    this.userService.currentUser$.subscribe(user => {
+      if (user != undefined) {
+        this.spaces = user.spaces;
+      }
+    });
   }
 
   ngOnInit() {
-    this.userService.currentUser$.subscribe(user => {
-      this.spaces = user.spaces;
-    });
   }
 
   navigateToSpace(id: number) {
@@ -45,7 +47,13 @@ export class SpaceBarComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != undefined) {
-        this.spaceService.createSpace(result);
+        this.spaceService.createSpace(result).subscribe(spaceData => {
+          if (spaceData != undefined) {
+            this.userService.addSpaceToUser(spaceData);
+            console.log('created space: ' + spaceData.id);
+            this.navigationService.navigateToSpace(spaceData.id);
+          }
+        });
       }
     });
   }

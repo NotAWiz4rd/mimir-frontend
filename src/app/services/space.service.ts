@@ -3,6 +3,7 @@ import {Folder} from '../classes/Folder';
 import {Space} from '../classes/Space';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
+import {SpaceMetadata} from '../classes/SpaceMetadata';
 
 const SPACE_TEST_PATH = 'https://se.pfuetsch.xyz/space/';
 const FOLDER_TEST_PATH = 'https://se.pfuetsch.xyz/folder';
@@ -29,17 +30,11 @@ export class SpaceService {
     return this.currentSpace$;
   }
 
-  createSpace(name: string) {
+  createSpace(name: string): Observable<SpaceMetadata> {
     if (name.length > 0) {
-      this.http.post<Space>(SPACE_TEST_PATH, {name: name}).subscribe(space => {
-        if (space != undefined) {
-          this.currentSpace = space;
-          this.currentFolder = space.root;
-          console.log('created space: ' + space.id);
-          this.currentSpace$.next(this.currentSpace);
-        }
-      });
+      return this.http.post<SpaceMetadata>(SPACE_TEST_PATH + '?name=' + name, {});
     }
+    return null;
   }
 
   /**
