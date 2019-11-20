@@ -1,0 +1,36 @@
+<h1 mat-dialog-title>
+  {{staticTextService.staticTexts | getStaticText : 'uploadFile' : languageService.getLanguage()}}
+</h1>
+
+<!-- This is the content of the dialog, containing a list of the files to upload -->
+<mat-dialog-content>
+  <button *ngIf="!uploading" mat-raised-button color="primary"
+          (click)="addFiles()">
+    {{staticTextService.staticTexts | getStaticText : 'addFile' : languageService.getLanguage()}}
+  </button>
+
+  <p class="in-progress-reminder" *ngIf="uploading">
+    {{staticTextService.staticTexts | getStaticText : 'uploadProgress' : languageService.getLanguage()}}
+  </p>
+
+  <input type="file" #file style="display: none" (change)="onFilesAdded()" multiple/>
+
+  <mat-list>
+    <mat-list-item *ngFor="let file of files">
+      <h4 mat-line>{{file.name}}</h4>
+      <mat-progress-bar *ngIf="progress" mode="determinate"
+                        [value]="progress[file.name].progress | async"></mat-progress-bar>
+    </mat-list-item>
+  </mat-list>
+</mat-dialog-content>
+
+<!-- This are the actions of the dialog, containing the primary and the cancel button-->
+<div mat-dialog-actions>
+  <button [disabled]="!showCancelButton" mat-button mat-dialog-close>
+    {{staticTextService.staticTexts | getStaticText : 'noThanks' : languageService.getLanguage()}}
+  </button>
+  <button mat-raised-button color="primary" [disabled]="files?.size == 0 || uploading" (click)="uploadFiles()">
+    {{staticTextService.staticTexts | getStaticText : 'upload' : languageService.getLanguage()}}
+  </button>
+</div>
+

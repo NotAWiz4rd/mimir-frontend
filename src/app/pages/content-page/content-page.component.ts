@@ -8,6 +8,7 @@ import {File} from '../../classes/File';
 import {CreateFolderDialogComponent} from '../../components/create-folder-dialog/create-folder-dialog.component';
 import {MatDialog} from '@angular/material';
 import {SearchService} from '../../services/search.service';
+import {UploadFileDialogComponent} from "../../components/upload-file-dialog/upload-file-dialog.component";
 
 @Component({
   selector: 'app-content-page',
@@ -126,6 +127,18 @@ export class ContentPageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result != undefined) {
         this.spaceService.createFolder(result, this.spaceService.currentFolder.id);
+      }
+    });
+  }
+
+  uploadFileDialog(){
+    const dialogRef = this.dialog.open(UploadFileDialogComponent, {
+      width: '400px'
+    });
+
+    dialogRef.afterClosed().subscribe(uploadSuccessful => {
+      if(uploadSuccessful == true){
+        this.spaceService.loadSpace(this.spaceService.currentSpace.id, uploadSuccessful);
       }
     });
   }

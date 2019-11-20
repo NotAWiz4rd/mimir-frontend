@@ -48,5 +48,30 @@
     "logicalName": "nameFolder",
     "english": "Please name the folder you want to create:",
     "german": "Bitte geben sie den Namen des Ordners ein:"
+  },
+  {
+    "logicalName": "uploadFile",
+    "english": "Upload File(s)",
+    "german": "Datei(en) Hochladen"
+  },
+  {
+    "logicalName": "upload",
+    "english": "Upload",
+    "german": "Upload"
+  },
+  {
+    "logicalName": "chooseInput",
+    "english": "Please choose the file you want to upload:",
+    "german": "Bitte wähle die Datei, die hochgeladen werden soll:"
+  },
+  {
+    "logicalName": "addFile",
+    "english": "Add file",
+    "german": "Durchsuchen"
+  },
+  {
+    "logicalName": "uploadProgress",
+    "english": "Upload in Progress...",
+    "german": "Dateien werden hochgeladen..."
   }
 ]
