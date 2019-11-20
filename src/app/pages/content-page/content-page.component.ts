@@ -7,6 +7,7 @@ import {FileService} from '../../services/file.service';
 import {File} from '../../classes/File';
 import {CreateFolderDialogComponent} from '../../components/create-folder-dialog/create-folder-dialog.component';
 import {MatDialog} from '@angular/material';
+import {SearchService} from '../../services/search.service';
 
 @Component({
   selector: 'app-content-page',
@@ -74,7 +75,6 @@ export class ContentPageComponent implements OnInit {
         this.setCurrentFolder(this.spaceService.getFolderFromSpace(this.folderId));
       } else if (this.folderId != undefined && this.spaceId == undefined && this.folderId != lastFolderId) { // direct folder access
         this.spaceService.loadFolder(this.folderId).subscribe(tempSpace => {
-          console.log(tempSpace)
           if (tempSpace != undefined) {
             this.setCurrentFolder(tempSpace.root);
           }
@@ -84,7 +84,7 @@ export class ContentPageComponent implements OnInit {
       if (params['searchValue'] != undefined && this.searchValue != params['searchValue']) {
         this.searchValue = params['searchValue'];
         if (this.spaceService.currentFolder != undefined) {
-          const filesAndFolders: [File[], Folder[]] = ContentPageComponent.collectMatchingFilesAndFolders(this.spaceService.currentFolder, this.searchValue);
+          const filesAndFolders: [File[], Folder[]] = SearchService.collectMatchingFilesAndFolders(this.spaceService.currentFolder, this.searchValue);
           this.spaceService.currentFolder.artifacts = filesAndFolders[0];
           this.spaceService.currentFolder.folders = filesAndFolders[1];
         }
@@ -135,28 +135,6 @@ export class ContentPageComponent implements OnInit {
     if (this.fileId == undefined) {
       this.navigationService.figureOutPaths(this.spaceService.currentFolder);
     }
-  }
-
-  private static collectMatchingFilesAndFolders(base: Folder, searchValue: string): [File[], Folder[]] {
-    let files: File[] = [];
-    let folders: Folder[] = [];
-
-    for (let i = 0; i < base.artifacts.length; i++) {
-      if (base.artifacts[i].name.toLowerCase().includes(searchValue.toLowerCase())) {
-        files.push(base.artifacts[i]);
-      }
-    }
-
-    for (let i = 0; i < base.folders.length; i++) {
-      if (base.folders[i].name.toLowerCase().includes(searchValue.toLowerCase())) {
-        folders.push(base.folders[i]);
-      }
-      let filesAndFolders: [File[], Folder[]] = this.collectMatchingFilesAndFolders(base.folders[i], searchValue);
-      files.concat(filesAndFolders[0]);
-      folders.concat(filesAndFolders[1]);
-    }
-
-    return [files, folders];
   }
 
   calculateName(file: File): string {
