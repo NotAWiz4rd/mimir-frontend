@@ -58,5 +58,30 @@
     "logicalName": "createSpace",
     "english": "Create Space",
     "german": "Space erstellen"
+  },
+  {
+    "logicalName": "uploadFile",
+    "english": "Upload File(s)",
+    "german": "Datei(en) Hochladen"
+  },
+  {
+    "logicalName": "upload",
+    "english": "Upload",
+    "german": "Upload"
+  },
+  {
+    "logicalName": "chooseInput",
+    "english": "Please choose the file you want to upload:",
+    "german": "Bitte wähle die Datei, die hochgeladen werden soll:"
+  },
+  {
+    "logicalName": "addFile",
+    "english": "Add file",
+    "german": "Durchsuchen"
+  },
+  {
+    "logicalName": "uploadProgress",
+    "english": "Upload in Progress...",
+    "german": "Dateien werden hochgeladen..."
   }
 ]
