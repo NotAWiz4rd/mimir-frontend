@@ -5,5 +5,11 @@
   <button mat-raised-button color="primary" (click)="onUploadFileClick()" [disabled]="actionsDisabled">
     {{staticTextService.staticTexts | getStaticText : 'uploadFile' : languageService.getLanguage()}}
   </button>
+
+  <button mat-raised-button color="primary" (click)="onDownloadSpaceClick()" [disabled]="actionsDisabled"
+          class="space-download" *ngIf="isSpaceRoot">
+    {{staticTextService.staticTexts | getStaticText : 'downloadSpace' : languageService.getLanguage()}}
+  </button>
+
   <app-search></app-search>
 </div>

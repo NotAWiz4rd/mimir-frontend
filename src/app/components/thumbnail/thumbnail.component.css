@@ -1,3 +1,7 @@
+:host {
+  position: relative;
+}
+
 img {
   display: block;
   margin: auto;
@@ -7,4 +11,12 @@ img {
 
 p {
   margin: 0;
+  text-align: center;
+}
+
+app-action-menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: -5px;
 }

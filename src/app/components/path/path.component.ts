@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {NavigationService} from '../../services/navigation.service';
-import {SpaceService} from '../../services/space.service';
+import {FolderService} from '../../services/folder.service';
 
 @Component({
   selector: 'app-path',
@@ -14,7 +14,7 @@ export class PathComponent implements OnInit, OnChanges {
   pathElements: string[];
 
   constructor(private navigationService: NavigationService,
-              private spaceService: SpaceService) {
+              private folderService: FolderService) {
   }
 
   ngOnInit() {
@@ -32,7 +32,7 @@ export class PathComponent implements OnInit, OnChanges {
       pathWithinSpace += this.pathElements[i];
       pathWithinSpace += '/';
     }
-    let folderGoal = this.spaceService.convertPathToFolder(pathWithinSpace.slice(0, pathWithinSpace.length - 1));
+    let folderGoal = this.folderService.convertPathToFolder(pathWithinSpace.slice(0, pathWithinSpace.length - 1));
     this.navigationService.navigateWithinSpace(folderGoal.id);
   }
 

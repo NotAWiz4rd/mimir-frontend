@@ -4,7 +4,7 @@ import {SpaceMetadata} from '../../classes/SpaceMetadata';
 import {NavigationService} from '../../services/navigation.service';
 import {LanguageService} from '../../services/language.service';
 import {StaticTextService} from '../../services/static-text.service';
-import {MatDialog} from '@angular/material';
+import {MatDialog, MatSnackBar} from '@angular/material';
 import {SpaceService} from '../../services/space.service';
 import {CreateSpaceDialogComponent} from '../create-space-dialog/create-space-dialog.component';
 
@@ -25,7 +25,8 @@ export class SpaceBarComponent implements OnInit {
               public languageService: LanguageService,
               public staticTextService: StaticTextService,
               public dialog: MatDialog,
-              private spaceService: SpaceService) {
+              private spaceService: SpaceService,
+              public _snackBar: MatSnackBar) {
     this.userService.currentUser$.subscribe(user => {
       if (user != undefined) {
         this.spaces = user.spaces;
@@ -50,11 +51,17 @@ export class SpaceBarComponent implements OnInit {
         this.spaceService.createSpace(result).subscribe(spaceData => {
           if (spaceData != undefined) {
             this.userService.addSpaceToUser(spaceData);
-            console.log('created space: ' + spaceData.id);
+            this.openSnackBar("Space was created successfully");
             this.navigationService.navigateToSpace(spaceData.id);
           }
         });
       }
+    });
+  }
+
+  openSnackBar(message: string) {
+    this._snackBar.open(message, null, {
+      duration: 1500,
     });
   }
 }

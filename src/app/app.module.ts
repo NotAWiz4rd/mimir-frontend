@@ -21,7 +21,10 @@ import {
   MatDialogModule,
   MatFormFieldModule,
   MatInputModule,
+  MatMenuModule,
   MatSidenavModule,
+  MatSnackBar,
+  MatSnackBarContainer, MatSnackBarModule,
   MatTooltipModule
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -36,11 +39,15 @@ import {FileViewComponent} from './components/file-view/file-view.component';
 import {FileService} from './services/file.service';
 import {SpaceBubbleComponent} from './components/space-bubble/space-bubble.component';
 import {CreateFolderDialogComponent} from './components/create-folder-dialog/create-folder-dialog.component';
+import {ActionMenuComponent} from './components/action-menu/action-menu.component';
+import {FolderService} from './services/folder.service';
 import {CreateSpaceDialogComponent} from './components/create-space-dialog/create-space-dialog.component';
 import {UploadFileDialogComponent} from './components/upload-file-dialog/upload-file-dialog.component';
 import {MatListModule} from '@angular/material/list';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {UploadService} from "./services/upload.service";
+import {UploadService} from './services/upload.service';
+import {DeletionDialogComponent} from './components/deletion-dialog/deletion-dialog.component';
+import {RenameDialogComponent} from './components/rename-dialog/rename-dialog.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +68,9 @@ import {UploadService} from "./services/upload.service";
     CreateFolderDialogComponent,
     CreateSpaceDialogComponent,
     UploadFileDialogComponent,
+    ActionMenuComponent,
+    DeletionDialogComponent,
+    RenameDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -81,11 +91,16 @@ import {UploadService} from "./services/upload.service";
     FormsModule,
     MatListModule,
     MatProgressBarModule,
+    MatMenuModule,
+    MatSnackBarModule,
   ],
   entryComponents: [
     CreateFolderDialogComponent,
     CreateSpaceDialogComponent,
     UploadFileDialogComponent,
+    DeletionDialogComponent,
+    RenameDialogComponent,
+    MatSnackBarContainer,
   ],
   providers: [
     UserService,
@@ -93,9 +108,11 @@ import {UploadService} from "./services/upload.service";
     LanguageService,
     SearchService,
     SpaceService,
+    FolderService,
     StaticTextService,
     FileService,
     UploadService,
+    MatSnackBar,
   ],
   bootstrap: [AppComponent]
 })

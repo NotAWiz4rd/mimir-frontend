@@ -83,5 +83,35 @@
     "logicalName": "uploadProgress",
     "english": "Upload in Progress...",
     "german": "Dateien werden hochgeladen..."
+  },
+  {
+    "logicalName": "delete",
+    "english": "Delete",
+    "german": "Löschen"
+  },
+  {
+    "logicalName": "rename",
+    "english": "Rename",
+    "german": "Umbenennen"
+  },
+  {
+    "logicalName": "download",
+    "english": "Download",
+    "german": "Download"
+  },
+  {
+    "logicalName": "downloadSpace",
+    "english": "Download Space",
+    "german": "Space herunterladen"
+  },
+  {
+    "logicalName": "deleteText",
+    "english": "Do you really want to delete this {}?",
+    "german": "Wollen sie diesen {} wirklich löschen?"
+  },
+  {
+    "logicalName": "enterName",
+    "english": "Please enter a new name:",
+    "german": "Bitte geben Sie einen neuen Namen ein:"
   }
 ]

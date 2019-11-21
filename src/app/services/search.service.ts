@@ -3,10 +3,12 @@ import {SpaceService} from './space.service';
 import {Folder} from '../classes/Folder';
 import {NavigationService} from './navigation.service';
 import {File} from '../classes/File';
+import {FolderService} from './folder.service';
 
 @Injectable()
 export class SearchService {
   constructor(private spaceService: SpaceService,
+              private folderService: FolderService,
               private navigationService: NavigationService) {
   }
 
@@ -16,7 +18,7 @@ export class SearchService {
     if (this.spaceService.currentSpace == undefined) {
       return [];
     }
-    this.currentSearchFolder = this.spaceService.convertPathToFolder(path);
+    this.currentSearchFolder = this.folderService.convertPathToFolder(path);
     if (this.currentSearchFolder == undefined) {
       return [];
     }

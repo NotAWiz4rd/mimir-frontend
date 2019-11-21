@@ -1,0 +1,14 @@
+<i class="material-icons" [matMenuTriggerFor]="actionMenu" (click)="stopPropagation($event)">
+  more_vert
+</i>
+<mat-menu #actionMenu="matMenu">
+  <button mat-menu-item (click)="rename()">
+    {{staticTextService.staticTexts | getStaticText : 'rename' : languageService.getLanguage()}}
+  </button>
+  <button mat-menu-item (click)="download()">
+    {{staticTextService.staticTexts | getStaticText : 'download' : languageService.getLanguage()}}
+  </button>
+  <button mat-menu-item (click)="delete()">
+    {{staticTextService.staticTexts | getStaticText : 'delete' : languageService.getLanguage()}}
+  </button>
+</mat-menu>

@@ -1,5 +1,9 @@
 <img [src]="'assets/thumbnails/' + thumbnailType + '.png'"
      alt="file thumbnail">
+
+<app-action-menu class="action-menu"
+                 (actionEmitter)="emitAction($event)">
+</app-action-menu>
 <p>
   {{filename}}
 </p>

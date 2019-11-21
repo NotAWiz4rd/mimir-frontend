@@ -13,7 +13,7 @@
   <button mat-button (click)="onNoClick()">
     {{staticTextService.staticTexts | getStaticText : 'noThanks' : languageService.getLanguage()}}
   </button>
-  <button mat-button [mat-dialog-close]="spaceName">
+  <button mat-button [mat-dialog-close]="spaceName" [disabled]="spaceName?.length < 3">
     {{staticTextService.staticTexts | getStaticText : 'create' : languageService.getLanguage()}}
   </button>
 </div>

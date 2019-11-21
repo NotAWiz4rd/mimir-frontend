@@ -5,6 +5,7 @@ import {SpaceService} from './space.service';
 import {Folder} from '../classes/Folder';
 import {BehaviorSubject} from 'rxjs';
 import {File} from '../classes/File';
+import {FolderService} from './folder.service';
 
 @Injectable()
 export class NavigationService {
@@ -12,7 +13,8 @@ export class NavigationService {
 
   constructor(private router: Router,
               private location: Location,
-              private spaceService: SpaceService) {
+              private spaceService: SpaceService,
+              private folderService: FolderService) {
   }
 
   navigateToView(view: string) {
@@ -25,7 +27,7 @@ export class NavigationService {
   }
 
   navigateUp(currentPath: string) {
-    let folder = this.spaceService.convertPathToFolder(currentPath);
+    let folder = this.folderService.convertPathToFolder(currentPath);
     if (folder.parentId == null || currentPath.includes('.')) { // check if we're either in the topmost folder or in a file
       this.navigateWithinSpace(folder.id);
     } else {
@@ -55,11 +57,11 @@ export class NavigationService {
   }
 
   figureOutPaths(folder: Folder) {
-    this.namePath$.next(this.spaceService.convertFolderToPaths(folder));
+    this.namePath$.next(this.folderService.convertFolderToPaths(folder));
   }
 
   navigateToFile(file: File, folder: Folder) {
-    let path = this.spaceService.convertFolderToPaths(folder) + '/' + file.name + '.' + file.contentType.split('/')[1];
+    let path = this.folderService.convertFolderToPaths(folder) + '/' + file.name + '.' + file.contentType.split('/')[1];
     this.namePath$.next(path);
     if (this.spaceService.currentSpace.id != undefined) {
       this.router.navigate(['space/' + this.spaceService.currentSpace.id + '/folder/' + file.parentId, {fileId: file.id}]);

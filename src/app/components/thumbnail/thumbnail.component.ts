@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-thumbnail',
@@ -12,9 +12,16 @@ export class ThumbnailComponent implements OnInit {
   @Input()
   thumbnailType: string;
 
+  @Output()
+  actionEmitter: EventEmitter<string> = new EventEmitter<string>();
+
   constructor() {
   }
 
   ngOnInit() {
+  }
+
+  emitAction(action: string) {
+    this.actionEmitter.emit(action);
   }
 }

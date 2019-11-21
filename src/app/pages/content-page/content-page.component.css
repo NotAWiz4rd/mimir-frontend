@@ -10,4 +10,5 @@ app-thumbnail {
   cursor: pointer;
   display: inline-block;
   margin: 5px;
+  min-width: 70px;
 }

@@ -7,14 +7,18 @@
 
     <ng-container *ngIf="fileId == undefined">
       <app-action-bar [actionsDisabled]="searchValue != undefined"
+                      [isSpaceRoot]="spaceService?.currentFolder?.id == spaceService?.currentSpace?.root?.id"
                       (openCreateFolderDialog)="createFolderDialog()"
-                      (openUploadFileDialog)="uploadFileDialog()"></app-action-bar>
+                      (openUploadFileDialog)="uploadFileDialog()"
+                      (downloadSpaceEmitter)="downloadSpace()"></app-action-bar>
 
-      <app-thumbnail *ngFor="let folder of spaceService.currentFolder?.folders" [filename]="folder.name" [thumbnailType]="'folder'"
-                     (click)="navigateToFolder(folder.id)"></app-thumbnail>
+      <app-thumbnail *ngFor="let folder of spaceService.currentFolder?.folders" [filename]="folder.name"
+                     [thumbnailType]="'folder'" (click)="navigateToFolder(folder.id)"
+                     (actionEmitter)="doFolderAction($event, folder.id)"></app-thumbnail>
+
       <app-thumbnail *ngFor="let file of spaceService.currentFolder?.artifacts" [thumbnailType]="'file'"
-                     [filename]="calculateName(file)"
-                     (click)="navigateToFile(file.id)"></app-thumbnail>
+                     [filename]="calculateName(file)" (click)="navigateToFile(file.id)"
+                     (actionEmitter)="doFileAction($event, file.id)"></app-thumbnail>
     </ng-container>
 
     <ng-container *ngIf="fileId != undefined">

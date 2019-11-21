@@ -7,6 +7,10 @@ app-search {
   margin-right: 50px;
 }
 
-.container{
+.container {
   border-bottom: 1px solid darkgray;
+}
+
+.space-download {
+  float: right;
 }

@@ -12,10 +12,15 @@ export class ActionBarComponent implements OnInit {
   @Input()
   actionsDisabled: boolean = false;
 
+  @Input()
+  isSpaceRoot: boolean = false;
+
   @Output()
   openCreateFolderDialog = new EventEmitter();
   @Output()
   openUploadFileDialog = new EventEmitter();
+  @Output()
+  downloadSpaceEmitter = new EventEmitter();
 
   constructor(public staticTextService: StaticTextService,
               public languageService: LanguageService) {
@@ -30,5 +35,9 @@ export class ActionBarComponent implements OnInit {
 
   onUploadFileClick() {
     this.openUploadFileDialog.emit();
+  }
+
+  onDownloadSpaceClick() {
+    this.downloadSpaceEmitter.emit();
   }
 }

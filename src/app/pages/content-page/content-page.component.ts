@@ -6,9 +6,11 @@ import {ActivatedRoute} from '@angular/router';
 import {FileService} from '../../services/file.service';
 import {File} from '../../classes/File';
 import {CreateFolderDialogComponent} from '../../components/create-folder-dialog/create-folder-dialog.component';
-import {MatDialog} from '@angular/material';
+import {MatDialog, MatSnackBar} from '@angular/material';
 import {SearchService} from '../../services/search.service';
-import {UploadFileDialogComponent} from "../../components/upload-file-dialog/upload-file-dialog.component";
+import {UploadFileDialogComponent} from '../../components/upload-file-dialog/upload-file-dialog.component';
+import {FolderService} from '../../services/folder.service';
+import {DeletionDialogComponent} from '../../components/deletion-dialog/deletion-dialog.component';
 
 @Component({
   selector: 'app-content-page',
@@ -24,10 +26,12 @@ export class ContentPageComponent implements OnInit {
   searchValue: string;
 
   constructor(public spaceService: SpaceService,
+              private folderService: FolderService,
               private navigationService: NavigationService,
               private route: ActivatedRoute,
               private fileService: FileService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              public _snackBar: MatSnackBar) {
 
     this.route.params.subscribe(params => {
       let lastSpaceId: number = this.spaceId;
@@ -64,18 +68,18 @@ export class ContentPageComponent implements OnInit {
           this.spaceService.loadSpace(this.spaceId);
           this.spaceService.currentSpace$.subscribe(space => {
             if (space != undefined && space.id == this.spaceId) {
-              this.setCurrentFolder(this.spaceService.getFolderFromSpace(this.folderId));
+              this.setCurrentFolder(this.folderService.getFolderFromSpace(this.folderId));
             }
           });
         } else {
-          this.setCurrentFolder(this.spaceService.getFolderFromSpace(this.folderId));
+          this.setCurrentFolder(this.folderService.getFolderFromSpace(this.folderId));
         }
       }
 
       if (this.folderId != undefined && this.folderId != lastFolderId && this.spaceService.currentFolder != undefined) {
-        this.setCurrentFolder(this.spaceService.getFolderFromSpace(this.folderId));
+        this.setCurrentFolder(this.folderService.getFolderFromSpace(this.folderId));
       } else if (this.folderId != undefined && this.spaceId == undefined && this.folderId != lastFolderId) { // direct folder access
-        this.spaceService.loadFolder(this.folderId).subscribe(tempSpace => {
+        this.folderService.loadFolderSpace(this.folderId).subscribe(tempSpace => {
           if (tempSpace != undefined) {
             this.setCurrentFolder(tempSpace.root);
           }
@@ -121,23 +125,27 @@ export class ContentPageComponent implements OnInit {
 
   createFolderDialog() {
     const dialogRef = this.dialog.open(CreateFolderDialogComponent, {
-      width: '250px'
+      width: '400px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != undefined) {
-        this.spaceService.createFolder(result, this.spaceService.currentFolder.id);
+        this.folderService.createFolder(result, this.spaceService.currentFolder.id).subscribe(folderWasCreated => {
+          if (folderWasCreated) {
+            this.openSnackBar('Folder was created successfully');
+          }
+        });
       }
     });
   }
 
-  uploadFileDialog(){
+  uploadFileDialog() {
     const dialogRef = this.dialog.open(UploadFileDialogComponent, {
       width: '400px'
     });
 
     dialogRef.afterClosed().subscribe(uploadSuccessful => {
-      if(uploadSuccessful == true){
+      if (uploadSuccessful) {
         this.spaceService.loadSpace(this.spaceService.currentSpace.id, uploadSuccessful);
       }
     });
@@ -152,5 +160,73 @@ export class ContentPageComponent implements OnInit {
 
   calculateName(file: File): string {
     return file.name + '.' + file.contentType.split('/')[1];
+  }
+
+  doFolderAction(action: string, id: number) {
+    switch (action) {
+      case 'rename':
+        // todo show rename dialog
+        break;
+      case 'delete':
+        // if folder has content, ask user to confirm deletion first
+        let folder = this.folderService.getFolderFromSpace(id);
+        if ((folder.folders != undefined && folder.folders.length != 0) || (folder.artifacts != undefined && folder.artifacts.length != 0)) {
+          const dialogRef = this.dialog.open(DeletionDialogComponent, {
+            width: '400px',
+            data: 'folder'
+          });
+
+          dialogRef.afterClosed().subscribe(deleteAnyways => {
+            if (deleteAnyways) { // todo this doesnt work yet
+              this.deleteFolder(id);
+            }
+          });
+        } else {
+          this.deleteFolder(id);
+        }
+        break;
+      case 'download':
+        this.folderService.download(id);
+        break;
+    }
+  }
+
+  private deleteFolder(id: number) {
+    this.folderService.delete(id).subscribe(folderWasDeleted => {
+      if (folderWasDeleted) {
+        this.openSnackBar('Folder was deleted successfully');
+      }
+    });
+  }
+
+  doFileAction(action: string, id: number) {
+    switch (action) {
+      case 'rename':
+        // todo show rename dialog
+        break;
+      case 'delete':
+        this.fileService.delete(id).subscribe(fileWasDeleted => {
+          if (fileWasDeleted) {
+            this.openSnackBar('File was deleted successfully');
+          }
+        });
+        break;
+      case 'download':
+        this.fileService.download(id);
+        break;
+    }
+  }
+
+  /**
+   * Downloads a space by downloading the root folder of the space that is currently loaded.
+   */
+  downloadSpace() {
+    this.folderService.download(this.spaceService.currentSpace.root.id);
+  }
+
+  openSnackBar(message: string) {
+    this._snackBar.open(message, null, {
+      duration: 1500,
+    });
   }
 }
