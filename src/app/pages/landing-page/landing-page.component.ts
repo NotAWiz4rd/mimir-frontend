@@ -2,11 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../services/user.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-landing-page',
+  templateUrl: './landing-page.component.html',
+  styleUrls: ['./landing-page.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LandingPageComponent implements OnInit {
 
   constructor(private userService: UserService) {
   }
