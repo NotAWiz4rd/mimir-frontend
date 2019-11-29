@@ -1,6 +1,7 @@
 import {ContentPageComponent} from './pages/content-page/content-page.component';
 import {LoginComponent} from './pages/login/login.component';
 import {SettingsPageComponent} from './pages/settings-page/settings-page.component';
+import {LandingPageComponent} from './pages/landing-page/landing-page.component';
 
 export const APP_ROUTES = [
   {
@@ -26,7 +27,7 @@ export const APP_ROUTES = [
   },
   {
     path: '',
-    component: LoginComponent,
+    component: LandingPageComponent,
     pathMatch: 'full'
   },
 ];

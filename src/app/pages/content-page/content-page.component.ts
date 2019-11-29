@@ -11,6 +11,7 @@ import {SearchService} from '../../services/search.service';
 import {UploadFileDialogComponent} from '../../components/upload-file-dialog/upload-file-dialog.component';
 import {FolderService} from '../../services/folder.service';
 import {DeletionDialogComponent} from '../../components/deletion-dialog/deletion-dialog.component';
+import {RenameDialogComponent} from '../../components/rename-dialog/rename-dialog.component';
 
 @Component({
   selector: 'app-content-page',
@@ -103,6 +104,7 @@ export class ContentPageComponent implements OnInit {
     this.fileService.currentFile$.subscribe(file => {
       if (file != undefined) {
         this.file = file;
+        this.navigationService.namePath$.next(this.file.name + "."+this.file.contentType.split("/")[1])
       }
     });
   }
@@ -119,6 +121,7 @@ export class ContentPageComponent implements OnInit {
     this.spaceService.currentFolder.artifacts.forEach(file => {
       if (file.id === id) {
         this.navigationService.navigateToFile(file, this.spaceService.currentFolder);
+        return;
       }
     });
   }
@@ -165,7 +168,14 @@ export class ContentPageComponent implements OnInit {
   doFolderAction(action: string, id: number) {
     switch (action) {
       case 'rename':
-        // todo show rename dialog
+        const dialogRef = this.dialog.open(RenameDialogComponent, {
+          width: '400px'
+        });
+        dialogRef.afterClosed().subscribe(newName => {
+          if (newName != undefined) {
+            this.folderService.rename(id, newName);
+          }
+        });
         break;
       case 'delete':
         // if folder has content, ask user to confirm deletion first
@@ -188,6 +198,10 @@ export class ContentPageComponent implements OnInit {
       case 'download':
         this.folderService.download(id);
         break;
+      case 'share':
+        this.folderService.share(id);
+        this.openSnackBar('Link was copied to clipboard');
+        break;
     }
   }
 
@@ -202,7 +216,14 @@ export class ContentPageComponent implements OnInit {
   doFileAction(action: string, id: number) {
     switch (action) {
       case 'rename':
-        // todo show rename dialog
+        const dialogRef = this.dialog.open(RenameDialogComponent, {
+          width: '400px'
+        });
+        dialogRef.afterClosed().subscribe(newName => {
+          if (newName != undefined) {
+            this.fileService.rename(id, newName);
+          }
+        });
         break;
       case 'delete':
         this.fileService.delete(id).subscribe(fileWasDeleted => {
@@ -213,6 +234,10 @@ export class ContentPageComponent implements OnInit {
         break;
       case 'download':
         this.fileService.download(id);
+        break;
+      case 'share':
+        this.fileService.share(id);
+        this.openSnackBar('Link was copied to clipboard');
         break;
     }
   }
@@ -226,7 +251,7 @@ export class ContentPageComponent implements OnInit {
 
   openSnackBar(message: string) {
     this._snackBar.open(message, null, {
-      duration: 1500,
+      duration: 1750,
     });
   }
 }

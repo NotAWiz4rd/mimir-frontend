@@ -2,6 +2,9 @@
   more_vert
 </i>
 <mat-menu #actionMenu="matMenu">
+  <button mat-menu-item (click)="share()">
+    {{staticTextService.staticTexts | getStaticText : 'share' : languageService.getLanguage()}}
+  </button>
   <button mat-menu-item (click)="rename()">
     {{staticTextService.staticTexts | getStaticText : 'rename' : languageService.getLanguage()}}
   </button>

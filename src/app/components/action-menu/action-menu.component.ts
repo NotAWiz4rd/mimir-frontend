@@ -33,4 +33,8 @@ export class ActionMenuComponent implements OnInit {
   delete() {
     this.actionEmitter.emit('delete');
   }
+
+  share() {
+    this.actionEmitter.emit('share');
+  }
 }

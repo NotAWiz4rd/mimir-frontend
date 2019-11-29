@@ -36,12 +36,12 @@ export class NavigationService {
   }
 
   navigateToSpace(id: number) {
-    if (this.spaceService.currentSpace.id == id) {
+    if (this.spaceService.currentSpace != undefined && this.spaceService.currentSpace.id == id) {
       return;
     }
 
     let spaceLoadingSubscription = this.spaceService.loadSpace(id).subscribe(space => {
-      if (space.id == id) {
+      if (space != undefined && space.id == id) {
         this.navigateWithinSpace(space.root.id);
         spaceLoadingSubscription.unsubscribe();
       }
