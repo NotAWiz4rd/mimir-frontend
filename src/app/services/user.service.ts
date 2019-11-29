@@ -4,8 +4,9 @@ import {BehaviorSubject} from 'rxjs';
 import {User} from '../classes/User';
 import {SpaceMetadata} from '../classes/SpaceMetadata';
 
-const TEST_URL = 'https://se.pfuetsch.xyz/login/';
-const SPACE_TEST_URL = 'https://se.pfuetsch.xyz/spaces/';
+const LOGIN_URL = 'https://se.pfuetsch.xyz/login/';
+const REGISTER_URL = 'https://se.pfuetsch.xyz/register/';
+const SPACE_URL = 'https://se.pfuetsch.xyz/spaces/';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -18,7 +19,7 @@ export class UserService {
   currentUser$: BehaviorSubject<User> = new BehaviorSubject<User>(undefined);
 
   constructor(private http: HttpClient) {
-    this.http.get<SpaceMetadata[]>(SPACE_TEST_URL).subscribe(spaceMetadata => {
+    this.http.get<SpaceMetadata[]>(SPACE_URL).subscribe(spaceMetadata => {
       let spaces: SpaceMetadata[] = spaceMetadata;
       let user = new User();
       user.id = 42;
@@ -27,7 +28,7 @@ export class UserService {
     });
   }
 
-  login(user: User) {
+  login(username: string, password: string) {
     // todo implement me properly
   }
 
@@ -37,5 +38,13 @@ export class UserService {
     let user = this.currentUser$.value;
     user.spaces = spaces;
     this.currentUser$.next(user);
+  }
+
+  logout() {
+    this.currentUser$.next(undefined);
+  }
+
+  register(username: string, mail: string, password: string) {
+    this.http.post(REGISTER_URL + '?receiver=' + mail + '&text=' + 'Registration successful!', {});
   }
 }

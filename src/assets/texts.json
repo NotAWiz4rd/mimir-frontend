@@ -5,6 +5,11 @@
     "german": "Einloggen"
   },
   {
+    "logicalName": "register",
+    "english": "Register",
+    "german": "Registrieren"
+  },
+  {
     "logicalName": "home",
     "english": "Home",
     "german": "Home"

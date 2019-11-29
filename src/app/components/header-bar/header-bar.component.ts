@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {LanguageService} from '../../services/language.service';
 import {NavigationService} from '../../services/navigation.service';
 import {StaticTextService} from '../../services/static-text.service';
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'app-header-bar',
@@ -17,7 +18,8 @@ export class HeaderBarComponent implements OnInit {
 
   constructor(public staticTextService: StaticTextService,
               public languageService: LanguageService,
-              private navigationService: NavigationService) {
+              private navigationService: NavigationService,
+              private userService: UserService) {
   }
 
   ngOnInit() {
@@ -31,7 +33,8 @@ export class HeaderBarComponent implements OnInit {
   }
 
   onLogoutButtonClick() {
-    // todo implement me
+    this.userService.logout();
+    this.navigationService.navigateToView('login');
   }
 
   openSettings() {

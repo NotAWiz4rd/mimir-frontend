@@ -1,3 +1,7 @@
-<p>
-  login works!
-</p>
+<button mat-button (click)="login()">
+  {{staticTextService.staticTexts | getStaticText : 'login' : languageService.getLanguage()}}
+</button>
+
+<button mat-button (click)="register()">
+  {{staticTextService.staticTexts | getStaticText : 'register' : languageService.getLanguage()}}
+</button>
