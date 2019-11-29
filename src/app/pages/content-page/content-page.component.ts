@@ -11,6 +11,7 @@ import {SearchService} from '../../services/search.service';
 import {UploadFileDialogComponent} from '../../components/upload-file-dialog/upload-file-dialog.component';
 import {FolderService} from '../../services/folder.service';
 import {DeletionDialogComponent} from '../../components/deletion-dialog/deletion-dialog.component';
+import {RenameDialogComponent} from '../../components/rename-dialog/rename-dialog.component';
 
 @Component({
   selector: 'app-content-page',
@@ -165,7 +166,14 @@ export class ContentPageComponent implements OnInit {
   doFolderAction(action: string, id: number) {
     switch (action) {
       case 'rename':
-        // todo show rename dialog
+        const dialogRef = this.dialog.open(RenameDialogComponent, {
+          width: '400px'
+        });
+        dialogRef.afterClosed().subscribe(newName => {
+          if (newName != undefined) {
+            this.folderService.rename(id, newName);
+          }
+        });
         break;
       case 'delete':
         // if folder has content, ask user to confirm deletion first
@@ -202,7 +210,14 @@ export class ContentPageComponent implements OnInit {
   doFileAction(action: string, id: number) {
     switch (action) {
       case 'rename':
-        // todo show rename dialog
+        const dialogRef = this.dialog.open(RenameDialogComponent, {
+          width: '400px'
+        });
+        dialogRef.afterClosed().subscribe(newName => {
+          if (newName != undefined) {
+            this.fileService.rename(id, newName);
+          }
+        });
         break;
       case 'delete':
         this.fileService.delete(id).subscribe(fileWasDeleted => {
