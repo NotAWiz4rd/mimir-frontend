@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Folder} from '../classes/Folder';
 import {Space} from '../classes/Space';
 import {SpaceService} from './space.service';
+import {ClipboardService} from './ClipboardService';
 
 const FOLDER_PATH = 'https://se.pfuetsch.xyz/folder';
 
@@ -166,5 +167,15 @@ export class FolderService {
     // we shall never arrive here. If we do, something went horribly wrong!
     console.error('Something went horribly wrong, trying to convert the following pathBits to a folder: '
       + pathBits + ' in the following base folder: ' + base.id);
+  }
+
+  /**
+   * Copies a share link for the given folder to the clipboard.
+   * @param id The folder id
+   */
+  share(id: number) {
+    // todo create link with authentication stuff
+    let link: string = window.location.host + '/folder/' + id;
+    ClipboardService.copyToClipboard(link);
   }
 }

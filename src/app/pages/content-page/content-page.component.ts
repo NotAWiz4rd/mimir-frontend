@@ -104,6 +104,7 @@ export class ContentPageComponent implements OnInit {
     this.fileService.currentFile$.subscribe(file => {
       if (file != undefined) {
         this.file = file;
+        this.navigationService.namePath$.next(this.file.name + "."+this.file.contentType.split("/")[1])
       }
     });
   }
@@ -120,6 +121,7 @@ export class ContentPageComponent implements OnInit {
     this.spaceService.currentFolder.artifacts.forEach(file => {
       if (file.id === id) {
         this.navigationService.navigateToFile(file, this.spaceService.currentFolder);
+        return;
       }
     });
   }
@@ -196,6 +198,10 @@ export class ContentPageComponent implements OnInit {
       case 'download':
         this.folderService.download(id);
         break;
+      case 'share':
+        this.folderService.share(id);
+        this.openSnackBar('Link was copied to clipboard');
+        break;
     }
   }
 
@@ -229,6 +235,10 @@ export class ContentPageComponent implements OnInit {
       case 'download':
         this.fileService.download(id);
         break;
+      case 'share':
+        this.fileService.share(id);
+        this.openSnackBar('Link was copied to clipboard');
+        break;
     }
   }
 
@@ -241,7 +251,7 @@ export class ContentPageComponent implements OnInit {
 
   openSnackBar(message: string) {
     this._snackBar.open(message, null, {
-      duration: 1500,
+      duration: 1750,
     });
   }
 }

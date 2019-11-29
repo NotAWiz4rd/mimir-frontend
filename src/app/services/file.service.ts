@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {File} from '../classes/File';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {FolderService} from './folder.service';
+import {ClipboardService} from './ClipboardService';
 
 const FILE_PATH = 'https://se.pfuetsch.xyz/artifact/';
 
@@ -40,5 +41,15 @@ export class FileService {
       fileWasRenamed.next(true);
     });
     return fileWasRenamed;
+  }
+
+  /**
+   * Copies a share link for the given file to the clipboard.
+   * @param id The file id
+   */
+  share(id: number) {
+    // todo create link with authentication stuff
+    let link: string = window.location.host + '/file/' + id;
+    ClipboardService.copyToClipboard(link);
   }
 }

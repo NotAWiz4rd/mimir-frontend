@@ -118,5 +118,10 @@
     "logicalName": "enterName",
     "english": "Please enter a new name:",
     "german": "Bitte geben Sie einen neuen Namen ein:"
+  },
+  {
+    "logicalName": "share",
+    "english": "Share",
+    "german": "Weitergeben"
   }
 ]
