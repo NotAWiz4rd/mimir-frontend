@@ -10,6 +10,9 @@ import {UserService} from '../../services/user.service';
   styleUrls: ['./header-bar.component.css']
 })
 export class HeaderBarComponent implements OnInit {
+  @Input()
+  isSettings: boolean = false;
+
   // the path within the current space
   currentPath: string = '';
 
@@ -29,7 +32,11 @@ export class HeaderBarComponent implements OnInit {
   }
 
   onBackButtonClick() {
-    this.navigationService.navigateUp(this.currentPath);
+    if (this.isSettings) {
+      this.navigationService.navigateBack();
+    } else {
+      this.navigationService.navigateUp(this.currentPath);
+    }
   }
 
   onLogoutButtonClick() {

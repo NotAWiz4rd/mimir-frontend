@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild, ViewContainerRef, ViewEncapsulation} from '@angular/core';
 import {UserService} from '../../services/user.service';
 import {SpaceMetadata} from '../../classes/SpaceMetadata';
 import {NavigationService} from '../../services/navigation.service';
@@ -7,6 +7,11 @@ import {StaticTextService} from '../../services/static-text.service';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {SpaceService} from '../../services/space.service';
 import {CreateSpaceDialogComponent} from '../create-space-dialog/create-space-dialog.component';
+import {TemplatePortal} from '@angular/cdk/portal';
+import {Overlay, OverlayRef} from '@angular/cdk/overlay';
+import {fromEvent, Subscription} from 'rxjs';
+import {filter, take} from 'rxjs/operators';
+import {ActivatedRoute} from '@angular/router';
 
 
 @Component({
@@ -18,6 +23,10 @@ import {CreateSpaceDialogComponent} from '../create-space-dialog/create-space-di
 export class SpaceBarComponent implements OnInit {
   SPACE_CREATION_THUMBNAIL_ID: number = -1;
 
+  @ViewChild('spaceMenu') spaceMenu: TemplateRef<any>;
+  sub: Subscription;
+  overlayRef: OverlayRef | null;
+
   spaces: SpaceMetadata[] = [];
 
   constructor(private userService: UserService,
@@ -26,7 +35,10 @@ export class SpaceBarComponent implements OnInit {
               public staticTextService: StaticTextService,
               public dialog: MatDialog,
               private spaceService: SpaceService,
-              public _snackBar: MatSnackBar) {
+              private route: ActivatedRoute,
+              public _snackBar: MatSnackBar,
+              public overlay: Overlay,
+              public viewContainerRef: ViewContainerRef) {
     this.userService.currentUser$.subscribe(user => {
       if (user != undefined) {
         this.spaces = user.spaces;
@@ -38,7 +50,7 @@ export class SpaceBarComponent implements OnInit {
   }
 
   navigateToSpace(id: number) {
-    this.navigationService.navigateToSpace(id);
+    this.navigationService.navigateToSpace(id, this.route.toString().includes('settings'));
   }
 
   openSpaceCreation() {
@@ -51,7 +63,7 @@ export class SpaceBarComponent implements OnInit {
         this.spaceService.createSpace(result).subscribe(spaceData => {
           if (spaceData != undefined) {
             this.userService.addSpaceToUser(spaceData);
-            this.openSnackBar("Space was created successfully");
+            this.openSnackBar('Space was created successfully');
             this.navigationService.navigateToSpace(spaceData.id);
           }
         });
@@ -59,9 +71,65 @@ export class SpaceBarComponent implements OnInit {
     });
   }
 
+  openSpaceSettings(id: number) {
+    this.close();
+    this.navigationService.navigateToSpaceSettings(id);
+  }
+
+  deleteSpace(id: number) {
+    this.close();
+    this.spaceService.delete(id).subscribe(result => {
+      if (result != '') {
+        this.openSnackBar(result);
+        this.userService.reloadUser();
+      }
+    });
+  }
+
   openSnackBar(message: string) {
     this._snackBar.open(message, null, {
-      duration: 1500,
+      duration: 1750,
     });
+  }
+
+  open(event: MouseEvent, space: SpaceMetadata) {
+    event.preventDefault();
+    this.close();
+    const positionStrategy = this.overlay.position()
+      .flexibleConnectedTo(event)
+      .withPositions([
+        {
+          originX: 'end',
+          originY: 'bottom',
+          overlayX: 'end',
+          overlayY: 'top',
+        }
+      ]);
+
+    this.overlayRef = this.overlay.create({
+      positionStrategy,
+      scrollStrategy: this.overlay.scrollStrategies.close()
+    });
+
+    this.overlayRef.attach(new TemplatePortal(this.spaceMenu, this.viewContainerRef, {
+      $implicit: space
+    }));
+
+    this.sub = fromEvent<MouseEvent>(document, 'click')
+      .pipe(
+        filter(event => {
+          const clickTarget = event.target as HTMLElement;
+          return !!this.overlayRef && !this.overlayRef.overlayElement.contains(clickTarget);
+        }),
+        take(1)
+      ).subscribe(() => this.close());
+  }
+
+  close() {
+    this.sub && this.sub.unsubscribe();
+    if (this.overlayRef) {
+      this.overlayRef.dispose();
+      this.overlayRef = null;
+    }
   }
 }

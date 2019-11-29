@@ -35,15 +35,17 @@ export class NavigationService {
     }
   }
 
-  navigateToSpace(id: number) {
-    if (this.spaceService.currentSpace != undefined && this.spaceService.currentSpace.id == id) {
+  navigateToSpace(id: number, inSettings: boolean = false) {
+    if (this.spaceService.currentSpace != undefined && this.spaceService.currentSpace.id == id && !inSettings) {
       return;
     }
 
     let spaceLoadingSubscription = this.spaceService.loadSpace(id).subscribe(space => {
       if (space != undefined && space.id == id) {
         this.navigateWithinSpace(space.root.id);
-        spaceLoadingSubscription.unsubscribe();
+        if (spaceLoadingSubscription != undefined) {
+          spaceLoadingSubscription.unsubscribe();
+        }
       }
     });
   }
@@ -76,5 +78,13 @@ export class NavigationService {
     } else {
       this.router.navigate(['folder/', currentSearchFolder.id, {searchValue: searchValue}]);
     }
+  }
+
+  navigateToSpaceSettings(id: number) {
+    this.router.navigateByUrl('space/' + id + '/settings');
+  }
+
+  navigateBack() {
+    this.location.back();
   }
 }
