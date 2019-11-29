@@ -1,6 +1,12 @@
 <div class="container">
-  <button mat-raised-button color="accent" (click)="onBackButtonClick()" [disabled]="backButtonDisabled || pathTooShort()">
-    {{staticTextService.staticTexts | getStaticText : 'back' : languageService.getLanguage()}}
+  <button mat-raised-button color="accent" (click)="onBackButtonClick()"
+          [disabled]="(backButtonDisabled || pathTooShort()) && !isSettings">
+    <ng-container *ngIf="isSettings">
+      {{staticTextService.staticTexts | getStaticText : 'back' : languageService.getLanguage()}}
+    </ng-container>
+    <ng-container *ngIf="!isSettings">
+      {{staticTextService.staticTexts | getStaticText : 'upwards' : languageService.getLanguage()}}
+    </ng-container>
   </button>
 
   <app-path [path]="currentPath"></app-path>

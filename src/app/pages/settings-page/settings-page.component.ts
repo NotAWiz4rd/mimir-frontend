@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {LanguageService} from '../../services/language.service';
+import {StaticTextService} from '../../services/static-text.service';
 
 @Component({
   selector: 'app-settings-page',
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(public languageService: LanguageService,
+              public staticTextService: StaticTextService) {
+  }
 
   ngOnInit() {
   }

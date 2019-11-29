@@ -3,6 +3,7 @@
                   matTooltip="{{space.name}}"
                   matTooltipClass="space-tooltip"
                   [matTooltipPosition]="'right'"
+                  (contextmenu)="open($event, space)"
                   (click)="navigateToSpace(space.id)"></app-space-bubble>
 
 <app-space-bubble class="space-creation-bubble"
@@ -11,3 +12,14 @@
                   matTooltipClass="space-tooltip"
                   [matTooltipPosition]="'right'"
                   (click)="openSpaceCreation()"></app-space-bubble>
+
+<ng-template #spaceMenu let-space>
+  <div class="menu-container">
+    <button mat-menu-item (click)="openSpaceSettings(space.id)">
+      {{staticTextService.staticTexts | getStaticText : 'settings' : languageService.getLanguage()}}
+    </button>
+    <button mat-menu-item (click)="deleteSpace(space.id)">
+      {{staticTextService.staticTexts | getStaticText : 'delete' : languageService.getLanguage()}}
+    </button>
+  </div>
+</ng-template>

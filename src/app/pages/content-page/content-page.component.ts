@@ -25,6 +25,7 @@ export class ContentPageComponent implements OnInit {
 
   file: File;
   searchValue: string;
+  isSettings: boolean = false;
 
   constructor(public spaceService: SpaceService,
               private folderService: FolderService,
@@ -68,11 +69,16 @@ export class ContentPageComponent implements OnInit {
           this.spaceService.currentFolder = undefined;
           this.spaceService.loadSpace(this.spaceId);
           this.spaceService.currentSpace$.subscribe(space => {
-            if (space != undefined && space.id == this.spaceId) {
+            if (this.route.toString().includes('settings')) { // settingsView
+              this.isSettings = true;
+              this.navigationService.namePath$.next(space.name);
+            } else if (space != undefined && space.id == this.spaceId) {
               this.setCurrentFolder(this.folderService.getFolderFromSpace(this.folderId));
             }
           });
-        } else {
+        } else if (this.route.toString().includes('settings')) { // settingsView
+          this.isSettings = true;
+        } else if (this.folderId != null) {
           this.setCurrentFolder(this.folderService.getFolderFromSpace(this.folderId));
         }
       }
@@ -104,7 +110,7 @@ export class ContentPageComponent implements OnInit {
     this.fileService.currentFile$.subscribe(file => {
       if (file != undefined) {
         this.file = file;
-        this.navigationService.namePath$.next(this.file.name + "."+this.file.contentType.split("/")[1])
+        this.navigationService.namePath$.next(this.file.name + '.' + this.file.contentType.split('/')[1]);
       }
     });
   }

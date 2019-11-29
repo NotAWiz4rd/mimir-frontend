@@ -18,6 +18,10 @@ export const APP_ROUTES = [
     component: ContentPageComponent,
   },
   {
+    path: 'space/:spaceId/settings',
+    component: ContentPageComponent,
+  },
+  {
     path: 'folder/:folderId',
     component: ContentPageComponent,
   },

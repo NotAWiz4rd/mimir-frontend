@@ -35,7 +35,7 @@
     "german": "Ausloggen"
   },
   {
-    "logicalName": "back",
+    "logicalName": "upwards",
     "english": "Upwards!",
     "german": "Zurück"
   },
@@ -123,5 +123,15 @@
     "logicalName": "share",
     "english": "Share",
     "german": "Weitergeben"
+  },
+  {
+    "logicalName": "settings",
+    "english": "Settings",
+    "german": "Einstellungen"
+  },
+  {
+    "logicalName": "back",
+    "english": "Back",
+    "german": "Zurück"
   }
 ]

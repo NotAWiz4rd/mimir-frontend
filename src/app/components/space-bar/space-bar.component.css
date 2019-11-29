@@ -15,3 +15,11 @@ app-space-bubble {
   position: absolute;
   bottom: 0;
 }
+
+.cdk-overlay-pane {
+  display: block;
+}
+
+.menu-container {
+  background-color: #ffd740;
+}

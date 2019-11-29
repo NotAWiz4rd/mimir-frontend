@@ -19,13 +19,7 @@ export class UserService {
   currentUser$: BehaviorSubject<User> = new BehaviorSubject<User>(undefined);
 
   constructor(private http: HttpClient) {
-    this.http.get<SpaceMetadata[]>(SPACE_URL).subscribe(spaceMetadata => {
-      let spaces: SpaceMetadata[] = spaceMetadata;
-      let user = new User();
-      user.id = 42;
-      user.spaces = spaces;
-      this.currentUser$.next(user);
-    });
+    this.reloadUser();
   }
 
   login(username: string, password: string) {
@@ -38,6 +32,16 @@ export class UserService {
     let user = this.currentUser$.value;
     user.spaces = spaces;
     this.currentUser$.next(user);
+  }
+
+  reloadUser() {
+    this.http.get<SpaceMetadata[]>(SPACE_URL).subscribe(spaceMetadata => {
+      let spaces: SpaceMetadata[] = spaceMetadata;
+      let user = new User();
+      user.id = 42;
+      user.spaces = spaces;
+      this.currentUser$.next(user);
+    });
   }
 
   logout() {

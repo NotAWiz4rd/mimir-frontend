@@ -24,7 +24,8 @@ import {
   MatMenuModule,
   MatSidenavModule,
   MatSnackBar,
-  MatSnackBarContainer, MatSnackBarModule,
+  MatSnackBarContainer,
+  MatSnackBarModule,
   MatTooltipModule
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -50,6 +51,7 @@ import {DeletionDialogComponent} from './components/deletion-dialog/deletion-dia
 import {RenameDialogComponent} from './components/rename-dialog/rename-dialog.component';
 import {LandingPageComponent} from './pages/landing-page/landing-page.component';
 import {ClipboardService} from './services/ClipboardService';
+import {SpaceSettingsComponent} from './components/space-settings/space-settings.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +76,7 @@ import {ClipboardService} from './services/ClipboardService';
     DeletionDialogComponent,
     RenameDialogComponent,
     LandingPageComponent,
+    SpaceSettingsComponent,
   ],
   imports: [
     BrowserModule,
