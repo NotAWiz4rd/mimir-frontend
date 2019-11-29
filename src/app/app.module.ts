@@ -48,6 +48,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {UploadService} from './services/upload.service';
 import {DeletionDialogComponent} from './components/deletion-dialog/deletion-dialog.component';
 import {RenameDialogComponent} from './components/rename-dialog/rename-dialog.component';
+import {LandingPageComponent} from './pages/landing-page/landing-page.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import {RenameDialogComponent} from './components/rename-dialog/rename-dialog.co
     ActionMenuComponent,
     DeletionDialogComponent,
     RenameDialogComponent,
+    LandingPageComponent,
   ],
   imports: [
     BrowserModule,
