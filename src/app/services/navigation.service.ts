@@ -7,6 +7,8 @@ import {BehaviorSubject} from 'rxjs';
 import {File} from '../classes/File';
 import {FolderService} from './folder.service';
 
+const KEY = 'YOU, W3ary TRAVELLER, Sh4LL P4ss!';
+
 @Injectable()
 export class NavigationService {
   namePath$: BehaviorSubject<string> = new BehaviorSubject<string>('');
@@ -18,7 +20,6 @@ export class NavigationService {
   }
 
   navigateToView(view: string) {
-    console.log('Changed view to ' + view);
     this.router.navigateByUrl(view);
   }
 
@@ -54,7 +55,7 @@ export class NavigationService {
     if (this.spaceService.currentSpace.id != undefined) {
       this.router.navigateByUrl('space/' + this.spaceService.currentSpace.id + '/folder/' + folderId);
     } else {
-      this.router.navigateByUrl('folder/' + folderId);
+      this.router.navigate(['folder/' + folderId], {queryParams: {key: btoa(KEY)}});
     }
   }
 
@@ -68,7 +69,7 @@ export class NavigationService {
     if (this.spaceService.currentSpace.id != undefined) {
       this.router.navigate(['space/' + this.spaceService.currentSpace.id + '/folder/' + file.parentId, {fileId: file.id}]);
     } else {
-      this.router.navigate(['folder/' + file.parentId, {fileId: file.id}]);
+      this.router.navigate(['folder/' + file.parentId, {fileId: file.id}], {queryParams: {key: btoa(KEY)}});
     }
   }
 
@@ -76,7 +77,7 @@ export class NavigationService {
     if (this.spaceService.currentSpace.id != undefined) {
       this.router.navigate(['space/' + this.spaceService.currentSpace.id + '/folder/' + currentSearchFolder.id, {searchValue: searchValue}]);
     } else {
-      this.router.navigate(['folder/', currentSearchFolder.id, {searchValue: searchValue}]);
+      this.router.navigate(['folder/', currentSearchFolder.id, {searchValue: searchValue}], {queryParams: {key: btoa(KEY)}});
     }
   }
 

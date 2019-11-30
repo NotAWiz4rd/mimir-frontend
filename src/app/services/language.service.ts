@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import {Injectable} from '@angular/core';
 
 @Injectable()
 export class LanguageService {
@@ -10,7 +10,31 @@ export class LanguageService {
     return Number(language);
   }
 
-  changeLanguage(language: number) {
-    localStorage.setItem('language', String(language))
+  getLanguageString(): string {
+    let language = this.getLanguage();
+    switch (language) {
+      case 0:
+        return 'English';
+      case 1:
+        return 'German';
+      default:
+        return 'English';
+    }
   }
+
+  setLanguage(language: number) {
+    localStorage.setItem('language', String(language));
+  }
+
+  setLanguageString(language: string = '') {
+    switch (language.toLowerCase()) {
+      case 'english':
+        this.setLanguage(0);
+        break;
+      case 'german':
+        this.setLanguage(1);
+        break;
+    }
+  }
+
 }

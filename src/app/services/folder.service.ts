@@ -7,6 +7,7 @@ import {SpaceService} from './space.service';
 import {ClipboardService} from './ClipboardService';
 
 const FOLDER_PATH = 'https://se.pfuetsch.xyz/folder';
+const KEY = 'YOU, W3ary TRAVELLER, Sh4LL P4ss!';
 
 @Injectable()
 export class FolderService {
@@ -174,8 +175,7 @@ export class FolderService {
    * @param id The folder id
    */
   share(id: number) {
-    // todo create link with authentication stuff
-    let link: string = window.location.host + '/folder/' + id;
+    let link: string = window.location.host + '/folder/' + id + '?key=' + btoa(KEY);
     ClipboardService.copyToClipboard(link);
   }
 }

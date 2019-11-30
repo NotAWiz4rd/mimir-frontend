@@ -12,6 +12,7 @@ import {UploadFileDialogComponent} from '../../components/upload-file-dialog/upl
 import {FolderService} from '../../services/folder.service';
 import {DeletionDialogComponent} from '../../components/deletion-dialog/deletion-dialog.component';
 import {RenameDialogComponent} from '../../components/rename-dialog/rename-dialog.component';
+import {LanguageService} from '../../services/language.service';
 
 @Component({
   selector: 'app-content-page',
@@ -25,6 +26,7 @@ export class ContentPageComponent implements OnInit {
 
   file: File;
   searchValue: string;
+  isSpaceSettings: boolean = false;
   isSettings: boolean = false;
 
   constructor(public spaceService: SpaceService,
@@ -32,10 +34,18 @@ export class ContentPageComponent implements OnInit {
               private navigationService: NavigationService,
               private route: ActivatedRoute,
               private fileService: FileService,
+              public languageService: LanguageService,
               public dialog: MatDialog,
               public _snackBar: MatSnackBar) {
 
     this.route.params.subscribe(params => {
+      if (this.route.toString().includes('url:\'settings\',')) { // check whether we should be showing the settings page
+        this.isSettings = true;
+        return;
+      } else {
+        this.isSettings = false;
+      }
+
       let lastSpaceId: number = this.spaceId;
       let lastFolderId: number = this.folderId;
       let lastFileId: number = this.fileId;
@@ -69,15 +79,15 @@ export class ContentPageComponent implements OnInit {
           this.spaceService.currentFolder = undefined;
           this.spaceService.loadSpace(this.spaceId);
           this.spaceService.currentSpace$.subscribe(space => {
-            if (this.route.toString().includes('settings')) { // settingsView
-              this.isSettings = true;
+            if (this.route.toString().includes('settings')) { // space settings
+              this.isSpaceSettings = true;
               this.navigationService.namePath$.next(space.name);
             } else if (space != undefined && space.id == this.spaceId) {
               this.setCurrentFolder(this.folderService.getFolderFromSpace(this.folderId));
             }
           });
-        } else if (this.route.toString().includes('settings')) { // settingsView
-          this.isSettings = true;
+        } else if (this.spaceId != undefined && this.route.toString().includes('settings')) { // space settings
+          this.isSpaceSettings = true;
         } else if (this.folderId != null) {
           this.setCurrentFolder(this.folderService.getFolderFromSpace(this.folderId));
         }

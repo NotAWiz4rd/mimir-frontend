@@ -3,10 +3,15 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BehaviorSubject} from 'rxjs';
 import {User} from '../classes/User';
 import {SpaceMetadata} from '../classes/SpaceMetadata';
+import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
+import {NavigationService} from './navigation.service';
 
 const LOGIN_URL = 'https://se.pfuetsch.xyz/login/';
+const USER_URL = 'https://se.pfuetsch.xyz/users/';
 const REGISTER_URL = 'https://se.pfuetsch.xyz/register/';
 const SPACE_URL = 'https://se.pfuetsch.xyz/spaces/';
+
+const KEY = 'YOU, W3ary TRAVELLER, Sh4LL P4ss!'; // encrypted key is this: WU9VLCBXM2FyeSBUUkFWRUxMRVIsIFNoNExMIFA0c3Mh
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -15,10 +20,11 @@ const httpOptions = {
 };
 
 @Injectable()
-export class UserService {
+export class UserService implements CanActivate {
   currentUser$: BehaviorSubject<User> = new BehaviorSubject<User>(undefined);
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private navigationService: NavigationService) {
     this.reloadUser();
   }
 
@@ -50,5 +56,38 @@ export class UserService {
 
   register(username: string, mail: string, password: string) {
     this.http.post(REGISTER_URL + '?receiver=' + mail + '&text=' + 'Registration successful!', {});
+  }
+
+  delete() {
+    this.http.delete(USER_URL + '/' + this.currentUser$.value.id);
+    this.logout();
+  }
+
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    let verdict = false;
+
+    let user = this.currentUser$.value;
+    // check whether we are allowed to navigate to space
+    let spaceId = route.params['spaceId'];
+    if (spaceId != undefined && user != undefined) {
+      for (let space of user.spaces) {
+        if (spaceId == space.id) {
+          return true;
+        }
+      }
+      verdict = false;
+    }
+
+    let folderId = route.params['folderId'];
+    let fileId = route.params['fileId'];
+    let key = route.queryParams['key'];
+    if ((folderId != undefined || fileId != undefined) && key != undefined) {
+      verdict = atob(key) == KEY;
+    }
+
+    if (verdict == false) {
+      this.navigationService.navigateToView('');
+    }
+    return verdict;
   }
 }

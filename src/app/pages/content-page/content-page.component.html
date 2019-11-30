@@ -3,9 +3,10 @@
     <app-space-bar></app-space-bar>
   </mat-sidenav>
   <mat-sidenav-content>
-    <app-header-bar [backButtonDisabled]="folderId == undefined" [isSettings]="isSettings"></app-header-bar>
+    <app-header-bar [backButtonDisabled]="folderId == undefined"
+                    [isSettings]="isSpaceSettings || isSettings"></app-header-bar>
 
-    <ng-container *ngIf="fileId == undefined && !isSettings">
+    <ng-container *ngIf="fileId == undefined && !isSettings && !isSpaceSettings">
       <app-action-bar [actionsDisabled]="searchValue != undefined"
                       [isSpaceRoot]="spaceService?.currentFolder?.id == spaceService?.currentSpace?.root?.id"
                       (openCreateFolderDialog)="createFolderDialog()"
@@ -21,12 +22,16 @@
                      (actionEmitter)="doFileAction($event, file.id)"></app-thumbnail>
     </ng-container>
 
-    <ng-container *ngIf="fileId != undefined && !isSettings">
+    <ng-container *ngIf="fileId != undefined && !isSpaceSettings && !isSettings">
       <app-file-view></app-file-view>
     </ng-container>
 
-    <ng-container *ngIf="isSettings">
+    <ng-container *ngIf="isSpaceSettings">
       <app-space-settings></app-space-settings>
+    </ng-container>
+
+    <ng-container *ngIf="isSettings">
+      <app-settings-page [language]="languageService.getLanguageString()"></app-settings-page>
     </ng-container>
   </mat-sidenav-content>
 </mat-sidenav-container>
