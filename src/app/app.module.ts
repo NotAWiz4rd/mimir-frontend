@@ -18,6 +18,7 @@ import {ActionBarComponent} from './components/action-bar/action-bar.component';
 import {
   MatAutocompleteModule,
   MatButtonModule,
+  MatButtonToggleModule,
   MatDialogModule,
   MatFormFieldModule,
   MatInputModule,
@@ -99,6 +100,7 @@ import {SpaceSettingsComponent} from './components/space-settings/space-settings
     MatProgressBarModule,
     MatMenuModule,
     MatSnackBarModule,
+    MatButtonToggleModule,
   ],
   entryComponents: [
     CreateFolderDialogComponent,

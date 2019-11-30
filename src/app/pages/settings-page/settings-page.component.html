@@ -1,3 +1,30 @@
-<p>
-  settings-page works!
-</p>
+<div class="container">
+  <h2>{{staticTextService.staticTexts | getStaticText : 'accountSettings' : languageService.getLanguage()}}</h2>
+  <div>
+    <p>
+      {{staticTextService.staticTexts | getStaticText : 'chooseLanguage' : languageService.getLanguage()}}
+    </p>
+
+    <mat-button-toggle-group #group="matButtonToggleGroup" [value]="language"
+                             (valueChange)="this.languageService.setLanguageString(group.value)">
+      <mat-button-toggle value="English">
+        English
+      </mat-button-toggle>
+      <mat-button-toggle value="German">
+        German
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  <div class="account-delete">
+    <button mat-raised-button color="accent" (click)="onChangePasswordButtonClick()">
+      {{staticTextService.staticTexts | getStaticText : 'changePassword' : languageService.getLanguage()}}
+    </button>
+  </div>
+
+  <div class="account-delete">
+    <button mat-raised-button color="warn" (click)="onDeleteButtonClick()">
+      {{staticTextService.staticTexts | getStaticText : 'deleteAccount' : languageService.getLanguage()}}
+    </button>
+  </div>
+</div>

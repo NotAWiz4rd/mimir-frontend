@@ -133,5 +133,25 @@
     "logicalName": "back",
     "english": "Back",
     "german": "Zurück"
+  },
+  {
+    "logicalName": "accountSettings",
+    "english": "Account Settings",
+    "german": "Account Einstellungen"
+  },
+  {
+    "logicalName": "chooseLanguage",
+    "english": "Language:",
+    "german": "Sprache:"
+  },
+  {
+    "logicalName": "deleteAccount",
+    "english": "Delete Account",
+    "german": "Account löschen"
+  },
+  {
+    "logicalName": "changePassword",
+    "english": "Change Password",
+    "german": "Passwort ändern"
   }
 ]
