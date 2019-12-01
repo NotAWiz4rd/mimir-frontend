@@ -42,7 +42,7 @@ body {
     width: 50%;
     position: absolute;
     top: 5.8em;
-    right: 10px;
+    right: 0px;
     z-index: 2;
 }
 .longLogo {
@@ -63,8 +63,9 @@ body {
   .container {
     --rX: 0;
     --rY: 0;
-    --bX: 50%;
-    --bY: 80%;
+    --bX: 25%;
+    --bY: 40%;
+    --image: ;
   
     width: 39.9rem;
     height: 22.5rem;
@@ -76,7 +77,7 @@ body {
     align-items: flex-end;
   
     position: relative;
-    transform: rotateX(calc(var(--rX) * 1deg)) rotateY(calc(var(--rY) * 1deg));
+    transform: rotateX(calc(var(--rX) * 0.5deg)) rotateY(calc(var(--rY) * 0.5deg));
   
     background: linear-gradient(hsla(0, 0%, 100%, .1), hsla(0, 0%, 100%, .1)), url("../../../assets/img/exampleImg_CMSpp.png");
     background-position: var(--bX) var(--bY);
