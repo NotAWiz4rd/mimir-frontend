@@ -14,7 +14,6 @@ export class LandingPageComponent implements OnInit {
   constructor(private userService: UserService) {
   }
 
-
   ngOnInit() {
     const $ = e => document.querySelector(e);
     const wrap1 = new parallaxTiltEffect({
@@ -37,7 +36,7 @@ class parallaxTiltEffect {
 
     this.element = element;
     this.container = this.element.querySelector('.container');
-    this.size = [300, 360];
+    this.size = [640, 360];
     [this.w, this.h] = this.size;
 
     this.mouseOnComponent = false;
