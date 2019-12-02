@@ -63,8 +63,19 @@ export class FolderService {
   reloadCurrentFolder() {
     this.loadFolder(this.spaceService.currentFolder.id).subscribe(folder => {
       this.spaceService.currentFolder = folder;
-      // todo actually change folder in space
+      this.replaceFolderInCurrentSpace(folder.id, this.spaceService.currentSpace.root);
     });
+  }
+
+  // todo make this work!
+  replaceFolderInCurrentSpace(folderId: number, base: Folder) {
+    for (let i = 0; i < base.folders.length; i++) {
+      if (base.folders[i].id == folderId) {
+        base.folders[i] = this.spaceService.currentFolder;
+      } else {
+        this.replaceFolderInCurrentSpace(folderId, base.folders[i]);
+      }
+    }
   }
 
   delete(id: number): Observable<boolean> {
