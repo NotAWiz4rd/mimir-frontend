@@ -165,7 +165,7 @@ export class ContentPageComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(uploadSuccessful => {
       if (uploadSuccessful) {
-        this.spaceService.loadSpace(this.spaceService.currentSpace.id, uploadSuccessful);
+        this.folderService.reloadCurrentFolder();
       }
     });
   }
