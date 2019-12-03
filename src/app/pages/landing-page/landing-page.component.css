@@ -99,7 +99,6 @@ span{
     background-size: 40rem auto;
     box-shadow: 0 0 3rem .5rem hsla(0, 0%, 0%, .2);
 
-    transition: transform .6s 1s;
     text-align: center;
   }
 

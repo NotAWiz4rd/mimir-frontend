@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from '../../services/user.service';
 
 // for parallax tilt: https://codepen.io/coder63812/pen/NWPKmNj
 
@@ -10,21 +9,13 @@ import {UserService} from '../../services/user.service';
   styleUrls: ['./landing-page.component.css']
 })
 export class LandingPageComponent implements OnInit {
-
-  value1 = false;
-  value2 = false;
-  value3 = false;
-
-  constructor(private userService: UserService) {
-  }
-
   ngOnInit() {
     const $ = e => document.querySelector(e);
-    const wrap1 = new parallaxTiltEffect({
-      element: $('.wrap--main')
+    // tslint:disable-next-line
+    new parallaxTiltEffect({
+      element: $('.wrap--main'),
     });
   }
-
 }
 
 // tslint:disable-next-line:class-name
@@ -37,7 +28,6 @@ class parallaxTiltEffect {
   mouseOnComponent: boolean;
 
   constructor({element}) {
-
     this.element = element;
     this.container = this.element.querySelector('.container');
     this.size = [640, 360];
@@ -48,6 +38,8 @@ class parallaxTiltEffect {
     this.handleMouseMove = this.handleMouseMove.bind(this);
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
+    this.handleDeviceMotion = this.handleDeviceMotion.bind(this);
+
     this.defaultStates = this.defaultStates.bind(this);
     this.setProperty = this.setProperty.bind(this);
     this.init = this.init.bind(this);
@@ -55,14 +47,9 @@ class parallaxTiltEffect {
     this.init();
   }
 
-  handleMouseMove(event) {
-    const {offsetX, offsetY} = event;
-
-    let X;
-    let Y;
-
-    X = (-(offsetX - (this.w / 2)) / 3) / 3;
-    Y = ((offsetY - (this.h / 2)) / 3) / 3;
+  skew(offsetX, offsetY) {
+    const X = (-(offsetX - (this.w / 2)) / 3) / 3;
+    const Y = ((offsetY - (this.h / 2)) / 3) / 3;
 
     this.setProperty('--rY', X.toFixed(2));
     this.setProperty('--rX', Y.toFixed(2));
@@ -73,6 +60,10 @@ class parallaxTiltEffect {
     this.setProperty('--bX', (25 - parseInt((Y / 4).toFixed(2))) + '%');
   }
 
+  handleMouseMove(event) {
+    this.skew(event.offsetX, event.offsetY);
+  }
+
   handleMouseEnter() {
     this.mouseOnComponent = true;
     this.container.classList.add('container--active');
@@ -81,6 +72,13 @@ class parallaxTiltEffect {
   handleMouseLeave() {
     this.mouseOnComponent = false;
     this.defaultStates();
+  }
+
+  handleDeviceMotion(event) {
+    if ('accelerationIncludingGravity' in event) {
+      const acc = event.accelerationIncludingGravity;
+      this.skew(acc.x * 50, -acc.y * 50);
+    }
   }
 
   defaultStates() {
@@ -96,10 +94,13 @@ class parallaxTiltEffect {
   }
 
   init() {
-    this.element.addEventListener('mousemove', this.handleMouseMove);
-    this.element.addEventListener('mouseenter', this.handleMouseEnter);
-    this.element.addEventListener('mouseleave', this.handleMouseLeave);
+    const isMobile = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i);
+    if (isMobile && 'ondevicemotion' in window) {
+      window.addEventListener('devicemotion', this.handleDeviceMotion);
+    } else {
+      this.element.addEventListener('mousemove', this.handleMouseMove);
+      this.element.addEventListener('mouseenter', this.handleMouseEnter);
+      this.element.addEventListener('mouseleave', this.handleMouseLeave);
+    }
   }
-
 }
-
