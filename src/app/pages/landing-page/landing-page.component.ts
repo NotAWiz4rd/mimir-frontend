@@ -11,6 +11,10 @@ import {UserService} from '../../services/user.service';
 })
 export class LandingPageComponent implements OnInit {
 
+  value1 = false;
+  value2 = false;
+  value3 = false;
+
   constructor(private userService: UserService) {
   }
 

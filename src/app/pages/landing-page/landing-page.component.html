@@ -1,15 +1,21 @@
 <div class="body-container">
   <div class="img-container">
-  <!--  <img class="longLogo" src = "../../../assets/img/cmspp.png">-->
-    <div class="example wrap wrap--main">
+    <img [class.mat-elevation-z4]="true" class="example" src = "../../../assets/img/exampleImg_CMSpp.png">
+<!--  remove funky stuff, add maybe later  <div class="example wrap wrap--main">
       <div class="container container--1">
         <p>Space Screen</p>
       </div>
-    </div>
+    </div>-->
   </div>
-  <div class="text-container">
-    <h2>CMS++</h2>
-    <p>lorem ipsum bla bla bla</p>
-    <p>loem ipsum 2</p>
-  </div>
+  <mat-card class="text-container">
+    <img class="longLogo" src = "../../../assets/img/cmspp.png">
+    <h2 class="subText">"We got the space for you"
+      <span></span>
+    </h2>
+    <p>Steve Jobs once said:<br><i>If you don't love it, you're going to fail.</i> <br> So we decided to build a CMS everybody can love.</p>
+    <mat-checkbox [(ngModel)]="value1"><label>Have you ever used an CMS where the community aspect was lackluster?</label></mat-checkbox>
+    <mat-checkbox [(ngModel)]="value2">Have you ever wanted to share your folders and files with ease? </mat-checkbox>
+    <mat-checkbox [(ngModel)]="value3">Have you ever wanted to collaborate with other Students through a CMS? </mat-checkbox>
+    <p *ngIf="value1 && value2 && value3"><br> Then look no further and bask upon the glory of CMS++</p>
+  </mat-card>
 </div>
