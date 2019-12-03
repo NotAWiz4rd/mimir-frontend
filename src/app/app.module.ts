@@ -102,8 +102,6 @@ import {SpaceSettingsComponent} from './components/space-settings/space-settings
     MatSnackBarModule,
     MatButtonToggleModule,
     MatCheckboxModule,
-    MatCardModule,
-    MatCardModule,
     MatSlideToggleModule,
   ],
   entryComponents: [

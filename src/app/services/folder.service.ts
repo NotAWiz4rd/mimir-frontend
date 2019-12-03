@@ -4,7 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Folder} from '../classes/Folder';
 import {Space} from '../classes/Space';
 import {SpaceService} from './space.service';
-import {ClipboardService} from './ClipboardService';
+import {ClipboardService} from './clipboard.service';
 
 const FOLDER_PATH = 'https://se.pfuetsch.xyz/folder';
 const KEY = 'YOU, W3ary TRAVELLER, Sh4LL P4ss!';
