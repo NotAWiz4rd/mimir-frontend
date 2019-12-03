@@ -1,21 +1,59 @@
 <div class="body-container">
-  <div class="img-container">
-    <img [class.mat-elevation-z4]="true" class="example" src = "../../../assets/img/exampleImg_CMSpp.png">
-<!--  remove funky stuff, add maybe later  <div class="example wrap wrap--main">
-      <div class="container container--1">
-        <p>Space Screen</p>
-      </div>
-    </div>-->
-  </div>
-  <mat-card class="text-container">
-    <img class="longLogo" src = "../../../assets/img/cmspp.png">
+  <img class="wave" src="../../../assets/img/wavey.png">
+  <div class="top-container">
+    <img class="longLogo" src="../../../assets/img/cmspp.png">
     <h2 class="subText">"We got the space for you"
       <span></span>
     </h2>
-    <p>Steve Jobs once said:<br><i>If you don't love it, you're going to fail.</i> <br> So we decided to build a CMS everybody can love.</p>
-    <mat-checkbox [(ngModel)]="value1"><label>Have you ever used an CMS where the community aspect was lackluster?</label></mat-checkbox>
-    <mat-checkbox [(ngModel)]="value2">Have you ever wanted to share your folders and files with ease? </mat-checkbox>
-    <mat-checkbox [(ngModel)]="value3">Have you ever wanted to collaborate with other Students through a CMS? </mat-checkbox>
-    <p *ngIf="value1 && value2 && value3"><br> Then look no further and bask upon the glory of CMS++</p>
+  </div>
+  <img class="hero-image" src="../../../assets/img/hero_gradient.png">
+  <div class="citation-container">
+    <p>Steve Jobs once said:<br>"<i>If you don't love it, you're going to fail.</i>"</p><br>
+    <h2>So we decided to build a CMS
+      everybody can love.
+    </h2><br>
+  </div>
+  <div class="screenshot-container">
+    <img class="screenshot" src="../../../assets/img/exampleImg_CMSpp.png">
+  </div>
+  <div class="checkbox-container purple">
+    <h2>Have you ever used an CMS where the community aspect was lackluster?</h2>
+    <br>
+    <mat-slide-toggle [(ngModel)]="value1">YES!</mat-slide-toggle>
+  </div>
+  <div *ngIf="value1" class="checkbox-container amber">
+    <h2>Have you ever wanted to collaborate with other students through a CMS?</h2>
+    <br>
+    <mat-slide-toggle [(ngModel)]="value2" [color]="'primary'">YES!</mat-slide-toggle>
+  </div>
+  <div *ngIf="value2" class="checkbox-container purple">
+    <h2>Have you ever wanted to share your folders and files with ease?</h2>
+    <br>
+    <mat-slide-toggle [(ngModel)]="value3">YES!</mat-slide-toggle>
+  </div>
+  <div *ngIf="value3" class="final-container">
+    <h2>Then look no further and bask upon the glory of CMS++</h2>
+    <br>
+    <button color="primary" mat-raised-button (click)="goToLogin()">ENTER</button>
+  </div>
+  <!--<div class="img-container">
+    <img [class.mat-elevation-z4]="true" class="example container" src="../../../assets/img/exampleImg_CMSpp.png">
+    &lt;!&ndash;  remove funky stuff, add maybe later  <div class="example wrap wrap&#45;&#45;main">
+          <div class="container container&#45;&#45;1">
+            <p>Space Screen</p>
+          </div>
+        </div>&ndash;&gt;
+  </div>
+  <mat-card class="text-container">
+
   </mat-card>
+  <div class="checkbox-container">
+
+      <br>
+    <mat-checkbox [(ngModel)]="value2">Have you ever wanted to share your folders and files with ease?</mat-checkbox>
+    <br>
+    <mat-checkbox [(ngModel)]="value3">Have you ever wanted to collaborate with other Students through a CMS?
+    </mat-checkbox>
+    <p *ngIf="value1 && value2 && value3"><br> Then look no further and bask upon the glory of CMS++</p>
+  </div>-->
 </div>

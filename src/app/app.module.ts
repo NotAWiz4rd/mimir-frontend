@@ -23,7 +23,7 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatMenuModule,
-  MatSidenavModule,
+  MatSidenavModule, MatSlideToggleModule,
   MatSnackBar,
   MatSnackBarContainer,
   MatSnackBarModule,
@@ -104,6 +104,7 @@ import {SpaceSettingsComponent} from './components/space-settings/space-settings
     MatCheckboxModule,
     MatCardModule,
     MatCardModule,
+    MatSlideToggleModule,
   ],
   entryComponents: [
     CreateFolderDialogComponent,
