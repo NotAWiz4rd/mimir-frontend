@@ -61,20 +61,20 @@ export class FolderService {
   }
 
   reloadCurrentFolder() {
-    this.loadFolder(this.spaceService.currentFolder.id).subscribe(folder => {
-      this.spaceService.currentFolder = folder;
-      this.replaceFolderInCurrentSpace(folder.id, this.spaceService.currentSpace.root);
+    this.loadFolder(this.spaceService.currentFolder.id).subscribe(replacementFolder => {
+      this.spaceService.currentFolder = replacementFolder;
+      this.spaceService.currentSpace.root = this.replaceFolderInCurrentSpace(replacementFolder, this.spaceService.currentSpace.root);
     });
   }
 
-  // todo make this work!
-  replaceFolderInCurrentSpace(folderId: number, base: Folder) {
-    for (let i = 0; i < base.folders.length; i++) {
-      if (base.folders[i].id == folderId) {
-        base.folders[i] = this.spaceService.currentFolder;
-      } else {
-        this.replaceFolderInCurrentSpace(folderId, base.folders[i]);
+  replaceFolderInCurrentSpace(replacementFolder: Folder, base: Folder): Folder {
+    if (base.id == replacementFolder.id) {
+      return replacementFolder;
+    } else {
+      for (let i = 0; i < base.folders.length; i++) {
+        base.folders[i] = this.replaceFolderInCurrentSpace(replacementFolder, base.folders[i]);
       }
+      return base;
     }
   }
 
