@@ -22,14 +22,17 @@ const httpOptions = {
 @Injectable()
 export class UserService implements CanActivate {
   currentUser$: BehaviorSubject<User> = new BehaviorSubject<User>(undefined);
+  username: string;
+  password: string;
 
   constructor(private http: HttpClient,
               private navigationService: NavigationService) {
-    this.reloadUser();
   }
 
   login(username: string, password: string) {
-    // todo implement me properly
+    this.username = username;
+    this.password = password;
+    this.reloadUser();
   }
 
   addSpaceToUser(space: SpaceMetadata) {
