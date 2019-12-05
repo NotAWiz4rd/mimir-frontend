@@ -14,6 +14,28 @@ export class SearchService {
 
   currentSearchFolder: Folder;
 
+  static collectMatchingFilesAndFolders(base: Folder, searchValue: string): [File[], Folder[]] {
+    const files: File[] = [];
+    const folders: Folder[] = [];
+
+    for (let i = 0; i < base.artifacts.length; i++) {
+      if (base.artifacts[i].name.toLowerCase().includes(searchValue.toLowerCase())) {
+        files.push(base.artifacts[i]);
+      }
+    }
+
+    for (let i = 0; i < base.folders.length; i++) {
+      if (base.folders[i].name.toLowerCase().includes(searchValue.toLowerCase())) {
+        folders.push(base.folders[i]);
+      }
+      const filesAndFolders: [File[], Folder[]] = this.collectMatchingFilesAndFolders(base.folders[i], searchValue);
+      files.concat(filesAndFolders[0]);
+      folders.concat(filesAndFolders[1]);
+    }
+
+    return [files, folders];
+  }
+
   getSearchablesForPath(path: string): string[] {
     if (this.spaceService.currentSpace == undefined) {
       return [];
@@ -48,27 +70,5 @@ export class SearchService {
     }
 
     return names;
-  }
-
-  static collectMatchingFilesAndFolders(base: Folder, searchValue: string): [File[], Folder[]] {
-    let files: File[] = [];
-    let folders: Folder[] = [];
-
-    for (let i = 0; i < base.artifacts.length; i++) {
-      if (base.artifacts[i].name.toLowerCase().includes(searchValue.toLowerCase())) {
-        files.push(base.artifacts[i]);
-      }
-    }
-
-    for (let i = 0; i < base.folders.length; i++) {
-      if (base.folders[i].name.toLowerCase().includes(searchValue.toLowerCase())) {
-        folders.push(base.folders[i]);
-      }
-      let filesAndFolders: [File[], Folder[]] = this.collectMatchingFilesAndFolders(base.folders[i], searchValue);
-      files.concat(filesAndFolders[0]);
-      folders.concat(filesAndFolders[1]);
-    }
-
-    return [files, folders];
   }
 }

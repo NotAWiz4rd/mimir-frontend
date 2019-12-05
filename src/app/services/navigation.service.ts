@@ -28,7 +28,7 @@ export class NavigationService {
   }
 
   navigateUp(currentPath: string) {
-    let folder = this.folderService.convertPathToFolder(currentPath);
+    const folder = this.folderService.convertPathToFolder(currentPath);
     if (folder.parentId == null || currentPath.includes('.')) { // check if we're either in the topmost folder or in a file
       this.navigateWithinSpace(folder.id);
     } else {
@@ -41,7 +41,7 @@ export class NavigationService {
       return;
     }
 
-    let spaceLoadingSubscription = this.spaceService.loadSpace(id).subscribe(space => {
+    const spaceLoadingSubscription = this.spaceService.loadSpace(id).subscribe(space => {
       if (space != undefined && space.id == id) {
         this.navigateWithinSpace(space.root.id);
         if (spaceLoadingSubscription != undefined) {
@@ -64,7 +64,7 @@ export class NavigationService {
   }
 
   navigateToFile(file: File, folder: Folder) {
-    let path = this.folderService.convertFolderToPaths(folder) + '/' + file.name + '.' + file.contentType.split('/')[1];
+    const path = this.folderService.convertFolderToPaths(folder) + '/' + file.name + '.' + file.contentType.split('/')[1];
     this.namePath$.next(path);
     if (this.spaceService.currentSpace.id != undefined) {
       this.router.navigate(['space/' + this.spaceService.currentSpace.id + '/folder/' + file.parentId, {fileId: file.id}]);
@@ -75,9 +75,9 @@ export class NavigationService {
 
   navigateSearch(currentSearchFolder: Folder, searchValue: string) {
     if (this.spaceService.currentSpace.id != undefined) {
-      this.router.navigate(['space/' + this.spaceService.currentSpace.id + '/folder/' + currentSearchFolder.id, {searchValue: searchValue}]);
+      this.router.navigate(['space/' + this.spaceService.currentSpace.id + '/folder/' + currentSearchFolder.id, {searchValue}]);
     } else {
-      this.router.navigate(['folder/', currentSearchFolder.id, {searchValue: searchValue}], {queryParams: {key: btoa(KEY)}});
+      this.router.navigate(['folder/', currentSearchFolder.id, {searchValue}], {queryParams: {key: btoa(KEY)}});
     }
   }
 

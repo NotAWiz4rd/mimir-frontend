@@ -15,15 +15,41 @@ export class FolderService {
               private spaceService: SpaceService) {
   }
 
+  private static searchForFolder(base: Folder, id: number): Folder {
+    if (base.id === id) {
+      return base;
+    }
+
+    if (base.folders == undefined) {
+      return null;
+    }
+
+    for (const folder of base.folders) {
+      if (folder.id === id) {
+        return folder;
+      } else {
+        const possibleFolder = this.searchForFolder(folder, id);
+        if (possibleFolder != null) {
+          return possibleFolder;
+        }
+      }
+    }
+    return null;
+  }
+
+  private static reversePath(str: string): string {
+    return str.split('/').reverse().join('/');
+  }
+
   /**
    * Creates a new folder within the folder that the user is currently in.
    * @param name
    * @param parentId
    */
   createFolder(name: string, parentId: number): Observable<boolean> {
-    let folderWasCreated = new BehaviorSubject(false);
+    const folderWasCreated = new BehaviorSubject(false);
     this.http.post(FOLDER_PATH + '?name=' + name + '&parentId=' + parentId, {}).subscribe(result => {
-      let folder = result as Folder;
+      const folder = result as Folder;
       if (folder.name == name) {
         this.spaceService.currentFolder.folders.push(folder);
         folderWasCreated.next(true);
@@ -79,7 +105,7 @@ export class FolderService {
   }
 
   delete(id: number): Observable<boolean> {
-    let folderWasDeleted = new BehaviorSubject(false);
+    const folderWasDeleted = new BehaviorSubject(false);
     this.http.delete(FOLDER_PATH + '/' + id).subscribe(result => {
       if (result == null) {
         this.reloadCurrentFolder();
@@ -90,7 +116,7 @@ export class FolderService {
   }
 
   rename(id: number, name: string): Observable<boolean> {
-    let folderWasRenamed = new BehaviorSubject(false);
+    const folderWasRenamed = new BehaviorSubject(false);
     this.http.post(FOLDER_PATH + '/' + id + '/rename?name=' + name, {}).subscribe(() => {
       this.reloadCurrentFolder();
       folderWasRenamed.next(true);
@@ -107,28 +133,6 @@ export class FolderService {
     return FolderService.searchForFolder(this.spaceService.currentSpace.root, id);
   }
 
-  private static searchForFolder(base: Folder, id: number): Folder {
-    if (base.id === id) {
-      return base;
-    }
-
-    if (base.folders == undefined) {
-      return null;
-    }
-
-    for (let folder of base.folders) {
-      if (folder.id === id) {
-        return folder;
-      } else {
-        let possibleFolder = this.searchForFolder(folder, id);
-        if (possibleFolder != null) {
-          return possibleFolder;
-        }
-      }
-    }
-    return null;
-  }
-
   convertFolderToPaths(folder: Folder): string {
     let namePath = folder.name;
     let currentFolder = folder;
@@ -142,10 +146,6 @@ export class FolderService {
     return FolderService.reversePath(namePath);
   }
 
-  private static reversePath(str: string): string {
-    return str.split('/').reverse().join('/');
-  }
-
   convertPathToFolder(path: string): Folder {
     if (path.length === 0 || path.endsWith(this.spaceService.currentSpace.root.name)) {
       return this.spaceService.currentSpace.root;
@@ -153,7 +153,7 @@ export class FolderService {
       path = path.replace(this.spaceService.currentSpace.root.name + '/', '');
     }
 
-    let pathBits: string[] = path.split('/');
+    const pathBits: string[] = path.split('/');
 
     return this.lookForNextPathBitWithin(this.spaceService.currentSpace.root, pathBits);
   }
@@ -186,7 +186,7 @@ export class FolderService {
    * @param id The folder id
    */
   share(id: number) {
-    let link: string = window.location.host + '/folder/' + id + '?key=' + btoa(KEY);
+    const link: string = window.location.host + '/folder/' + id + '?key=' + btoa(KEY);
     ClipboardService.copyToClipboard(link);
   }
 }

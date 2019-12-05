@@ -21,7 +21,7 @@ import {ActivatedRoute} from '@angular/router';
   encapsulation: ViewEncapsulation.None
 })
 export class SpaceBarComponent implements OnInit {
-  SPACE_CREATION_THUMBNAIL_ID: number = -1;
+  SPACE_CREATION_THUMBNAIL_ID = -1;
 
   @ViewChild('spaceMenu') spaceMenu: TemplateRef<any>;
   sub: Subscription;

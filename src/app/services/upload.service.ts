@@ -21,7 +21,7 @@ export class UploadService {
       formData.append('parentId', folderId.toString());
       const nameArr = file.name.split('.');
       let fileName = '';
-      for(let i = 0; i<nameArr.length-1; i++){
+      for (let i = 0; i < nameArr.length - 1; i++) {
         fileName += nameArr[i];
       }
       formData.append('name', fileName);

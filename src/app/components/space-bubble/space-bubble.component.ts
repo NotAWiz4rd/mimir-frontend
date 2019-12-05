@@ -8,7 +8,7 @@ import {Component, Input, OnInit} from '@angular/core';
 export class SpaceBubbleComponent implements OnInit {
 
   @Input()
-  spacename: string = '';
+  spacename = '';
 
   @Input()
   thumbnailId: number;

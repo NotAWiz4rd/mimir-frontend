@@ -4,7 +4,7 @@ import {StaticTextService} from '../../services/static-text.service';
 import {LanguageService} from '../../services/language.service';
 import {forkJoin} from 'rxjs';
 import {UploadService} from '../../services/upload.service';
-import {SpaceService} from "../../services/space.service";
+import {SpaceService} from '../../services/space.service';
 
 @Component({
   selector: 'app-upload-file-dialog',
@@ -36,7 +36,7 @@ export class UploadFileDialogComponent implements OnInit {
 
   onFilesAdded() {
     const files: { [key: string]: File } = this.file.nativeElement.files;
-    for (let key in files) {
+    for (const key in files) {
       if (!isNaN(parseInt(key))) {
         this.files.add(files[key]);
       }
@@ -56,8 +56,8 @@ export class UploadFileDialogComponent implements OnInit {
     this.progress = this.uploadService.upload(this.files, this.spaceService.currentFolder.id);
 
     // convert the progress map into an array
-    let allProgressObservables = [];
-    for (let key in this.progress) {
+    const allProgressObservables = [];
+    for (const key in this.progress) {
       allProgressObservables.push(this.progress[key].progress);
     }
 
@@ -76,7 +76,7 @@ export class UploadFileDialogComponent implements OnInit {
       this.uploadSuccessful = true;
       // ... and the component is no longer uploading
       this.uploading = false;
-      //close dialog
+      // close dialog
       this.dialogRef.close(true);
     });
   }

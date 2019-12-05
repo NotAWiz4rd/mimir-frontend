@@ -11,10 +11,10 @@ import {UserService} from '../../services/user.service';
 })
 export class HeaderBarComponent implements OnInit {
   @Input()
-  isSettings: boolean = false;
+  isSettings = false;
 
   // the path within the current space
-  currentPath: string = '';
+  currentPath = '';
 
   @Input()
   backButtonDisabled: boolean;

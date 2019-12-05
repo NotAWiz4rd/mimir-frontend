@@ -1,5 +1,5 @@
 export class StaticText {
-  logicalName: string = '';
-  english: string = '';
-  german: string = '';
+  logicalName = '';
+  english = '';
+  german = '';
 }

@@ -16,7 +16,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   searchOptions: string[] = [];
   filteredOptions: Observable<string[]>;
   control = new FormControl();
-  searchValue: string = '';
+  searchValue = '';
 
   namePathSubscription: Subscription;
 

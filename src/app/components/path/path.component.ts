@@ -32,7 +32,7 @@ export class PathComponent implements OnInit, OnChanges {
       pathWithinSpace += this.pathElements[i];
       pathWithinSpace += '/';
     }
-    let folderGoal = this.folderService.convertPathToFolder(pathWithinSpace.slice(0, pathWithinSpace.length - 1));
+    const folderGoal = this.folderService.convertPathToFolder(pathWithinSpace.slice(0, pathWithinSpace.length - 1));
     this.navigationService.navigateWithinSpace(folderGoal.id);
   }
 

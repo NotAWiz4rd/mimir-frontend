@@ -33,17 +33,17 @@ export class UserService implements CanActivate {
   }
 
   addSpaceToUser(space: SpaceMetadata) {
-    let spaces = this.currentUser$.value.spaces;
+    const spaces = this.currentUser$.value.spaces;
     spaces.push(space);
-    let user = this.currentUser$.value;
+    const user = this.currentUser$.value;
     user.spaces = spaces;
     this.currentUser$.next(user);
   }
 
   reloadUser() {
     this.http.get<SpaceMetadata[]>(SPACE_URL).subscribe(spaceMetadata => {
-      let spaces: SpaceMetadata[] = spaceMetadata;
-      let user = new User();
+      const spaces: SpaceMetadata[] = spaceMetadata;
+      const user = new User();
       user.id = 42;
       user.spaces = spaces;
       this.currentUser$.next(user);
@@ -66,11 +66,11 @@ export class UserService implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     let verdict = false;
 
-    let user = this.currentUser$.value;
+    const user = this.currentUser$.value;
     // check whether we are allowed to navigate to space
-    let spaceId = route.params['spaceId'];
+    const spaceId = route.params.spaceId;
     if (spaceId != undefined && user != undefined) {
-      for (let space of user.spaces) {
+      for (const space of user.spaces) {
         if (spaceId == space.id) {
           return true;
         }
@@ -78,9 +78,9 @@ export class UserService implements CanActivate {
       verdict = false;
     }
 
-    let folderId = route.params['folderId'];
-    let fileId = route.params['fileId'];
-    let key = route.queryParams['key'];
+    const folderId = route.params.folderId;
+    const fileId = route.params.fileId;
+    const key = route.queryParams.key;
     if ((folderId != undefined || fileId != undefined) && key != undefined) {
       verdict = atob(key) == KEY;
     }

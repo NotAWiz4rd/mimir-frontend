@@ -26,8 +26,8 @@ export class ContentPageComponent implements OnInit {
 
   file: File;
   searchValue: string;
-  isSpaceSettings: boolean = false;
-  isSettings: boolean = false;
+  isSpaceSettings = false;
+  isSettings = false;
 
   constructor(public spaceService: SpaceService,
               private folderService: FolderService,
@@ -46,24 +46,24 @@ export class ContentPageComponent implements OnInit {
         this.isSettings = false;
       }
 
-      let lastSpaceId: number = this.spaceId;
-      let lastFolderId: number = this.folderId;
-      let lastFileId: number = this.fileId;
+      const lastSpaceId: number = this.spaceId;
+      const lastFolderId: number = this.folderId;
+      const lastFileId: number = this.fileId;
 
-      if (params['fileId'] != undefined) {
-        this.fileId = Number(params['fileId']);
+      if (params.fileId != undefined) {
+        this.fileId = Number(params.fileId);
       } else {
         this.fileId = undefined;
       }
 
-      if (params['folderId'] != undefined) {
-        this.folderId = Number(params['folderId']);
+      if (params.folderId != undefined) {
+        this.folderId = Number(params.folderId);
       } else {
         this.folderId = undefined;
       }
 
-      if (params['spaceId'] != undefined) {
-        this.spaceId = Number(params['spaceId']);
+      if (params.spaceId != undefined) {
+        this.spaceId = Number(params.spaceId);
       } else {
         this.spaceId = undefined;
       }
@@ -103,14 +103,14 @@ export class ContentPageComponent implements OnInit {
         });
       }
 
-      if (params['searchValue'] != undefined && this.searchValue != params['searchValue']) {
-        this.searchValue = params['searchValue'];
+      if (params.searchValue != undefined && this.searchValue != params.searchValue) {
+        this.searchValue = params.searchValue;
         if (this.spaceService.currentFolder != undefined) {
           const filesAndFolders: [File[], Folder[]] = SearchService.collectMatchingFilesAndFolders(this.spaceService.currentFolder, this.searchValue);
           this.spaceService.currentFolder.artifacts = filesAndFolders[0];
           this.spaceService.currentFolder.folders = filesAndFolders[1];
         }
-      } else if (params['searchValue'] == undefined) {
+      } else if (params.searchValue == undefined) {
         this.searchValue = undefined;
       }
     });
@@ -195,7 +195,7 @@ export class ContentPageComponent implements OnInit {
         break;
       case 'delete':
         // if folder has content, ask user to confirm deletion first
-        let folder = this.folderService.getFolderFromSpace(id);
+        const folder = this.folderService.getFolderFromSpace(id);
         if ((folder.folders != undefined && folder.folders.length != 0) || (folder.artifacts != undefined && folder.artifacts.length != 0)) {
           const dialogRef = this.dialog.open(DeletionDialogComponent, {
             width: '400px',

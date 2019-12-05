@@ -10,10 +10,10 @@ import {StaticTextService} from '../../services/static-text.service';
 export class ActionBarComponent implements OnInit {
 
   @Input()
-  actionsDisabled: boolean = false;
+  actionsDisabled = false;
 
   @Input()
-  isSpaceRoot: boolean = false;
+  isSpaceRoot = false;
 
   @Output()
   openCreateFolderDialog = new EventEmitter();

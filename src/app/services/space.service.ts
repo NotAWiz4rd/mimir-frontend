@@ -32,7 +32,7 @@ export class SpaceService {
   }
 
   delete(id: number): Observable<string> {
-    let spaceDeletionResult = new BehaviorSubject('');
+    const spaceDeletionResult = new BehaviorSubject('');
     // todo disable deleting current space? Or navigate to other space then?
     if (id != this.currentSpace.id) {
       this.http.delete<string>(SPACE_PATH + id).subscribe(result => {

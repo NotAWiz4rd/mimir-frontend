@@ -6,12 +6,12 @@ export class LanguageService {
   }
 
   getLanguage(): number {
-    let language = localStorage.getItem('language') != null ? localStorage.getItem('language') : 0;
+    const language = localStorage.getItem('language') != null ? localStorage.getItem('language') : 0;
     return Number(language);
   }
 
   getLanguageString(): string {
-    let language = this.getLanguage();
+    const language = this.getLanguage();
     switch (language) {
       case 0:
         return 'English';

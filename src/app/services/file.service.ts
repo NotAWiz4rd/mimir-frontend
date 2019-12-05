@@ -23,7 +23,7 @@ export class FileService {
   }
 
   delete(id: number): Observable<boolean> {
-    let fileWasDeleted = new BehaviorSubject(false);
+    const fileWasDeleted = new BehaviorSubject(false);
     this.http.delete(FILE_PATH + id).subscribe(() => {
       this.folderService.reloadCurrentFolder();
       fileWasDeleted.next(true);
@@ -36,7 +36,7 @@ export class FileService {
   }
 
   rename(id: number, name: string): Observable<boolean> {
-    let fileWasRenamed = new BehaviorSubject(false);
+    const fileWasRenamed = new BehaviorSubject(false);
     this.http.post(FILE_PATH + 'id' + '/rename?name=' + name, {}).subscribe(() => {
       this.folderService.reloadCurrentFolder();
       fileWasRenamed.next(true);
@@ -49,7 +49,7 @@ export class FileService {
    * @param id The file id
    */
   share(id: number) {
-    let link: string = window.location.host + '/file/' + id + '?key=' + btoa(KEY);
+    const link: string = window.location.host + '/file/' + id + '?key=' + btoa(KEY);
     ClipboardService.copyToClipboard(link);
   }
 }
