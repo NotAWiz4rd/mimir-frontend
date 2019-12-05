@@ -5,11 +5,7 @@ import {User} from '../classes/User';
 import {SpaceMetadata} from '../classes/SpaceMetadata';
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
 import {NavigationService} from './navigation.service';
-
-const LOGIN_URL = 'https://se.pfuetsch.xyz/login/';
-const USER_URL = 'https://se.pfuetsch.xyz/users/';
-const REGISTER_URL = 'https://se.pfuetsch.xyz/register/';
-const SPACE_URL = 'https://se.pfuetsch.xyz/spaces/';
+import { environment } from 'src/environments/environment';
 
 const KEY = 'YOU, W3ary TRAVELLER, Sh4LL P4ss!'; // encrypted key is this: WU9VLCBXM2FyeSBUUkFWRUxMRVIsIFNoNExMIFA0c3Mh
 
@@ -41,7 +37,7 @@ export class UserService implements CanActivate {
   }
 
   reloadUser() {
-    this.http.get<SpaceMetadata[]>(SPACE_URL).subscribe(spaceMetadata => {
+    this.http.get<SpaceMetadata[]>(environment.apiUrl + 'spaces').subscribe(spaceMetadata => {
       let spaces: SpaceMetadata[] = spaceMetadata;
       let user = new User();
       user.id = 42;
@@ -55,11 +51,11 @@ export class UserService implements CanActivate {
   }
 
   register(username: string, mail: string, password: string) {
-    this.http.post(REGISTER_URL + '?receiver=' + mail + '&text=' + 'Registration successful!', {});
+    this.http.post(environment.apiUrl + 'register?receiver=' + mail + '&text=' + 'Registration successful!', {});
   }
 
   delete() {
-    this.http.delete(USER_URL + '/' + this.currentUser$.value.id);
+    this.http.delete(environment.apiUrl + 'users/' + this.currentUser$.value.id);
     this.logout();
   }
 

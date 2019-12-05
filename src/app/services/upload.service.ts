@@ -1,14 +1,11 @@
 import {Observable, Subject} from 'rxjs';
 import {HttpClient, HttpEventType, HttpRequest, HttpResponse} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-
-const TEST_SERVER_URL = 'https://se.pfuetsch.xyz/artifact';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class UploadService {
-
   constructor(private http: HttpClient) {
-
   }
 
   public upload(files: Set<File>, folderId: number): { [p: string]: { progress: Observable<number> } } {
@@ -28,7 +25,7 @@ export class UploadService {
       formData.append('file', file);
       // create a http-post request and pass the form
       // tell it to report the upload progress
-      const req = new HttpRequest('POST', TEST_SERVER_URL, formData, {
+      const req = new HttpRequest('POST', environment.apiUrl + 'artifact', formData, {
         reportProgress: true
       });
 
