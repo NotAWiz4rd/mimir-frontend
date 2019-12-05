@@ -4,7 +4,7 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {RouterModule} from '@angular/router';
 import {APP_ROUTES} from './app.routes';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {UserService} from './services/user.service';
 import {NavigationService} from './services/navigation.service';
 import {LanguageService} from './services/language.service';
@@ -53,6 +53,7 @@ import {RenameDialogComponent} from './components/rename-dialog/rename-dialog.co
 import {LandingPageComponent} from './pages/landing-page/landing-page.component';
 import {ClipboardService} from './services/clipboard.service';
 import {SpaceSettingsComponent} from './components/space-settings/space-settings.component';
+import {BasicAuthInterceptor} from './helpers/basic-auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -111,6 +112,7 @@ import {SpaceSettingsComponent} from './components/space-settings/space-settings
     MatSnackBarContainer,
   ],
   providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true},
     UserService,
     NavigationService,
     LanguageService,
