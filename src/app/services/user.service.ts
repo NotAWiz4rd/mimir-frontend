@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {User} from '../classes/User';
 import {SpaceMetadata} from '../classes/SpaceMetadata';
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
@@ -89,5 +89,13 @@ export class UserService implements CanActivate {
       this.navigationService.navigateToView('');
     }
     return verdict;
+  }
+
+  getUsersByIds(users: number[]): Observable<User[]> {
+    let userSubject: BehaviorSubject<User[]> = new BehaviorSubject<User[]>(undefined);
+    this.http.get<User[]>(USER_URL + users).subscribe(users => {
+      userSubject.next(users);
+    });
+    return userSubject;
   }
 }

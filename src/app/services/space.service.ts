@@ -4,6 +4,7 @@ import {Space} from '../classes/Space';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {SpaceMetadata} from '../classes/SpaceMetadata';
+import {User} from '../classes/User';
 
 const SPACE_PATH = 'https://se.pfuetsch.xyz/space/';
 
@@ -44,5 +45,21 @@ export class SpaceService {
       });
     }
     return spaceDeletionResult;
+  }
+
+  addUserToCurrentSpace(usermail: string): Observable<User[]> {
+    let userSubject: BehaviorSubject<User[]> = new BehaviorSubject<User[]>(undefined);
+    this.http.post<User[]>(SPACE_PATH + this.currentSpace.id + '/adduser?mail=' + usermail, {}).subscribe(users => {
+      userSubject.next(users);
+    });
+    return userSubject;
+  }
+
+  removeUserFromCurrentSpace(userId: number): Observable<User[]> {
+    let userSubject: BehaviorSubject<User[]> = new BehaviorSubject<User[]>(undefined);
+    this.http.post<User[]>(SPACE_PATH + this.currentSpace.id + '/removeuser?id=' + userId, {}).subscribe(users => {
+      userSubject.next(users);
+    });
+    return userSubject;
   }
 }

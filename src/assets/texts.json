@@ -153,5 +153,20 @@
     "logicalName": "changePassword",
     "english": "Change Password",
     "german": "Passwort ändern"
+  },
+  {
+    "logicalName": "addUser",
+    "english": "Add User",
+    "german": "Nutzer hinzufügen"
+  },
+  {
+    "logicalName": "enterMail",
+    "english": "Please enter a valid email address",
+    "german": "Bitte geben Sie eine valide E-Mail Addresse ein"
+  },
+  {
+    "logicalName": "currentUsers",
+    "english": "  Users currently in this space",
+    "german": "Aktuelle Nutzer im Space"
   }
 ]
