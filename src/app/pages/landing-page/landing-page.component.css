@@ -89,6 +89,7 @@ span {
   width: 100%;
   z-index: -2;
   position: sticky;
+  top: -20vh;
 }
 
 .screenshot-container {
@@ -105,7 +106,7 @@ span {
 .wave {
   position: absolute;
   top: 0;
-  height: 100vh;
+  height: 120vh;
   width: 100%;
   z-index: -1;
 }
