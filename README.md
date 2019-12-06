@@ -5,6 +5,6 @@ Konfiguration der Umgebung:
   * In der `angular.json` wird sie mit `configuration.production.fileReplacements` durch die produktive environment-Konfiguration ersetzt, die die Domain des produktiven Servers konfiguriert.
 
 Projekt bauen:
-  * development Server, http://localhost:4200 `ng serve`
+  * development Server, http://localhost:4200 `ng update-serve`
   * produktiv: `ng build --prod`
   * Die Artefakte liegen in `dist`.
