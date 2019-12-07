@@ -20,8 +20,8 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  login() {
-    this.userService.login('thellmann', 'thellmann');
+  async login() {
+    await this.userService.login('thellmann', 'thellmann');
     this.navigationService.navigateToSpace(2); // todo get user from backend, navigate to first space
   }
 
