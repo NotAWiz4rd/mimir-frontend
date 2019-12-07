@@ -5,7 +5,7 @@ import {User} from '../classes/User';
 import {SpaceMetadata} from '../classes/SpaceMetadata';
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
 import {NavigationService} from './navigation.service';
-import { environment } from 'src/environments/environment';
+import {environment} from 'src/environments/environment';
 
 const KEY = 'YOU, W3ary TRAVELLER, Sh4LL P4ss!'; // encrypted key is this: WU9VLCBXM2FyeSBUUkFWRUxMRVIsIFNoNExMIFA0c3Mh
 
@@ -30,7 +30,8 @@ export class UserService implements CanActivate {
     const params = new HttpParams()
       .set('username', username)
       .set('password', password);
-    const response = await this.http.get<{ token: string }>(environment.apiUrl + 'login', { params }).toPromise();
+    const response = await this.http.get<{ token: string }>(
+      environment.apiUrl + 'login', { params }).toPromise();
     this.token = response.token;
     localStorage.setItem(this.localStorageTokenKey, this.token);
     this.reloadUser();
