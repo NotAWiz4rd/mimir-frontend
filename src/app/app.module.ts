@@ -53,7 +53,7 @@ import {RenameDialogComponent} from './components/rename-dialog/rename-dialog.co
 import {LandingPageComponent} from './pages/landing-page/landing-page.component';
 import {ClipboardService} from './services/clipboard.service';
 import {SpaceSettingsComponent} from './components/space-settings/space-settings.component';
-import {BasicAuthInterceptor} from './helpers/basic-auth.interceptor';
+import {TokenAuthInterceptor} from './helpers/token-auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -112,7 +112,7 @@ import {BasicAuthInterceptor} from './helpers/basic-auth.interceptor';
     MatSnackBarContainer,
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: TokenAuthInterceptor, multi: true},
     UserService,
     NavigationService,
     LanguageService,

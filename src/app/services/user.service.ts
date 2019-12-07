@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {BehaviorSubject} from 'rxjs';
 import {User} from '../classes/User';
 import {SpaceMetadata} from '../classes/SpaceMetadata';
@@ -18,16 +18,21 @@ const httpOptions = {
 @Injectable()
 export class UserService implements CanActivate {
   currentUser$: BehaviorSubject<User> = new BehaviorSubject<User>(undefined);
-  username: string;
-  password: string;
+  localStorageTokenKey = 'cmspp-token';
+  token: string;
 
   constructor(private http: HttpClient,
               private navigationService: NavigationService) {
+    this.token = localStorage.getItem(this.localStorageTokenKey);
   }
 
-  login(username: string, password: string) {
-    this.username = username;
-    this.password = password;
+  async login(username: string, password: string) {
+    const params = new HttpParams()
+      .set('username', username)
+      .set('password', password);
+    const response = await this.http.get<{ token: string }>(environment.apiUrl + 'login', { params }).toPromise();
+    this.token = response.token;
+    localStorage.setItem(this.localStorageTokenKey, this.token);
     this.reloadUser();
   }
 
@@ -51,6 +56,8 @@ export class UserService implements CanActivate {
 
   logout() {
     this.currentUser$.next(undefined);
+    this.token = undefined;
+    localStorage.removeItem(this.localStorageTokenKey);
   }
 
   register(username: string, mail: string, password: string) {

@@ -4,19 +4,16 @@ import {Observable} from 'rxjs';
 import {UserService} from '../services/user.service';
 
 @Injectable()
-export class BasicAuthInterceptor implements HttpInterceptor {
+export class TokenAuthInterceptor implements HttpInterceptor {
   constructor(private userService: UserService) {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // add authorization header with basic auth credentials if available
-    const username = this.userService.username;
-    const password = this.userService.password;
-    if (username !== undefined && password !== undefined) {
-      const token = btoa(username + ':' + password);
+    const token = this.userService.token;
+    if (!!token) {
       request = request.clone({
         setHeaders: {
-          Authorization: 'Basic ' + token,
+          Authorization: 'Bearer ' + token,
         }
       });
     }
