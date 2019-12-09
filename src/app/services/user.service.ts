@@ -1,10 +1,9 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {BehaviorSubject} from 'rxjs';
 import {User} from '../classes/User';
 import {SpaceMetadata} from '../classes/SpaceMetadata';
-import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
-import {NavigationService} from './navigation.service';
+import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, Router} from '@angular/router';
 import {environment} from 'src/environments/environment';
 
 const KEY = 'YOU, W3ary TRAVELLER, Sh4LL P4ss!'; // encrypted key is this: WU9VLCBXM2FyeSBUUkFWRUxMRVIsIFNoNExMIFA0c3Mh
@@ -22,7 +21,7 @@ export class UserService implements CanActivate {
   token: string;
 
   constructor(private http: HttpClient,
-              private navigationService: NavigationService) {
+              private router: Router) {
     this.token = localStorage.getItem(this.localStorageTokenKey);
   }
 
@@ -93,7 +92,7 @@ export class UserService implements CanActivate {
     }
 
     if (verdict == false) {
-      this.navigationService.navigateToView('');
+      this.router.navigateByUrl('');
     }
     return verdict;
   }

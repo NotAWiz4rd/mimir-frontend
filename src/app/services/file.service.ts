@@ -5,6 +5,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {FolderService} from './folder.service';
 import {ClipboardService} from './clipboard.service';
 import { environment } from 'src/environments/environment';
+import { UserService } from './user.service';
 
 const KEY = 'YOU, W3ary TRAVELLER, Sh4LL P4ss!';
 
@@ -14,7 +15,8 @@ export class FileService {
   currentFile$: BehaviorSubject<File> = new BehaviorSubject<File>(undefined);
 
   constructor(private http: HttpClient,
-              private folderService: FolderService) {
+              private folderService: FolderService,
+              private userService: UserService) {
   }
 
   loadFile(id: number) {
@@ -33,7 +35,23 @@ export class FileService {
   }
 
   download(id: number) {
-    window.open(this.baseUrl + id + '?download');
+    /*
+      create and submit a virtual form
+        <form method=POST action=…download>
+          <input type=text name=token>…token…</input>
+        </form>
+    */
+    const form = document.createElement('form');
+    form.setAttribute('method', 'POST');
+    form.setAttribute('action', this.baseUrl + id + '/download');
+    const tokenField = document.createElement('input');
+    tokenField.setAttribute('type', 'text');
+    tokenField.setAttribute('name', 'token');
+    tokenField.value = this.userService.token;
+    form.appendChild(tokenField);
+    document.body.appendChild(form);
+    form.submit();
+    document.body.removeChild(form);
   }
 
   rename(id: number, name: string): Observable<boolean> {
