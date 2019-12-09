@@ -6,6 +6,7 @@ import {Space} from '../classes/Space';
 import {SpaceService} from './space.service';
 import {ClipboardService} from './clipboard.service';
 import { environment } from 'src/environments/environment';
+import { UserService } from './user.service';
 
 const KEY = 'YOU, W3ary TRAVELLER, Sh4LL P4ss!';
 
@@ -14,7 +15,8 @@ export class FolderService {
   baseUrl: string = environment.apiUrl + 'folder/';
 
   constructor(private http: HttpClient,
-              private spaceService: SpaceService) {
+              private spaceService: SpaceService,
+              private userService: UserService) {
   }
 
   /**
@@ -101,7 +103,23 @@ export class FolderService {
   }
 
   download(id: number) {
-    window.open(this.baseUrl + id + '?download');
+    /*
+      create and submit a virtual form
+        <form method=POST action=…download>
+          <input type=text name=token>…token…</input>
+        </form>
+    */
+    const form = document.createElement('form');
+    form.setAttribute('method', 'GET');
+    form.setAttribute('action', this.baseUrl + id + '/download');
+    const tokenField = document.createElement('input');
+    tokenField.setAttribute('type', 'text');
+    tokenField.setAttribute('name', 'token');
+    tokenField.value = this.userService.token;
+    form.appendChild(tokenField);
+    document.body.appendChild(form);
+    form.submit();
+    document.body.removeChild(form);
   }
 
 
