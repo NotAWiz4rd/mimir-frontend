@@ -4,7 +4,6 @@ import {StaticTextService} from '../../services/static-text.service';
 import {LanguageService} from '../../services/language.service';
 import {NavigationService} from '../../services/navigation.service';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-login',
