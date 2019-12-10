@@ -181,7 +181,10 @@ export class ContentPageComponent implements OnInit {
     switch (action) {
       case 'rename':
         const dialogRef = this.dialog.open(RenameDialogComponent, {
-          width: '400px'
+          width: '400px',
+          data: {
+            type: 'folder'
+          }
         });
         dialogRef.afterClosed().subscribe(newName => {
           if (newName != undefined) {
@@ -229,7 +232,10 @@ export class ContentPageComponent implements OnInit {
     switch (action) {
       case 'rename':
         const dialogRef = this.dialog.open(RenameDialogComponent, {
-          width: '400px'
+          width: '400px',
+          data: {
+            type: 'file'
+          }
         });
         dialogRef.afterClosed().subscribe(newName => {
           if (newName != undefined) {
