@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { ThumbnailService } from 'src/app/services/thumbnail.service';
 
 @Component({
   selector: 'app-thumbnail',
@@ -7,7 +8,10 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 })
 export class ThumbnailComponent implements OnInit {
   @Input()
-  filename: string;
+  fileName: string;
+
+  @Input()
+  fileId: number;
 
   @Input()
   thumbnailType: string;
@@ -15,13 +19,26 @@ export class ThumbnailComponent implements OnInit {
   @Output()
   actionEmitter: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor() {
+  thumbnailUrl: string = 'assets/thumbnails/folder.png';
+
+  constructor(private thumbnailService: ThumbnailService) {
   }
 
   ngOnInit() {
+    if(this.thumbnailType == 'file') this.setFileThumbnailUrl();
   }
 
   emitAction(action: string) {
     this.actionEmitter.emit(action);
+  }
+
+  getShortenedFileName(): string {
+    return this.fileName.length > 15 ? this.fileName.substr(0, 12) + '...' : this.fileName;
+  }
+
+  setFileThumbnailUrl(): void {
+    this.thumbnailService.fetchThumbnail(this.fileId).subscribe(base64Image => {
+      this.thumbnailUrl = base64Image;
+    });
   }
 }

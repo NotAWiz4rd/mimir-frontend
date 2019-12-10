@@ -1,9 +1,8 @@
-<img [src]="'assets/thumbnails/' + thumbnailType + '.png'"
+<img [src]="thumbnailUrl"
      alt="file thumbnail">
-
 <app-action-menu class="action-menu"
                  (actionEmitter)="emitAction($event)">
 </app-action-menu>
-<p>
-  {{filename}}
+<p [matTooltip] = "fileName">
+  {{getShortenedFileName()}}
 </p>

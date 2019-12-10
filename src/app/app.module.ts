@@ -54,6 +54,7 @@ import {LandingPageComponent} from './pages/landing-page/landing-page.component'
 import {ClipboardService} from './services/clipboard.service';
 import {SpaceSettingsComponent} from './components/space-settings/space-settings.component';
 import {TokenAuthInterceptor} from './helpers/token-auth.interceptor';
+import { ThumbnailService } from './services/thumbnail.service';
 
 @NgModule({
   declarations: [
@@ -116,6 +117,7 @@ import {TokenAuthInterceptor} from './helpers/token-auth.interceptor';
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: TokenAuthInterceptor, multi: true},
+    ThumbnailService,
     UserService,
     NavigationService,
     LanguageService,
