@@ -110,7 +110,7 @@ export class FolderService {
         </form>
     */
     const form = document.createElement('form');
-    form.setAttribute('method', 'GET');
+    form.setAttribute('method', 'POST');
     form.setAttribute('action', this.baseUrl + id + '/download');
     const tokenField = document.createElement('input');
     tokenField.setAttribute('type', 'text');
