@@ -55,6 +55,7 @@ import {ClipboardService} from './services/clipboard.service';
 import {SpaceSettingsComponent} from './components/space-settings/space-settings.component';
 import {TokenAuthInterceptor} from './helpers/token-auth.interceptor';
 import {MatCardModule} from "@angular/material/card";
+import { ThumbnailService } from './services/thumbnail.service';
 
 @NgModule({
   declarations: [
@@ -118,6 +119,7 @@ import {MatCardModule} from "@angular/material/card";
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: TokenAuthInterceptor, multi: true},
+    ThumbnailService,
     UserService,
     NavigationService,
     LanguageService,
