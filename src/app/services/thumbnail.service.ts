@@ -3,11 +3,13 @@ import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { flatMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
+
 
 @Injectable()
 export class ThumbnailService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private sanitizer: DomSanitizer,) {
   }
 
   public fetchThumbnail(fileId: number) : Observable<string> {
@@ -27,7 +29,7 @@ export class ThumbnailService {
     const fileReader = new FileReader();
     const observable = new Observable(observer => {
       fileReader.onloadend = () => {
-        observer.next(fileReader.result);
+        observer.next(this.sanitizer.bypassSecurityTrustResourceUrl(<string> fileReader.result));
         observer.complete();
       };
     });
