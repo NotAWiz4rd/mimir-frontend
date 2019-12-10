@@ -1,3 +1,47 @@
-<p>
-  landing-page works!
-</p>
+<div class="body-container">
+  <img class="wave" src="../../../assets/img/wavey.png">
+  <div class="top-container">
+    <img class="longLogo" src="../../../assets/img/cmspp.png">
+    <h2 class="subText">The collaborative CMS
+      <span></span>
+    </h2>
+    <div class="imageFan-container">
+    </div>
+    <div>
+      <p style="color: white;">Through CMS++ you can share everything with your fellow students and friends. Everybody has a space where the data is stored, a space is like a collaborative holy grail.</p>
+    </div>
+    <button mat-stroked-button (click)="goToLogin()" color="accent">
+      Login
+    </button>
+  </div>
+  <img class="hero-image" src="../../../assets/img/hero_gradient.png">
+  <div class="citation-container">
+    <p class="citation-step-1">Steve Jobs once said:<br>"<i>If you don't love it, you're going to fail.</i>"</p><br>
+    <h2 class="citation-step-2">
+      So we decided to build a CMS everybody can love.
+    </h2>
+    <br>
+    <div class="citation-step-3"></div>
+  </div>  
+  <div class="checkbox-container purple">
+    <h2>Have you ever used a CMS where the community aspect was lackluster?</h2>
+    <br>
+    <mat-slide-toggle [(ngModel)]="value1" (change)="scroll('checkbox2')">SLIDE FOR YES!
+    </mat-slide-toggle>
+  </div>
+  <div *ngIf="value1" class="checkbox-container amber">
+    <h2>Have you ever wanted to collaborate with other students through a CMS?</h2>
+    <br>
+    <mat-slide-toggle id="checkbox2" [(ngModel)]="value2" (change)="scroll('checkbox3')" [color]="'primary'">SLIDE FOR YES!</mat-slide-toggle>
+  </div>
+  <div *ngIf="value2" class="checkbox-container purple">
+    <h2>Have you ever wanted to share your folders and files with ease?</h2>
+    <br>
+    <mat-slide-toggle id="checkbox3" [(ngModel)]="value3" (change)="scroll('finalButton')">SLIDE FOR YES!</mat-slide-toggle>
+  </div>
+  <div *ngIf="value3" class="final-container">
+    <h2>Then look no further and bask upon the glory of CMS++</h2>
+    <br>
+    <button id="finalButton" color="primary" mat-raised-button (click)="goToLogin()">ENTER</button>
+  </div>
+</div>

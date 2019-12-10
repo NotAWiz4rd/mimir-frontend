@@ -56,7 +56,7 @@ export class FileService {
 
   rename(id: number, name: string): Observable<boolean> {
     let fileWasRenamed = new BehaviorSubject(false);
-    this.http.post(environment.apiUrl + 'folder/id' + '/rename?name=' + name, {}).subscribe(() => {
+    this.http.put(environment.apiUrl + 'artifact/' + id + '/?name=' + name, {}).subscribe(() => {
       this.folderService.reloadCurrentFolder();
       fileWasRenamed.next(true);
     });
