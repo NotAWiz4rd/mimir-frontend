@@ -18,7 +18,7 @@ import {ActionBarComponent} from './components/action-bar/action-bar.component';
 import {
     MatAutocompleteModule,
     MatButtonModule,
-    MatButtonToggleModule, MatCardModule, MatCheckboxModule,
+    MatButtonToggleModule, MatCheckboxModule,
     MatDialogModule,
     MatFormFieldModule, MatIconModule,
     MatInputModule,
@@ -54,6 +54,7 @@ import {LandingPageComponent} from './pages/landing-page/landing-page.component'
 import {ClipboardService} from './services/clipboard.service';
 import {SpaceSettingsComponent} from './components/space-settings/space-settings.component';
 import {TokenAuthInterceptor} from './helpers/token-auth.interceptor';
+import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
   declarations: [
@@ -80,32 +81,33 @@ import {TokenAuthInterceptor} from './helpers/token-auth.interceptor';
     LandingPageComponent,
     SpaceSettingsComponent,
   ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        RouterModule.forRoot(APP_ROUTES, {
-            scrollPositionRestoration: 'disabled',
-            onSameUrlNavigation: 'reload'
-        }),
-        BrowserAnimationsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatSidenavModule,
-        MatAutocompleteModule,
-        ReactiveFormsModule,
-        MatButtonModule,
-        MatTooltipModule,
-        MatDialogModule,
-        FormsModule,
-        MatListModule,
-        MatProgressBarModule,
-        MatMenuModule,
-        MatSnackBarModule,
-        MatButtonToggleModule,
-        MatCheckboxModule,
-        MatSlideToggleModule,
-        MatIconModule,
-    ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    RouterModule.forRoot(APP_ROUTES, {
+      scrollPositionRestoration: 'disabled',
+      onSameUrlNavigation: 'reload'
+    }),
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSidenavModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatDialogModule,
+    FormsModule,
+    MatListModule,
+    MatProgressBarModule,
+    MatMenuModule,
+    MatSnackBarModule,
+    MatButtonToggleModule,
+    MatCheckboxModule,
+    MatSlideToggleModule,
+    MatIconModule,
+    MatCardModule,
+  ],
   entryComponents: [
     CreateFolderDialogComponent,
     CreateSpaceDialogComponent,
