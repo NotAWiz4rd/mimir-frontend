@@ -95,7 +95,7 @@ export class FolderService {
 
   rename(id: number, name: string): Observable<boolean> {
     let folderWasRenamed = new BehaviorSubject(false);
-    this.http.post(this.baseUrl + id + '/rename?name=' + name, {}).subscribe(() => {
+    this.http.put(this.baseUrl + id + '/?name=' + name, {}).subscribe(() => {
       this.reloadCurrentFolder();
       folderWasRenamed.next(true);
     });
