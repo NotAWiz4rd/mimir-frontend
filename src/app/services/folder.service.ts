@@ -5,14 +5,18 @@ import {Folder} from '../classes/Folder';
 import {Space} from '../classes/Space';
 import {SpaceService} from './space.service';
 import {ClipboardService} from './clipboard.service';
+import { environment } from 'src/environments/environment';
+import { UserService } from './user.service';
 
-const FOLDER_PATH = 'https://se.pfuetsch.xyz/folder';
 const KEY = 'YOU, W3ary TRAVELLER, Sh4LL P4ss!';
 
 @Injectable()
 export class FolderService {
+  baseUrl: string = environment.apiUrl + 'folder/';
+
   constructor(private http: HttpClient,
-              private spaceService: SpaceService) {
+              private spaceService: SpaceService,
+              private userService: UserService) {
   }
 
   /**
@@ -22,7 +26,7 @@ export class FolderService {
    */
   createFolder(name: string, parentId: number): Observable<boolean> {
     let folderWasCreated = new BehaviorSubject(false);
-    this.http.post(FOLDER_PATH + '?name=' + name + '&parentId=' + parentId, {}).subscribe(result => {
+    this.http.post(this.baseUrl + '?name=' + name + '&parentId=' + parentId, {}).subscribe(result => {
       let folder = result as Folder;
       if (folder.name == name) {
         this.spaceService.currentFolder.folders.push(folder);
@@ -45,7 +49,7 @@ export class FolderService {
       }
     }
 
-    this.http.get<Folder>(FOLDER_PATH + '/' + folderId).subscribe(folder => {
+    this.http.get<Folder>(this.baseUrl + folderId).subscribe(folder => {
       this.spaceService.currentSpace = new Space();
       this.spaceService.currentSpace.root = folder;
       this.spaceService.currentSpace.root.parentId = 0;
@@ -57,7 +61,7 @@ export class FolderService {
   }
 
   loadFolder(folderId: number): Observable<Folder> {
-    return this.http.get<Folder>(FOLDER_PATH + '/' + folderId);
+    return this.http.get<Folder>(this.baseUrl + folderId);
   }
 
   reloadCurrentFolder() {
@@ -80,7 +84,7 @@ export class FolderService {
 
   delete(id: number): Observable<boolean> {
     let folderWasDeleted = new BehaviorSubject(false);
-    this.http.delete(FOLDER_PATH + '/' + id).subscribe(result => {
+    this.http.delete(this.baseUrl + id).subscribe(result => {
       if (result == null) {
         this.reloadCurrentFolder();
         folderWasDeleted.next(true);
@@ -91,7 +95,7 @@ export class FolderService {
 
   rename(id: number, name: string): Observable<boolean> {
     let folderWasRenamed = new BehaviorSubject(false);
-    this.http.post(FOLDER_PATH + '/' + id + '/rename?name=' + name, {}).subscribe(() => {
+    this.http.post(this.baseUrl + id + '/rename?name=' + name, {}).subscribe(() => {
       this.reloadCurrentFolder();
       folderWasRenamed.next(true);
     });
@@ -99,7 +103,23 @@ export class FolderService {
   }
 
   download(id: number) {
-    window.open(FOLDER_PATH + '/' + id + '?download');
+    /*
+      create and submit a virtual form
+        <form method=POST action=…download>
+          <input type=text name=token>…token…</input>
+        </form>
+    */
+    const form = document.createElement('form');
+    form.setAttribute('method', 'POST');
+    form.setAttribute('action', this.baseUrl + id + '/download');
+    const tokenField = document.createElement('input');
+    tokenField.setAttribute('type', 'text');
+    tokenField.setAttribute('name', 'token');
+    tokenField.value = this.userService.token;
+    form.appendChild(tokenField);
+    document.body.appendChild(form);
+    form.submit();
+    document.body.removeChild(form);
   }
 
 

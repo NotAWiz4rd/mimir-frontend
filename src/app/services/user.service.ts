@@ -1,15 +1,10 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Injectable, OnInit} from '@angular/core';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {User} from '../classes/User';
 import {SpaceMetadata} from '../classes/SpaceMetadata';
-import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
-import {NavigationService} from './navigation.service';
-
-const LOGIN_URL = 'https://se.pfuetsch.xyz/login/';
-const USER_URL = 'https://se.pfuetsch.xyz/users/';
-const REGISTER_URL = 'https://se.pfuetsch.xyz/register/';
-const SPACE_URL = 'https://se.pfuetsch.xyz/spaces/';
+import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, Router} from '@angular/router';
+import {environment} from 'src/environments/environment';
 
 const KEY = 'YOU, W3ary TRAVELLER, Sh4LL P4ss!'; // encrypted key is this: WU9VLCBXM2FyeSBUUkFWRUxMRVIsIFNoNExMIFA0c3Mh
 
@@ -22,14 +17,23 @@ const httpOptions = {
 @Injectable()
 export class UserService implements CanActivate {
   currentUser$: BehaviorSubject<User> = new BehaviorSubject<User>(undefined);
+  localStorageTokenKey = 'cmspp-token';
+  token: string;
 
   constructor(private http: HttpClient,
-              private navigationService: NavigationService) {
-    this.reloadUser();
+              private router: Router) {
+    this.token = localStorage.getItem(this.localStorageTokenKey);
   }
 
-  login(username: string, password: string) {
-    // todo implement me properly
+  async login(username: string, password: string) {
+    const params = new HttpParams()
+      .set('username', username)
+      .set('password', password);
+    const response = await this.http.get<{ token: string }>(
+      environment.apiUrl + 'login', { params }).toPromise();
+    this.token = response.token;
+    localStorage.setItem(this.localStorageTokenKey, this.token);
+    this.reloadUser();
   }
 
   addSpaceToUser(space: SpaceMetadata) {
@@ -41,7 +45,7 @@ export class UserService implements CanActivate {
   }
 
   reloadUser() {
-    this.http.get<SpaceMetadata[]>(SPACE_URL).subscribe(spaceMetadata => {
+    this.http.get<SpaceMetadata[]>(environment.apiUrl + 'spaces').subscribe(spaceMetadata => {
       let spaces: SpaceMetadata[] = spaceMetadata;
       let user = new User();
       user.id = 42;
@@ -52,14 +56,16 @@ export class UserService implements CanActivate {
 
   logout() {
     this.currentUser$.next(undefined);
+    this.token = undefined;
+    localStorage.removeItem(this.localStorageTokenKey);
   }
 
   register(username: string, mail: string, password: string) {
-    this.http.post(REGISTER_URL + '?receiver=' + mail + '&text=' + 'Registration successful!', {});
+    this.http.post(environment.apiUrl + 'register?receiver=' + mail + '&text=' + 'Registration successful!', {});
   }
 
   delete() {
-    this.http.delete(USER_URL + '/' + this.currentUser$.value.id);
+    this.http.delete(environment.apiUrl + 'users/' + this.currentUser$.value.id);
     this.logout();
   }
 
@@ -86,14 +92,14 @@ export class UserService implements CanActivate {
     }
 
     if (verdict == false) {
-      this.navigationService.navigateToView('');
+      this.router.navigateByUrl('');
     }
     return verdict;
   }
 
   getUsersByIds(users: number[]): Observable<User[]> {
     let userSubject: BehaviorSubject<User[]> = new BehaviorSubject<User[]>(undefined);
-    this.http.get<User[]>(USER_URL + users).subscribe(users => {
+    this.http.get<User[]>(environment.apiUrl +"users/" + users).subscribe(users => {
       userSubject.next(users);
     });
     return userSubject;

@@ -4,12 +4,12 @@ import {Space} from '../classes/Space';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {SpaceMetadata} from '../classes/SpaceMetadata';
+import { environment } from 'src/environments/environment';
 import {User} from '../classes/User';
-
-const SPACE_PATH = 'https://se.pfuetsch.xyz/space/';
 
 @Injectable()
 export class SpaceService {
+  baseUrl: string = environment.apiUrl + 'space/';
   currentSpace: Space;
   currentSpace$: BehaviorSubject<Space> = new BehaviorSubject<Space>(this.currentSpace);
 
@@ -20,7 +20,7 @@ export class SpaceService {
 
   loadSpace(spaceId: number, uploaded: boolean = false): Observable<Space> {
     if (spaceId != undefined && (this.currentSpace == undefined || (this.currentSpace.id != spaceId) || uploaded)) {
-      this.http.get<Space>(SPACE_PATH + spaceId).subscribe(space => {
+      this.http.get<Space>(this.baseUrl + spaceId).subscribe(space => {
         this.currentSpace = space;
         this.currentSpace$.next(this.currentSpace);
       });
@@ -29,14 +29,14 @@ export class SpaceService {
   }
 
   createSpace(name: string): Observable<SpaceMetadata> {
-    return this.http.post<SpaceMetadata>(SPACE_PATH + '?name=' + name, {});
+    return this.http.post<SpaceMetadata>(this.baseUrl + '?name=' + name, {});
   }
 
   delete(id: number): Observable<string> {
     let spaceDeletionResult = new BehaviorSubject('');
     // todo disable deleting current space? Or navigate to other space then?
     if (id != this.currentSpace.id) {
-      this.http.delete<string>(SPACE_PATH + id).subscribe(result => {
+      this.http.delete<string>(this.baseUrl + id).subscribe(result => {
         if (result != null) {
           spaceDeletionResult.next(result);
         } else {
@@ -49,7 +49,7 @@ export class SpaceService {
 
   addUserToCurrentSpace(usermail: string): Observable<User[]> {
     let userSubject: BehaviorSubject<User[]> = new BehaviorSubject<User[]>(undefined);
-    this.http.post<User[]>(SPACE_PATH + this.currentSpace.id + '/adduser?mail=' + usermail, {}).subscribe(users => {
+    this.http.post<User[]>(this.baseUrl + this.currentSpace.id + '/adduser?mail=' + usermail, {}).subscribe(users => {
       userSubject.next(users);
     });
     return userSubject;
@@ -57,7 +57,7 @@ export class SpaceService {
 
   removeUserFromCurrentSpace(userId: number): Observable<User[]> {
     let userSubject: BehaviorSubject<User[]> = new BehaviorSubject<User[]>(undefined);
-    this.http.post<User[]>(SPACE_PATH + this.currentSpace.id + '/removeuser?id=' + userId, {}).subscribe(users => {
+    this.http.post<User[]>(this.baseUrl + this.currentSpace.id + '/removeuser?id=' + userId, {}).subscribe(users => {
       userSubject.next(users);
     });
     return userSubject;
