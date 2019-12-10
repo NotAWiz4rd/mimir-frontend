@@ -54,6 +54,7 @@ import {LandingPageComponent} from './pages/landing-page/landing-page.component'
 import {ClipboardService} from './services/clipboard.service';
 import {SpaceSettingsComponent} from './components/space-settings/space-settings.component';
 import {TokenAuthInterceptor} from './helpers/token-auth.interceptor';
+import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
   declarations: [
@@ -102,6 +103,7 @@ import {TokenAuthInterceptor} from './helpers/token-auth.interceptor';
     MatMenuModule,
     MatSnackBarModule,
     MatButtonToggleModule,
+    MatCardModule,
   ],
   entryComponents: [
     CreateFolderDialogComponent,
