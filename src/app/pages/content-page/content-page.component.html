@@ -18,7 +18,7 @@
                      (actionEmitter)="doFolderAction($event, folder.id)"></app-thumbnail>
 
       <app-thumbnail *ngFor="let file of spaceService.currentFolder?.artifacts" [fileId] = "file.id" [thumbnailType]="'file'"
-                     [fileName]="calculateName(file)" (click)="navigateToFile(file.id)"
+                     [fileName]="file.name" (click)="navigateToFile(file.id)"
                      (actionEmitter)="doFileAction($event, file.id)"></app-thumbnail>
     </ng-container>
 

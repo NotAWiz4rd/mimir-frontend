@@ -191,7 +191,7 @@ export class FolderService {
     }
     // check if we're in a file
     for (let i = 0; i < base.artifacts.length; i++) {
-      if ((base.artifacts[i].name + '.' + base.artifacts[i].contentType.split('/')[1]).toLowerCase() === pathBits[0].toLowerCase()) {
+      if ((base.artifacts[i].name).toLowerCase() === pathBits[0].toLowerCase()) {
         return base;
       }
     }

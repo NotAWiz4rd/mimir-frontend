@@ -120,7 +120,7 @@ export class ContentPageComponent implements OnInit {
     this.fileService.currentFile$.subscribe(file => {
       if (file != undefined) {
         this.file = file;
-        this.navigationService.namePath$.next(this.file.name + '.' + this.file.contentType.split('/')[1]);
+        this.navigationService.namePath$.next(this.file.name);
       }
     });
   }
@@ -175,10 +175,6 @@ export class ContentPageComponent implements OnInit {
     if (this.fileId == undefined) {
       this.navigationService.figureOutPaths(this.spaceService.currentFolder);
     }
-  }
-
-  calculateName(file: File): string {
-    return file.name + '.' + file.contentType.split('/')[1];
   }
 
   doFolderAction(action: string, id: number) {
