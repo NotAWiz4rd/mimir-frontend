@@ -4,6 +4,7 @@ import {StaticTextService} from '../../services/static-text.service';
 import {LanguageService} from '../../services/language.service';
 import {NavigationService} from '../../services/navigation.service';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-login',
@@ -34,19 +35,15 @@ export class LoginComponent implements OnInit {
   get f() { return this.loginForm.controls; }
 
   async login() {
-    await this.userService.login('thellmann', 'thellmann');
-    //TODO if error -> this.loading = false  and  display error message
-    this.navigationService.navigateToSpace(2); // todo get user from backend, navigate to first space
-  }
-
-  onSubmit() {
     this.submitted = true;
     if (this.loginForm.invalid) {
       return;
     }
     this.loading = true;
-    this.login();
-    //this.userService.login(this.f.username.value, this.f.password.value)
+    //await this.userService.login(this.f.username.value, this.f.password.value)
+    await this.userService.login('thellmann', 'thellmann');
+    //TODO if error -> this.loading = false  and  display error message
+    this.navigationService.navigateToSpace(2); // todo get user from backend, navigate to first space
   }
 
   register() {
