@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "update": "npm prune && npm install",
-    "serve": "ng serve --host 0.0.0.0 --disable-host-check",
+    "serve": "ng serve --host 0.0.0.0 --disable-host-check --prod",
     "update-serve": "npm run update && npm run serve",
     "start": "ng serve",
     "build": "ng build --prod",

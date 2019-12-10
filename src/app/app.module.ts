@@ -16,18 +16,18 @@ import {HeaderBarComponent} from './components/header-bar/header-bar.component';
 import {LoginComponent} from './pages/login/login.component';
 import {ActionBarComponent} from './components/action-bar/action-bar.component';
 import {
-  MatAutocompleteModule,
-  MatButtonModule,
-  MatButtonToggleModule,
-  MatDialogModule,
-  MatFormFieldModule,
-  MatInputModule,
-  MatMenuModule,
-  MatSidenavModule,
-  MatSnackBar,
-  MatSnackBarContainer,
-  MatSnackBarModule,
-  MatTooltipModule
+    MatAutocompleteModule,
+    MatButtonModule,
+    MatButtonToggleModule, MatCardModule, MatCheckboxModule,
+    MatDialogModule,
+    MatFormFieldModule, MatIconModule,
+    MatInputModule,
+    MatMenuModule,
+    MatSidenavModule, MatSlideToggleModule,
+    MatSnackBar,
+    MatSnackBarContainer,
+    MatSnackBarModule,
+    MatTooltipModule
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SearchComponent} from './components/search/search.component';
@@ -54,7 +54,6 @@ import {LandingPageComponent} from './pages/landing-page/landing-page.component'
 import {ClipboardService} from './services/clipboard.service';
 import {SpaceSettingsComponent} from './components/space-settings/space-settings.component';
 import {TokenAuthInterceptor} from './helpers/token-auth.interceptor';
-import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
   declarations: [
@@ -81,30 +80,32 @@ import {MatCardModule} from "@angular/material/card";
     LandingPageComponent,
     SpaceSettingsComponent,
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    RouterModule.forRoot(APP_ROUTES, {
-      scrollPositionRestoration: 'disabled',
-      onSameUrlNavigation: 'reload'
-    }),
-    BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSidenavModule,
-    MatAutocompleteModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatTooltipModule,
-    MatDialogModule,
-    FormsModule,
-    MatListModule,
-    MatProgressBarModule,
-    MatMenuModule,
-    MatSnackBarModule,
-    MatButtonToggleModule,
-    MatCardModule,
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        RouterModule.forRoot(APP_ROUTES, {
+            scrollPositionRestoration: 'disabled',
+            onSameUrlNavigation: 'reload'
+        }),
+        BrowserAnimationsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSidenavModule,
+        MatAutocompleteModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatTooltipModule,
+        MatDialogModule,
+        FormsModule,
+        MatListModule,
+        MatProgressBarModule,
+        MatMenuModule,
+        MatSnackBarModule,
+        MatButtonToggleModule,
+        MatCheckboxModule,
+        MatSlideToggleModule,
+        MatIconModule,
+    ],
   entryComponents: [
     CreateFolderDialogComponent,
     CreateSpaceDialogComponent,

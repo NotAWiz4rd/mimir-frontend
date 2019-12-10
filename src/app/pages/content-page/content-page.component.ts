@@ -203,8 +203,8 @@ export class ContentPageComponent implements OnInit {
           });
 
           dialogRef.afterClosed().subscribe(deleteAnyways => {
-            if (deleteAnyways) { // todo this doesnt work yet
-              this.deleteFolder(id);
+            if (deleteAnyways) {
+              this.deleteFolder(id, true);
             }
           });
         } else {
@@ -221,8 +221,8 @@ export class ContentPageComponent implements OnInit {
     }
   }
 
-  private deleteFolder(id: number) {
-    this.folderService.delete(id).subscribe(folderWasDeleted => {
+  private deleteFolder(id: number, deleteWithContent: boolean = false) {
+    this.folderService.delete(id, deleteWithContent).subscribe(folderWasDeleted => {
       if (folderWasDeleted) {
         this.openSnackBar('Folder was deleted successfully');
       }
