@@ -5,8 +5,8 @@ import {Folder} from '../classes/Folder';
 import {Space} from '../classes/Space';
 import {SpaceService} from './space.service';
 import {ClipboardService} from './clipboard.service';
-import { environment } from 'src/environments/environment';
-import { UserService } from './user.service';
+import {environment} from 'src/environments/environment';
+import {UserService} from './user.service';
 
 const KEY = 'YOU, W3ary TRAVELLER, Sh4LL P4ss!';
 
@@ -82,9 +82,9 @@ export class FolderService {
     }
   }
 
-  delete(id: number): Observable<boolean> {
+  delete(id: number, deleteWithContent: boolean = false): Observable<boolean> {
     let folderWasDeleted = new BehaviorSubject(false);
-    this.http.delete(this.baseUrl + id).subscribe(result => {
+    this.http.delete(this.baseUrl + id + '?force=' + deleteWithContent).subscribe(result => {
       if (result == null) {
         this.reloadCurrentFolder();
         folderWasDeleted.next(true);
@@ -95,7 +95,7 @@ export class FolderService {
 
   rename(id: number, name: string): Observable<boolean> {
     let folderWasRenamed = new BehaviorSubject(false);
-    this.http.post(this.baseUrl + id + '/rename?name=' + name, {}).subscribe(() => {
+    this.http.put(this.baseUrl + id + '/?name=' + name, {}).subscribe(() => {
       this.reloadCurrentFolder();
       folderWasRenamed.next(true);
     });
@@ -191,7 +191,7 @@ export class FolderService {
     }
     // check if we're in a file
     for (let i = 0; i < base.artifacts.length; i++) {
-      if ((base.artifacts[i].name + '.' + base.artifacts[i].contentType.split('/')[1]).toLowerCase() === pathBits[0].toLowerCase()) {
+      if ((base.artifacts[i].name).toLowerCase() === pathBits[0].toLowerCase()) {
         return base;
       }
     }

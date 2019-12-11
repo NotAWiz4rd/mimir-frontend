@@ -120,7 +120,7 @@ export class ContentPageComponent implements OnInit {
     this.fileService.currentFile$.subscribe(file => {
       if (file != undefined) {
         this.file = file;
-        this.navigationService.namePath$.next(this.file.name + '.' + this.file.contentType.split('/')[1]);
+        this.navigationService.namePath$.next(this.file.name);
       }
     });
   }
@@ -177,10 +177,6 @@ export class ContentPageComponent implements OnInit {
     }
   }
 
-  calculateName(file: File): string {
-    return file.name + '.' + file.contentType.split('/')[1];
-  }
-
   doFolderAction(action: string, id: number) {
     switch (action) {
       case 'rename':
@@ -203,8 +199,8 @@ export class ContentPageComponent implements OnInit {
           });
 
           dialogRef.afterClosed().subscribe(deleteAnyways => {
-            if (deleteAnyways) { // todo this doesnt work yet
-              this.deleteFolder(id);
+            if (deleteAnyways) {
+              this.deleteFolder(id, true);
             }
           });
         } else {
@@ -221,8 +217,8 @@ export class ContentPageComponent implements OnInit {
     }
   }
 
-  private deleteFolder(id: number) {
-    this.folderService.delete(id).subscribe(folderWasDeleted => {
+  private deleteFolder(id: number, deleteWithContent: boolean = false) {
+    this.folderService.delete(id, deleteWithContent).subscribe(folderWasDeleted => {
       if (folderWasDeleted) {
         this.openSnackBar('Folder was deleted successfully');
       }

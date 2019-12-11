@@ -16,12 +16,7 @@ export class UploadService {
       // create a new multipart-form for every file
       const formData: FormData = new FormData();
       formData.append('parentId', folderId.toString());
-      const nameArr = file.name.split('.');
-      let fileName = '';
-      for(let i = 0; i<nameArr.length-1; i++){
-        fileName += nameArr[i];
-      }
-      formData.append('name', fileName);
+      formData.append('name', file.name);
       formData.append('file', file);
       // create a http-post request and pass the form
       // tell it to report the upload progress

@@ -66,6 +66,7 @@ import {
   MatSnackBarModule,
   MatTooltipModule
 } from '@angular/material';
+import { ThumbnailService } from './services/thumbnail.service';
 
 @NgModule({
   declarations: [
@@ -118,31 +119,6 @@ import {
         MatSlideToggleModule,
         MatIconModule,
     ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    RouterModule.forRoot(APP_ROUTES, {
-      scrollPositionRestoration: 'disabled',
-      onSameUrlNavigation: 'reload'
-    }),
-    BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSidenavModule,
-    MatAutocompleteModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatTooltipModule,
-    MatDialogModule,
-    FormsModule,
-    MatListModule,
-    MatProgressBarModule,
-    MatMenuModule,
-    MatSnackBarModule,
-    MatButtonToggleModule,
-    MatChipsModule,
-    MatIconModule,
-  ],
   entryComponents: [
     CreateFolderDialogComponent,
     CreateSpaceDialogComponent,
@@ -153,6 +129,7 @@ import {
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: TokenAuthInterceptor, multi: true},
+    ThumbnailService,
     UserService,
     NavigationService,
     LanguageService,
