@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Inject} from '@angular/core';
 import {StaticTextService} from '../../services/static-text.service';
 import {LanguageService} from '../../services/language.service';
-import {MatDialogRef} from '@angular/material';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {CreateFolderDialogComponent} from '../create-folder-dialog/create-folder-dialog.component';
 
 @Component({
@@ -11,10 +11,13 @@ import {CreateFolderDialogComponent} from '../create-folder-dialog/create-folder
 })
 export class RenameDialogComponent implements OnInit {
   name: string;
+  type: string;
 
   constructor(public dialogRef: MatDialogRef<CreateFolderDialogComponent>,
               public staticTextService: StaticTextService,
-              public languageService: LanguageService) {
+              public languageService: LanguageService,
+              @Inject(MAT_DIALOG_DATA) data) {
+    this.type = data.type;
   }
 
   ngOnInit() {
@@ -31,6 +34,13 @@ export class RenameDialogComponent implements OnInit {
     if (this.name == undefined) {
       return true;
     }
-    return this.name.includes('.'); // using '.' in a name would confuse the path and navigation
+    switch(this.type) {
+      case 'folder':
+        return this.name.includes('.');
+      case 'file':
+        return false;
+      default:
+        return true;
+    }
   }
 }
