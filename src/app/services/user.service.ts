@@ -1,9 +1,9 @@
-import {Injectable, OnInit} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {User} from '../classes/User';
 import {SpaceMetadata} from '../classes/SpaceMetadata';
-import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, Router} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {environment} from 'src/environments/environment';
 
 const KEY = 'YOU, W3ary TRAVELLER, Sh4LL P4ss!'; // encrypted key is this: WU9VLCBXM2FyeSBUUkFWRUxMRVIsIFNoNExMIFA0c3Mh
@@ -30,7 +30,7 @@ export class UserService implements CanActivate {
       .set('username', username)
       .set('password', password);
     const response = await this.http.get<{ token: string }>(
-      environment.apiUrl + 'login', { params }).toPromise();
+      environment.apiUrl + 'login', {params}).toPromise();
     this.token = response.token;
     localStorage.setItem(this.localStorageTokenKey, this.token);
     this.reloadUser();
@@ -99,7 +99,7 @@ export class UserService implements CanActivate {
 
   getUsersByIds(users: number[]): Observable<User[]> {
     let userSubject: BehaviorSubject<User[]> = new BehaviorSubject<User[]>(undefined);
-    this.http.get<User[]>(environment.apiUrl +"users/" + users).subscribe(users => {
+    this.http.get<User[]>(environment.apiUrl + 'users/' + users).subscribe(users => {
       userSubject.next(users);
     });
     return userSubject;
