@@ -43,8 +43,10 @@ import {TokenAuthInterceptor} from './helpers/token-auth.interceptor';
 import {
   MatAutocompleteModule,
   MatButtonModule,
-  MatButtonToggleModule, MatCardModule,
+  MatButtonToggleModule,
+  MatCardModule,
   MatCheckboxModule,
+  MatChipsModule,
   MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
@@ -110,6 +112,7 @@ import {ThumbnailService} from './services/thumbnail.service';
     MatSlideToggleModule,
     MatIconModule,
     MatCardModule,
+    MatChipsModule,
   ],
   entryComponents: [
     CreateFolderDialogComponent,
