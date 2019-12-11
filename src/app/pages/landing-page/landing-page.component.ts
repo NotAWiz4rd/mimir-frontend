@@ -15,8 +15,7 @@ export class LandingPageComponent implements OnInit {
   value3 = false;
   scrollTo: string;
   constructor(private userService: UserService,
-              private navigationService: NavigationService,
-              private vps: ViewportScroller) {
+              private navigationService: NavigationService) {
   }
 
   ngOnInit() {
