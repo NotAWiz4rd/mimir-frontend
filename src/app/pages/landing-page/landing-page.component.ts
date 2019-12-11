@@ -24,7 +24,7 @@ export class LandingPageComponent implements OnInit {
 
   // tslint:disable-next-line:use-life-cycle-interface
   ngAfterViewChecked() {
-    this.vps.scrollToAnchor(this.scrollTo);
+    document.getElementById(this.scrollTo).scrollIntoView({behavior: 'smooth'});
     this.scrollTo = undefined;
   }
 
