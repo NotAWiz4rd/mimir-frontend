@@ -52,6 +52,7 @@ export class ContentPageComponent implements OnInit {
 
       if (params['fileId'] != undefined) {
         this.fileId = Number(params['fileId']);
+        this.fileService.loadFile(this.fileId);
       } else {
         this.fileId = undefined;
       }
@@ -120,7 +121,10 @@ export class ContentPageComponent implements OnInit {
     this.fileService.currentFile$.subscribe(file => {
       if (file != undefined) {
         this.file = file;
-        this.navigationService.namePath$.next(this.file.name);
+
+        if (this.folderId == undefined) {
+          this.navigationService.namePath$.next(this.file.name);
+        }
       }
     });
   }
