@@ -1,11 +1,12 @@
 export class ClipboardService {
   static copyToClipboard(toCopy: string): void {
-    const create_copy = (e: ClipboardEvent) => {
-      e.clipboardData.setData('text/plain', toCopy);
-      e.preventDefault();
-    };
-    document.addEventListener('copy', create_copy);
+    const textArea = document.createElement('textarea');
+    textArea.value = toCopy;
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
     document.execCommand('copy');
-    document.removeEventListener('copy', create_copy);
+
+    document.body.removeChild(textArea);
   }
 }
