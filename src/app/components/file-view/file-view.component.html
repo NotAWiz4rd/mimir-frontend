@@ -8,3 +8,6 @@
   <ckeditor [editor]="Editor" data="<p>Hello, world!</p>"></ckeditor>
 </ng-template>
 <app-comments [fileId]="file.id"></app-comments>
+
+<ckeditor [editor]="Editor" data="<p>Hello, world!</p>" (ready)="onReady($event)">
+</ckeditor>

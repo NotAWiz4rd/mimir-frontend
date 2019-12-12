@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {File} from '../../classes/File';
-import {FileDataService} from "../../services/file-data.service";
-import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
+import {FileDataService} from '../../services/file-data.service';
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
@@ -10,9 +10,9 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
   styleUrls: ['./file-view.component.css']
 })
 export class FileViewComponent implements OnInit {
+  public Editor = ClassicEditor;
   @Input()
   file: File;
-  public Editor = ClassicEditor;
   contentFileType: String;
   isPicture: boolean;
   text: SafeHtml = 'test';
@@ -20,16 +20,23 @@ export class FileViewComponent implements OnInit {
   fileUrl: string;
 
   constructor(private fileViewService: FileDataService,
-              private domSanitizer:DomSanitizer) {
+              private domSanitizer: DomSanitizer) {
   }
 
 
+  public onReady(editor) {
+    editor.ui.getEditableElement().parentElement.insertBefore(
+      editor.ui.view.toolbar.element,
+      editor.ui.getEditableElement()
+    );
+  }
+
   ngOnInit() {
     this.contentFileType = this.getFileContentType();
-    if(this.contentFileType.includes('jpg') || this.contentFileType.includes('png')){
+    if (this.contentFileType.includes('jpg') || this.contentFileType.includes('png')){
       this.isPicture = true;
       this.setFileUrl();
-    }else if(this.contentFileType.includes('txt')){
+    } else if (this.contentFileType.includes('txt')) {
       this.isPicture = false;
       this.setText();
     }
@@ -49,10 +56,10 @@ export class FileViewComponent implements OnInit {
 
   getFileContentType(): String {
     const fileName = this.file.name.split('.');
-    return fileName[fileName.length-1];
+    return fileName[fileName.length - 1];
   }
 
-  editText(){
+  editText() {
 
   }
 

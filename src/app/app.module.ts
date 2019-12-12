@@ -65,6 +65,7 @@ import {NoAccessPageComponent} from './pages/no-access-page/no-access-page.compo
 import {FileDataService} from './services/file-data.service';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import {FooterComponent} from './components/footer/footer.component';
+import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   declarations: [
