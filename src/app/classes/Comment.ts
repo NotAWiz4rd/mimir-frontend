@@ -1,5 +1,6 @@
 export class Comment {
   text: string;
   author: string;
-  date: number;
+  date: Date;
+  comments: Comment[];
 }

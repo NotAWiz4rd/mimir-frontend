@@ -1,0 +1,18 @@
+<mat-card class="container">
+  <mat-card-header>
+    <mat-card-title>{{comment?.text}}</mat-card-title>
+    <mat-card-subtitle>{{comment?.author}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    Posted on: {{comment?.date}}
+
+    <div class="next-level-comments">
+      <app-comment *ngFor="let com of comment?.comments" [comment]="com"></app-comment>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button color="primary" mat-button>REPLY</button>
+    <button color="warn" mat-button *ngIf="comment.author == userService.currentUser$?.value?.username">DELETE</button>
+  </mat-card-actions>
+</mat-card>
