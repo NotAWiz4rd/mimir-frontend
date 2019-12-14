@@ -40,9 +40,9 @@ export class LoginComponent implements OnInit {
     }
     this.loading = true;
     //TODO change to: await this.userService.login(this.f.username.value, this.f.password.value)
-    await this.userService.login('thellmann', 'thellmann');
+    await this.userService.login('thellmann', 'thellmann'); // todo get user from backend
     //TODO if error -> this.loading = false  and  display error message
-    this.navigationService.navigateToSpace(2); // todo get user from backend, navigate to first space
+    this.navigationService.navigateToSpace(this.userService.currentUser$.getValue().spaces[0].id);
   }
 
   register() {
