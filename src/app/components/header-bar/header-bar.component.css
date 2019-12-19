@@ -8,9 +8,15 @@ button {
 }
 
 .container {
-  border-bottom: 1px solid darkgray;
+  background-color: #6A0080;
+  color: white;
 }
 
 .material-icons {
   font-size: 40px;
+}
+
+.back-button:disabled {
+  border: 1px solid #ffd740;
+  color: #ffd740;
 }

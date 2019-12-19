@@ -1,5 +1,5 @@
 <div class="container">
-  <button mat-raised-button color="accent" (click)="onBackButtonClick()"
+  <button mat-raised-button color="accent" (click)="onBackButtonClick()" class="back-button"
           [disabled]="(backButtonDisabled || pathTooShort()) && !isSettings">
     <ng-container *ngIf="isSettings">
       {{staticTextService.staticTexts | getStaticText : 'back' : languageService.getLanguage()}}
@@ -15,7 +15,7 @@
     {{staticTextService.staticTexts | getStaticText : 'logout' : languageService.getLanguage()}}
   </button>
 
-  <button mat-icon-button (click)="openSettings()" class="settings-button" color="primary">
+  <button mat-icon-button (click)="openSettings()" class="settings-button" color="accent">
     <i class="material-icons">
       settings_applications
     </i>
