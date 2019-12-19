@@ -1,5 +1,4 @@
 <p>
-  {{file?.name}}
-  file-view works!
+  This is the file: {{file?.name}}
 </p>
-<app-comment *ngFor="let comment of file?.comments" [comment]="comment"></app-comment>
+<app-comments [fileId]="file.id"></app-comments>

@@ -22,8 +22,8 @@
                      (actionEmitter)="doFileAction($event, file.id)"></app-thumbnail>
     </ng-container>
 
-    <ng-container *ngIf="fileId != undefined && !isSpaceSettings && !isSettings">
-      <app-file-view [file]="file" *ngIf="file"></app-file-view>
+    <ng-container *ngIf="fileId != undefined && !isSpaceSettings && !isSettings && file">
+      <app-file-view [file]="file"></app-file-view>
     </ng-container>
 
     <ng-container *ngIf="isSpaceSettings">

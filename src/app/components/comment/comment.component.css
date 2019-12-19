@@ -1,6 +1,3 @@
-.container {
-}
-
-.next-level-comments {
-  margin-left: 30px;
+.comment-container {
+  width: 300px;
 }

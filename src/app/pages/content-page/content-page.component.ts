@@ -13,7 +13,6 @@ import {FolderService} from '../../services/folder.service';
 import {DeletionDialogComponent} from '../../components/deletion-dialog/deletion-dialog.component';
 import {RenameDialogComponent} from '../../components/rename-dialog/rename-dialog.component';
 import {LanguageService} from '../../services/language.service';
-import {Comment} from '../../classes/Comment';
 
 @Component({
   selector: 'app-content-page',
@@ -38,8 +37,6 @@ export class ContentPageComponent implements OnInit {
               public languageService: LanguageService,
               public dialog: MatDialog,
               public _snackBar: MatSnackBar) {
-    this.setTestFile();
-
     this.route.params.subscribe(params => {
       if (this.route.toString().includes('url:\'settings\',')) { // check whether we should be showing the settings page
         this.isSettings = true;
@@ -56,6 +53,7 @@ export class ContentPageComponent implements OnInit {
         this.fileId = Number(params['fileId']);
       } else {
         this.fileId = undefined;
+        this.file = undefined;
       }
 
       if (params['folderId'] != undefined) {
@@ -70,7 +68,7 @@ export class ContentPageComponent implements OnInit {
         this.spaceId = undefined;
       }
 
-      if (this.fileId != undefined && this.spaceId == undefined && this.folderId == undefined) { // load file directly
+      if (this.fileId != undefined) { // load file directly
         this.fileService.loadFile(this.fileId);
       } else if (this.fileId == undefined && this.spaceService.currentFolder != undefined && lastFileId != undefined && this.spaceId == lastSpaceId) { // recalculate path if we go back from a file
         this.navigationService.figureOutPaths(this.spaceService.currentFolder);
@@ -122,8 +120,10 @@ export class ContentPageComponent implements OnInit {
     this.fileService.currentFile$.subscribe(file => {
       if (file != undefined) {
         this.file = file;
-        this.setTestFile();
-        this.navigationService.namePath$.next(this.file.name);
+
+        if (this.folderId == undefined) {
+          this.navigationService.namePath$.next(this.file.name);
+        }
       }
     });
   }
@@ -274,22 +274,5 @@ export class ContentPageComponent implements OnInit {
     this._snackBar.open(message, null, {
       duration: 1750,
     });
-  }
-
-  setTestFile() {
-    this.file = new File();
-    this.file.name = 'testfile';
-    this.file.author = 'NotAWiz4rd';
-    this.file.comments = [];
-    let comment = new Comment();
-    comment.date = new Date();
-    comment.author = 'NotAWiz4rd';
-    comment.text = 'This is a test comment! blub';
-    let comment2 = new Comment();
-    comment2.date = new Date();
-    comment2.author = 'SomeoneElse';
-    comment2.text = 'AAAAAAAAAAAAAAAaaaaaaaaaaaaAAAAAAAAAAAAA';
-    comment.comments = [comment2, comment2];
-    this.file.comments = this.file.comments.concat([comment, comment, comment]);
   }
 }
