@@ -7,7 +7,6 @@ import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '
 import {environment} from 'src/environments/environment';
 import {SpaceService} from './space.service';
 
-const KEY = 'YOU, W3ary TRAVELLER, Sh4LL P4ss!'; // encrypted key is this: WU9VLCBXM2FyeSBUUkFWRUxMRVIsIFNoNExMIFA0c3Mh
 const LOCAL_STORAGE_TOKEN_KEY = 'cmspp-token';
 
 @Injectable()
@@ -16,7 +15,6 @@ export class UserService implements CanActivate {
   token: string;
 
   constructor(private http: HttpClient,
-              private router: Router,
               private spaceService: SpaceService) {
     this.token = localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY);
   }
@@ -75,38 +73,11 @@ export class UserService implements CanActivate {
   }
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
-    let verdict = false;
-
-    // checks whether we're accessing a file or folder via a direct link
-    let folderId = route.params['folderId'];
-    let fileId = route.params['fileId'];
-    let key = route.queryParams['key'];
-    if ((folderId != undefined || fileId != undefined) && key != undefined) {
-      verdict = atob(key) == KEY;
-    }
-
-    if (this.token != undefined && this.currentUser$.value == undefined) {
-      await this.reloadUser();
-    }
-
-    let user = this.currentUser$.value;
-    // check whether we are allowed to navigate to space
-    let spaceId = route.params['spaceId'];
-    if (spaceId != undefined && user != undefined) {
-      for (let space of user.spaces) {
-        if (spaceId == space.id) {
-          return true;
-        }
-      }
-    }
-
-    if (user != undefined && state.toString().includes('settings')) {
-      return true;
-    }
-
-    if (verdict == false) {
+    if (this.token == undefined) {
       this.router.navigateByUrl('');
+      return false;
     }
-    return verdict;
+
+    return true;
   }
 }
