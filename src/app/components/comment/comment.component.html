@@ -15,7 +15,8 @@
     {{comment?.text}}
     <mat-card-subtitle>
       {{comment?.authorId}} <!-- todo change this to author name once backend has been adjusted -->
-      {{comment?.creationDate}}
+      {{comment?.creationDate?.getDate()}}.{{comment?.creationDate?.getMonth()}}.{{comment?.creationDate?.getFullYear()}}
+      {{comment?.creationDate?.getHours()}}:{{comment?.creationDate?.getMinutes()}}
     </mat-card-subtitle>
   </mat-card-content>
 

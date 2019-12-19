@@ -39,6 +39,7 @@ export class CommentComponent implements OnInit {
   postComment() {
     this.fileService.addComment(this.fileId, this.newComment).subscribe(comment => {
       this.newComment = '';
+      comment.creationDate = new Date(comment.creationDate);
       this.comments.push(comment);
     });
   }
@@ -47,6 +48,9 @@ export class CommentComponent implements OnInit {
     if (this.fileId != undefined) {
       this.fileService.getComments(this.fileId).subscribe(comments => {
         this.comments = comments;
+        for (let i = 0; i < this.comments.length; i++) {
+          this.comments[i].creationDate = new Date(this.comments[i].creationDate);
+        }
       });
     }
   }
