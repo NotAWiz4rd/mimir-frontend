@@ -1,3 +1,6 @@
+<app-header-bar [backButtonDisabled]="true"
+                [isSettings]="true"></app-header-bar>
+
 <div class="container">
   <h2>{{staticTextService.staticTexts | getStaticText : 'accountSettings' : languageService.getLanguage()}}</h2>
   <div>

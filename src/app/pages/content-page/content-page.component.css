@@ -1,11 +1,3 @@
-mat-sidenav {
-  min-width: 50px;
-}
-
-mat-sidenav-container {
-  height: 100%;
-}
-
 app-thumbnail {
   cursor: pointer;
   display: inline-block;

@@ -52,10 +52,10 @@ import {DeletionDialogComponent} from './components/deletion-dialog/deletion-dia
 import {RenameDialogComponent} from './components/rename-dialog/rename-dialog.component';
 import {LandingPageComponent} from './pages/landing-page/landing-page.component';
 import {ClipboardService} from './services/clipboard.service';
-import {SpaceSettingsComponent} from './components/space-settings/space-settings.component';
 import {TokenAuthInterceptor} from './helpers/token-auth.interceptor';
 import {MatCardModule} from "@angular/material/card";
 import { ThumbnailService } from './services/thumbnail.service';
+import { DataLayoutPageComponent } from './pages/data-layout-page/data-layout-page.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +72,6 @@ import { ThumbnailService } from './services/thumbnail.service';
     ThumbnailComponent,
     FileViewComponent,
     SpaceBubbleComponent,
-    SpaceBubbleComponent,
     CreateFolderDialogComponent,
     CreateSpaceDialogComponent,
     UploadFileDialogComponent,
@@ -80,7 +79,7 @@ import { ThumbnailService } from './services/thumbnail.service';
     DeletionDialogComponent,
     RenameDialogComponent,
     LandingPageComponent,
-    SpaceSettingsComponent,
+    DataLayoutPageComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,37 +1,22 @@
-<mat-sidenav-container>
-  <mat-sidenav mode="side" disableClose opened>
-    <app-space-bar></app-space-bar>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <app-header-bar [backButtonDisabled]="folderId == undefined"
-                    [isSettings]="isSpaceSettings || isSettings"></app-header-bar>
+<app-header-bar [backButtonDisabled]="folderId == undefined"
+                [isSettings]="false"></app-header-bar>
 
-    <ng-container *ngIf="fileId == undefined && !isSettings && !isSpaceSettings">
-      <app-action-bar [actionsDisabled]="searchValue != undefined"
-                      [isSpaceRoot]="spaceService?.currentFolder?.id == spaceService?.currentSpace?.root?.id"
-                      (openCreateFolderDialog)="createFolderDialog()"
-                      (openUploadFileDialog)="uploadFileDialog()"
-                      (downloadSpaceEmitter)="downloadSpace()"></app-action-bar>
+<ng-container *ngIf="fileId == undefined">
+  <app-action-bar [actionsDisabled]="searchValue != undefined"
+                  [isSpaceRoot]="spaceService?.currentFolder?.id == spaceService?.currentSpace?.root?.id"
+                  (openCreateFolderDialog)="createFolderDialog()"
+                  (openUploadFileDialog)="uploadFileDialog()"
+                  (downloadSpaceEmitter)="downloadSpace()"></app-action-bar>
 
-      <app-thumbnail *ngFor="let folder of spaceService.currentFolder?.folders" [fileName]="folder.name"
-                     [thumbnailType]="'folder'" (click)="navigateToFolder(folder.id)"
-                     (actionEmitter)="doFolderAction($event, folder.id)"></app-thumbnail>
+  <app-thumbnail *ngFor="let folder of spaceService.currentFolder?.folders" [fileName]="folder.name"
+                  [thumbnailType]="'folder'" (click)="navigateToFolder(folder.id)"
+                  (actionEmitter)="doFolderAction($event, folder.id)"></app-thumbnail>
 
-      <app-thumbnail *ngFor="let file of spaceService.currentFolder?.artifacts" [fileId] = "file.id" [thumbnailType]="'file'"
-                     [fileName]="file.name" (click)="navigateToFile(file.id)"
-                     (actionEmitter)="doFileAction($event, file.id)"></app-thumbnail>
-    </ng-container>
+  <app-thumbnail *ngFor="let file of spaceService.currentFolder?.artifacts" [fileId] = "file.id" [thumbnailType]="'file'"
+                  [fileName]="file.name" (click)="navigateToFile(file.id)"
+                  (actionEmitter)="doFileAction($event, file.id)"></app-thumbnail>
+</ng-container>
 
-    <ng-container *ngIf="fileId != undefined && !isSpaceSettings && !isSettings">
-      <app-file-view></app-file-view>
-    </ng-container>
-
-    <ng-container *ngIf="isSpaceSettings">
-      <app-space-settings></app-space-settings>
-    </ng-container>
-
-    <ng-container *ngIf="isSettings">
-      <app-settings-page [language]="languageService.getLanguageString()"></app-settings-page>
-    </ng-container>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<ng-container *ngIf="fileId != undefined">
+  <app-file-view></app-file-view>
+</ng-container>

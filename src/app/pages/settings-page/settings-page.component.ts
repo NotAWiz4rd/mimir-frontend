@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LanguageService} from '../../services/language.service';
 import {StaticTextService} from '../../services/static-text.service';
 import {UserService} from '../../services/user.service';
@@ -10,7 +10,6 @@ import {NavigationService} from '../../services/navigation.service';
   styleUrls: ['./settings-page.component.css']
 })
 export class SettingsPageComponent implements OnInit {
-  @Input()
   language: string;
 
   constructor(public languageService: LanguageService,
@@ -20,6 +19,7 @@ export class SettingsPageComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.language = this.languageService.getLanguageString()
   }
 
   onDeleteButtonClick() {
