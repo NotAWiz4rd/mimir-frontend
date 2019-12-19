@@ -54,13 +54,6 @@ export class FolderService {
 
     const shareToken = this.route.snapshot.queryParams['token'];
     this.userService.anonymousLogin(shareToken);
-    const queryParams = Object.assign({}, this.route.snapshot.queryParams);
-    queryParams['token'] = null;
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams,
-      queryParamsHandling: 'merge',
-    });
 
     this.http.get<Folder>(this.baseUrl + folderId).subscribe(folder => {
       this.spaceService.currentSpace = new Space();
