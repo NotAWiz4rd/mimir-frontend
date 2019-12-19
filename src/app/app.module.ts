@@ -30,6 +30,7 @@ import {
   MatSnackBar,
   MatSnackBarContainer,
   MatSnackBarModule,
+  MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -61,8 +62,9 @@ import {MatCardModule} from '@angular/material/card';
 import {ThumbnailService} from './services/thumbnail.service';
 import {CommentComponent} from './components/comment/comment.component';
 import {NoAccessPageComponent} from './pages/no-access-page/no-access-page.component';
-import {FileDataService} from "./services/file-data.service";
+import {FileDataService} from './services/file-data.service';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import {FooterComponent} from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +90,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     RenameDialogComponent,
     LandingPageComponent,
     SpaceSettingsComponent,
+    FooterComponent,
+    FooterComponent,
     CommentComponent,
     NoAccessPageComponent,
   ],
@@ -118,6 +122,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     MatIconModule,
     MatCardModule,
     CKEditorModule,
+    MatToolbarModule,
   ],
   entryComponents: [
     CreateFolderDialogComponent,
