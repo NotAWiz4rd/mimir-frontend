@@ -7,6 +7,7 @@ import {SpaceService} from './space.service';
 import {ClipboardService} from './clipboard.service';
 import {environment} from 'src/environments/environment';
 import {UserService} from './user.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 const KEY = 'YOU, W3ary TRAVELLER, Sh4LL P4ss!';
 
@@ -15,6 +16,8 @@ export class FolderService {
   baseUrl: string = environment.apiUrl + 'folder/';
 
   constructor(private http: HttpClient,
+              private router: Router,
+              private route: ActivatedRoute,
               private spaceService: SpaceService,
               private userService: UserService) {
   }
@@ -51,6 +54,14 @@ export class FolderService {
 
     const shareToken = this.route.snapshot.queryParams['token'];
     this.userService.anonymousLogin(shareToken);
+    const queryParams = Object.assign({}, this.route.snapshot.queryParams);
+    queryParams['token'] = null;
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams,
+      queryParamsHandling: 'merge',
+    });
+
     this.http.get<Folder>(this.baseUrl + folderId).subscribe(folder => {
       this.spaceService.currentSpace = new Space();
       this.spaceService.currentSpace.root = folder;

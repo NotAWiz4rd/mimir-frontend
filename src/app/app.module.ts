@@ -56,6 +56,7 @@ import {SpaceSettingsComponent} from './components/space-settings/space-settings
 import {TokenAuthInterceptor} from './helpers/token-auth.interceptor';
 import {MatCardModule} from "@angular/material/card";
 import { ThumbnailService } from './services/thumbnail.service';
+import { ErrorInterceptor } from './helpers/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -119,6 +120,7 @@ import { ThumbnailService } from './services/thumbnail.service';
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: TokenAuthInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     ThumbnailService,
     UserService,
     NavigationService,

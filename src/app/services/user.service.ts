@@ -3,14 +3,13 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {User} from '../classes/User';
 import {SpaceMetadata} from '../classes/SpaceMetadata';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {environment} from 'src/environments/environment';
 import {SpaceService} from './space.service';
 
 const LOCAL_STORAGE_TOKEN_KEY = 'cmspp-token';
 
 @Injectable()
-export class UserService implements CanActivate {
+export class UserService {
   currentUser$: BehaviorSubject<User> = new BehaviorSubject<User>(undefined);
   token: string;
 
@@ -70,14 +69,5 @@ export class UserService implements CanActivate {
   delete() {
     this.http.delete(environment.apiUrl + 'users/' + this.currentUser$.value.id);
     this.logout();
-  }
-
-  async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
-    if (this.token == undefined) {
-      this.router.navigateByUrl('');
-      return false;
-    }
-
-    return true;
   }
 }
