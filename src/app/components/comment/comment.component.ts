@@ -38,6 +38,7 @@ export class CommentComponent implements OnInit {
 
   postComment() {
     this.fileService.addComment(this.fileId, this.newComment).subscribe(comment => {
+      this.newComment = '';
       this.comments.push(comment);
     });
   }

@@ -1,3 +1,11 @@
 .comment-container {
   width: 300px;
 }
+
+mat-card {
+  margin-top: 10px;
+}
+
+mat-card-content {
+  margin: 0;
+}

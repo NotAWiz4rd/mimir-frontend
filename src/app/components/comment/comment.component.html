@@ -11,18 +11,19 @@
 </button>
 
 <mat-card *ngFor="let comment of comments">
-  <mat-card-header>
-    <mat-card-title>{{comment?.text}}</mat-card-title>
-    <mat-card-subtitle>{{comment?.author}}</mat-card-subtitle>
-  </mat-card-header>
   <mat-card-content>
-    {{comment?.date}}
+    {{comment?.text}}
+    <mat-card-subtitle>
+      {{comment?.authorId}}
+      {{comment?.creationDate}}
+    </mat-card-subtitle>
   </mat-card-content>
 
   <mat-card-actions>
-    <button color="warn" mat-button *ngIf="comment.author == userService?.currentUser$?.value?.username"
+    <button color="primary" mat-button *ngIf="comment.authorId == userService?.currentUser$?.value?.username"
             (click)="deleteComment(comment.id)">
       {{staticTextService?.staticTexts | getStaticText : 'delete' : languageService?.getLanguage()}}
+      <mat-icon>delete_forever</mat-icon>
     </button>
   </mat-card-actions>
 </mat-card>
