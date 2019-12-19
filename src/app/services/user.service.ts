@@ -31,6 +31,10 @@ export class UserService implements CanActivate {
     await this.reloadUser();
   }
 
+  async anonymousLogin(shareToken: string) {
+    this.token = shareToken;
+  }
+
   addSpaceToUser(space: SpaceMetadata) { // todo propagate this to the backend
     let spaces = this.currentUser$.value.spaces;
     spaces.push(space);

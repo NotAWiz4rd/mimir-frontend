@@ -49,6 +49,8 @@ export class FolderService {
       }
     }
 
+    const shareToken = this.route.snapshot.queryParams['token'];
+    this.userService.anonymousLogin(shareToken);
     this.http.get<Folder>(this.baseUrl + folderId).subscribe(folder => {
       this.spaceService.currentSpace = new Space();
       this.spaceService.currentSpace.root = folder;
@@ -205,8 +207,9 @@ export class FolderService {
    * Copies a share link for the given folder to the clipboard.
    * @param id The folder id
    */
-  share(id: number) {
-    let link: string = window.location.host + '/folder/' + id + '?key=' + btoa(KEY);
+  async share(id: number) {
+    const shareToken = await this.http.get<{ token: string }>(this.baseUrl + 'share/' + id).toPromise();
+    const link = window.location.host + '/folder/' + id + '?token=' + shareToken.token;
     ClipboardService.copyToClipboard(link);
   }
 }
