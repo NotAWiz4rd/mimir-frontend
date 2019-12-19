@@ -1,19 +1,19 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 import {User} from '../classes/User';
 import {SpaceMetadata} from '../classes/SpaceMetadata';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {environment} from 'src/environments/environment';
 import {SpaceService} from './space.service';
 
-const KEY = 'YOU, W3ary TRAVELLER, Sh4LL P4ss!'; // encrypted key is this: WU9VLCBXM2FyeSBUUkFWRUxMRVIsIFNoNExMIFA0c3Mh
 const LOCAL_STORAGE_TOKEN_KEY = 'cmspp-token';
 
 @Injectable()
 export class UserService implements CanActivate {
   currentUser$: BehaviorSubject<User> = new BehaviorSubject<User>(undefined);
   token: string;
+  shareToken: string;
 
   constructor(private http: HttpClient,
               private router: Router,
@@ -76,9 +76,9 @@ export class UserService implements CanActivate {
     // checks whether we're accessing a file or folder via a direct link
     let folderId = route.params['folderId'];
     let fileId = route.params['fileId'];
-    let key = route.queryParams['key'];
-    if ((folderId != undefined || fileId != undefined) && key != undefined) {
-      verdict = atob(key) == KEY;
+    this.shareToken = route.queryParams['token'];
+    if ((folderId != undefined || fileId != undefined) && this.shareToken != undefined) {
+      verdict = true;
     }
 
     if (this.token != undefined && this.currentUser$.value == undefined) {

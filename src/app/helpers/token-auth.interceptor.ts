@@ -9,8 +9,13 @@ export class TokenAuthInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = this.userService.token;
-    if (!!token) {
+    let token = this.userService.token;
+    const shareToken = this.userService.shareToken;
+    if (shareToken && !request.url.includes('space')) { // include shareToken if it exists and we're not making some kind of space request
+      token = shareToken;
+    }
+
+    if (token) {
       request = request.clone({
         setHeaders: {
           Authorization: 'Bearer ' + token,

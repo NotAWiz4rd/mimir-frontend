@@ -177,7 +177,7 @@ export class ContentPageComponent implements OnInit {
     }
   }
 
-  doFolderAction(action: string, id: number) {
+  async doFolderAction(action: string, id: number) {
     switch (action) {
       case 'rename':
         const dialogRef = this.dialog.open(RenameDialogComponent, {
@@ -214,7 +214,7 @@ export class ContentPageComponent implements OnInit {
         this.folderService.download(id);
         break;
       case 'share':
-        this.folderService.share(id);
+        await this.folderService.share(id);
         this.openSnackBar('Link was copied to clipboard');
         break;
     }
@@ -228,7 +228,7 @@ export class ContentPageComponent implements OnInit {
     });
   }
 
-  doFileAction(action: string, id: number) {
+  async doFileAction(action: string, id: number) {
     switch (action) {
       case 'rename':
         const dialogRef = this.dialog.open(RenameDialogComponent, {
@@ -254,7 +254,7 @@ export class ContentPageComponent implements OnInit {
         this.fileService.download(id);
         break;
       case 'share':
-        this.fileService.share(id);
+        await this.fileService.share(id);
         this.openSnackBar('Link was copied to clipboard');
         break;
     }

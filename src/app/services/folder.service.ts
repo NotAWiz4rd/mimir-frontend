@@ -8,15 +8,13 @@ import {ClipboardService} from './clipboard.service';
 import {environment} from 'src/environments/environment';
 import {UserService} from './user.service';
 
-const KEY = 'YOU, W3ary TRAVELLER, Sh4LL P4ss!';
-
 @Injectable()
 export class FolderService {
   baseUrl: string = environment.apiUrl + 'folder/';
 
   constructor(private http: HttpClient,
               private spaceService: SpaceService,
-              private userService: UserService) {
+              public userService: UserService) {
   }
 
   /**
@@ -205,8 +203,9 @@ export class FolderService {
    * Copies a share link for the given folder to the clipboard.
    * @param id The folder id
    */
-  share(id: number) {
-    let link: string = window.location.host + '/folder/' + id + '?key=' + btoa(KEY);
+  async share(id: number) {
+    const shareToken = await this.http.get<{ token: string }>(this.baseUrl + 'share/' + id).toPromise();
+    const link = window.location.host + '/folder/' + id + '?token=' + shareToken.token;
     ClipboardService.copyToClipboard(link);
   }
 }

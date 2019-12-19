@@ -4,10 +4,8 @@ import {File} from '../classes/File';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {FolderService} from './folder.service';
 import {ClipboardService} from './clipboard.service';
-import { environment } from 'src/environments/environment';
-import { UserService } from './user.service';
-
-const KEY = 'YOU, W3ary TRAVELLER, Sh4LL P4ss!';
+import {environment} from 'src/environments/environment';
+import {UserService} from './user.service';
 
 @Injectable()
 export class FileService {
@@ -67,8 +65,9 @@ export class FileService {
    * Copies a share link for the given file to the clipboard.
    * @param id The file id
    */
-  share(id: number) {
-    let link: string = window.location.host + '/file/' + id + '?key=' + btoa(KEY);
+  async share(id: number) {
+    const shareToken = await this.http.get<{ token: string }>(this.baseUrl + 'share/' + id).toPromise();
+    const link = window.location.host + '/file/' + id + '?token=' + shareToken.token;
     ClipboardService.copyToClipboard(link);
   }
 }
