@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 import {User} from '../classes/User';
 import {SpaceMetadata} from '../classes/SpaceMetadata';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
@@ -45,6 +45,7 @@ export class UserService implements CanActivate {
       let spaces: SpaceMetadata[] = spaceMetadata;
       let user = new User();  // todo replace with real user
       user.id = 1;
+      user.username = 'thellmann';
       user.spaces = spaces;
       this.currentUser$.next(user);
     });

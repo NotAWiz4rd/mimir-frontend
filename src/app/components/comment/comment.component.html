@@ -19,14 +19,13 @@
     <mat-card-content>
       {{comment?.text}}
       <mat-card-subtitle>
-        {{comment?.authorId}} <!-- todo change this to author name once backend has been adjusted -->
+        {{comment?.author}}
         {{comment?.creationDate.toLocaleDateString()}} {{comment?.creationDate.toLocaleTimeString()}}
       </mat-card-subtitle>
     </mat-card-content>
 
     <mat-card-actions>
-      <!--   todo change from userId to username   -->
-      <button color="primary" mat-button *ngIf="comment.authorId == userService?.currentUser$?.value?.id"
+      <button color="primary" mat-button *ngIf="comment.author == userService?.currentUser$?.value?.username"
               (click)="deleteComment(comment.id)">
         {{staticTextService?.staticTexts | getStaticText : 'delete' : languageService?.getLanguage()}}
         <mat-icon>delete_forever</mat-icon>
