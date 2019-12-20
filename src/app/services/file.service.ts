@@ -34,24 +34,10 @@ export class FileService {
     return fileWasDeleted;
   }
 
-  download(id: number) {
-    /*
-      create and submit a virtual form
-        <form method=POST action=…download>
-          <input type=text name=token>…token…</input>
-        </form>
-    */
-    const form = document.createElement('form');
-    form.setAttribute('method', 'POST');
-    form.setAttribute('action', this.baseUrl + id + '/download');
-    const tokenField = document.createElement('input');
-    tokenField.setAttribute('type', 'text');
-    tokenField.setAttribute('name', 'token');
-    tokenField.value = this.userService.token;
-    form.appendChild(tokenField);
-    document.body.appendChild(form);
-    form.submit();
-    document.body.removeChild(form);
+  async download(id: number) {
+    const response = await this.http.get<{ token: string }>(environment.apiUrl + 'artifact/download/'+ id).toPromise();
+    const downloadToken = response.token;
+    window.open(environment.apiUrl + "artifact/" + id + "/download?token=" + downloadToken);
   }
 
   rename(id: number, name: string): Observable<boolean> {
