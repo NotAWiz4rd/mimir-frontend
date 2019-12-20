@@ -25,7 +25,8 @@
     </mat-card-content>
 
     <mat-card-actions>
-      <button color="primary" mat-button *ngIf="comment.authorId == userService?.currentUser$?.value?.username"
+      <!--   todo change from userId to username   -->
+      <button color="primary" mat-button *ngIf="comment.authorId == userService?.currentUser$?.value?.id"
               (click)="deleteComment(comment.id)">
         {{staticTextService?.staticTexts | getStaticText : 'delete' : languageService?.getLanguage()}}
         <mat-icon>delete_forever</mat-icon>
