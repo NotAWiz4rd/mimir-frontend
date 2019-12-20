@@ -1,10 +1,14 @@
 <mat-form-field>
   <label>
-    <input matInput placeholder="{{staticTextService.staticTexts | getStaticText : 'search' : languageService.getLanguage()}}"
-           type="search" [formControl]="control" [matAutocomplete]="auto" (keyup.enter)="onEnter()"
-           [ngModel]="searchValue">
+    <input matInput
+           placeholder="{{staticTextService?.staticTexts | getStaticText : 'search' : languageService?.getLanguage()}}"
+           type="search" [formControl]="control" [matAutocomplete]="auto" (keyup.enter)="onEnter()">
   </label>
   <mat-autocomplete #auto="matAutocomplete">
     <mat-option *ngFor="let option of filteredOptions | async" [value]="option">{{option}}</mat-option>
   </mat-autocomplete>
+  <button mat-button *ngIf="searchValue?.length > 0" matSuffix mat-icon-button aria-label="Clear"
+          (click)="control.setValue('')">
+    <mat-icon>close</mat-icon>
+  </button>
 </mat-form-field>
