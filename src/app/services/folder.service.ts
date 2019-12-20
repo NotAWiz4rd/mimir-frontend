@@ -1,18 +1,20 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Folder} from '../classes/Folder';
 import {Space} from '../classes/Space';
 import {SpaceService} from './space.service';
 import {ClipboardService} from './clipboard.service';
 import {environment} from 'src/environments/environment';
 import {UserService} from './user.service';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class FolderService {
   baseUrl: string = environment.apiUrl + 'folder/';
 
   constructor(private http: HttpClient,
+              private router: Router,
               private spaceService: SpaceService,
               public userService: UserService) {
   }
@@ -47,14 +49,15 @@ export class FolderService {
       }
     }
 
-    this.http.get<Folder>(this.baseUrl + folderId).subscribe(folder => {
-      this.spaceService.currentSpace = new Space();
-      this.spaceService.currentSpace.root = folder;
-      this.spaceService.currentSpace.root.parentId = 0;
-      this.spaceService.currentSpace.name = 'temp';
-      this.spaceService.currentSpace$.next(this.spaceService.currentSpace);
-      console.log('loaded folder: ' + folderId);
-    });
+    this.http.get<Folder>(this.baseUrl + folderId).subscribe(
+      folder => {
+        this.spaceService.currentSpace = new Space();
+        this.spaceService.currentSpace.root = folder;
+        this.spaceService.currentSpace.root.parentId = 0;
+        this.spaceService.currentSpace.name = 'temp';
+        this.spaceService.currentSpace$.next(this.spaceService.currentSpace);
+      },
+      error => this.handleError(error));
     return this.spaceService.currentSpace$;
   }
 
@@ -207,5 +210,13 @@ export class FolderService {
     const shareToken = await this.http.get<{ token: string }>(this.baseUrl + 'share/' + id).toPromise();
     const link = window.location.host + '/folder/' + id + '?token=' + shareToken.token;
     ClipboardService.copyToClipboard(link);
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.status == 403) {
+      this.router.navigateByUrl('no-access');
+    } else {
+      console.error(error);
+    }
   }
 }

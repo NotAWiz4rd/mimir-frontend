@@ -56,6 +56,7 @@ import {SpaceSettingsComponent} from './components/space-settings/space-settings
 import {TokenAuthInterceptor} from './helpers/token-auth.interceptor';
 import {MatCardModule} from "@angular/material/card";
 import { ThumbnailService } from './services/thumbnail.service';
+import {NoAccessPageComponent} from './pages/no-access-page/no-access-page.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import { ThumbnailService } from './services/thumbnail.service';
     RenameDialogComponent,
     LandingPageComponent,
     SpaceSettingsComponent,
+    NoAccessPageComponent,
   ],
   imports: [
     BrowserModule,

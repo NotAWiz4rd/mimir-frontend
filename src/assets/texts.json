@@ -153,5 +153,10 @@
     "logicalName": "changePassword",
     "english": "Change Password",
     "german": "Passwort ändern"
+  },
+  {
+    "logicalName": "noAccessButton",
+    "english": "GO HOME",
+    "german": "Zurückkehren"
   }
 ]

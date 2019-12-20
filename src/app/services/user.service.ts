@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {BehaviorSubject} from 'rxjs';
 import {User} from '../classes/User';
 import {SpaceMetadata} from '../classes/SpaceMetadata';
@@ -41,13 +41,15 @@ export class UserService implements CanActivate {
 
   async reloadUser() {
     let hubbleTelescope = this.http.get<SpaceMetadata[]>(environment.apiUrl + 'spaces'); // because it observes space(s)
-    hubbleTelescope.subscribe(spaceMetadata => {
-      let spaces: SpaceMetadata[] = spaceMetadata;
-      let user = new User();  // todo replace with real user
-      user.id = 42;
-      user.spaces = spaces;
-      this.currentUser$.next(user);
-    });
+    hubbleTelescope.subscribe(
+      spaceMetadata => {
+        let spaces: SpaceMetadata[] = spaceMetadata;
+        let user = new User();  // todo replace with real user
+        user.id = 42;
+        user.spaces = spaces;
+        this.currentUser$.next(user);
+      },
+      error => this.handleError(error));
     await hubbleTelescope.toPromise();
   }
 
@@ -104,5 +106,13 @@ export class UserService implements CanActivate {
       this.router.navigateByUrl('');
     }
     return verdict;
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.status == 403) {
+      this.router.navigateByUrl('no-access');
+    } else {
+      console.error(error);
+    }
   }
 }
