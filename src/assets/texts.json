@@ -153,5 +153,15 @@
     "logicalName": "changePassword",
     "english": "Change Password",
     "german": "Passwort ändern"
+  },
+  {
+    "logicalName": "comment",
+    "english": "Comment",
+    "german": "Kommentieren"
+  },
+  {
+    "logicalName": "leaveComment",
+    "english": "Leave a comment",
+    "german": "Kommentieren Sie"
   }
 ]

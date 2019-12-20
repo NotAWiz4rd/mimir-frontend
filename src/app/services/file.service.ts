@@ -4,14 +4,16 @@ import {File} from '../classes/File';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {FolderService} from './folder.service';
 import {ClipboardService} from './clipboard.service';
-import { environment } from 'src/environments/environment';
-import { UserService } from './user.service';
+import {environment} from 'src/environments/environment';
+import {UserService} from './user.service';
+import {Comment} from '../classes/Comment';
 
 const KEY = 'YOU, W3ary TRAVELLER, Sh4LL P4ss!';
 
 @Injectable()
 export class FileService {
-  baseUrl: string = environment.apiUrl + 'artifact/';
+  artifactBaseUrl: string = environment.apiUrl + 'artifact/';
+  commentBaseUrl: string = environment.apiUrl + 'comments';
   currentFile$: BehaviorSubject<File> = new BehaviorSubject<File>(undefined);
 
   constructor(private http: HttpClient,
@@ -20,14 +22,14 @@ export class FileService {
   }
 
   loadFile(id: number) {
-    this.http.get<File>(this.baseUrl + id).subscribe(file => {
+    this.http.get<File>(this.artifactBaseUrl + id).subscribe(file => {
       this.currentFile$.next(file);
     });
   }
 
   delete(id: number): Observable<boolean> {
     let fileWasDeleted = new BehaviorSubject(false);
-    this.http.delete(this.baseUrl + id).subscribe(() => {
+    this.http.delete(this.artifactBaseUrl + id).subscribe(() => {
       this.folderService.reloadCurrentFolder();
       fileWasDeleted.next(true);
     });
@@ -56,5 +58,18 @@ export class FileService {
   share(id: number) {
     let link: string = window.location.host + '/file/' + id + '?key=' + btoa(KEY);
     ClipboardService.copyToClipboard(link);
+  }
+
+  addComment(fileId: number, text: string): Observable<Comment> {
+    let commentDto = {artifactId: fileId, text: text};
+    return this.http.post<Comment>(this.commentBaseUrl, commentDto);
+  }
+
+  getComments(fileId: number): Observable<Comment[]> {
+    return this.http.get<Comment[]>(this.commentBaseUrl + '?artifactId=' + fileId);
+  }
+
+  async deleteComment(commentId: number) {
+    await this.http.delete(this.commentBaseUrl + '/' + commentId).toPromise();
   }
 }
