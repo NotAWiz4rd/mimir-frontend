@@ -10,7 +10,8 @@ import {Router} from '@angular/router';
 
 @Injectable()
 export class FileService {
-  baseUrl: string = environment.apiUrl + 'artifact/';
+  artifactBaseUrl: string = environment.apiUrl + 'artifact/';
+  commentBaseUrl: string = environment.apiUrl + 'comments';
   currentFile$: BehaviorSubject<File> = new BehaviorSubject<File>(undefined);
 
   constructor(private http: HttpClient,
@@ -20,7 +21,7 @@ export class FileService {
   }
 
   loadFile(id: number) {
-    this.http.get<File>(this.baseUrl + id).subscribe(
+    this.http.get<File>(this.artifactBaseUrl + id).subscribe(
       file => {
         this.currentFile$.next(file);
       },
@@ -30,7 +31,7 @@ export class FileService {
 
   delete(id: number): Observable<boolean> {
     let fileWasDeleted = new BehaviorSubject(false);
-    this.http.delete(this.baseUrl + id).subscribe(() => {
+    this.http.delete(this.artifactBaseUrl + id).subscribe(() => {
       this.folderService.reloadCurrentFolder();
       fileWasDeleted.next(true);
     });
@@ -38,9 +39,9 @@ export class FileService {
   }
 
   async download(id: number) {
-    const response = await this.http.get<{ token: string }>(environment.apiUrl + 'artifact/download/'+ id).toPromise();
+    const response = await this.http.get<{ token: string }>(environment.apiUrl + 'artifact/download/' + id).toPromise();
     const downloadToken = response.token;
-    window.open(environment.apiUrl + "artifact/" + id + "/download?token=" + downloadToken);
+    window.open(environment.apiUrl + 'artifact/' + id + '/download?token=' + downloadToken);
   }
 
   rename(id: number, name: string): Observable<boolean> {
@@ -68,5 +69,18 @@ export class FileService {
     } else {
       console.error(error);
     }
+  }
+
+  addComment(fileId: number, text: string): Observable<Comment> {
+    let commentDto = {artifactId: fileId, text: text};
+    return this.http.post<Comment>(this.commentBaseUrl, commentDto);
+  }
+
+  getComments(fileId: number): Observable<Comment[]> {
+    return this.http.get<Comment[]>(this.commentBaseUrl + '?artifactId=' + fileId);
+  }
+
+  async deleteComment(commentId: number) {
+    await this.http.delete(this.commentBaseUrl + '/' + commentId).toPromise();
   }
 }

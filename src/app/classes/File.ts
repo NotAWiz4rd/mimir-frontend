@@ -1,10 +1,7 @@
-import {Comment} from './Comment';
-
 export class File {
   id: number;
   name: string;
-  author: number;
+  author: string;
   creationDate: number;
   parentId: number;
-  comments: Comment[];
 }

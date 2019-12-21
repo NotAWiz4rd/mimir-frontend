@@ -16,18 +16,21 @@ import {HeaderBarComponent} from './components/header-bar/header-bar.component';
 import {LoginComponent} from './pages/login/login.component';
 import {ActionBarComponent} from './components/action-bar/action-bar.component';
 import {
-    MatAutocompleteModule,
-    MatButtonModule,
-    MatButtonToggleModule, MatCheckboxModule,
-    MatDialogModule,
-    MatFormFieldModule, MatIconModule,
-    MatInputModule,
-    MatMenuModule,
-    MatSidenavModule, MatSlideToggleModule,
-    MatSnackBar,
-    MatSnackBarContainer,
-    MatSnackBarModule,
-    MatTooltipModule
+  MatAutocompleteModule,
+  MatButtonModule,
+  MatButtonToggleModule,
+  MatCheckboxModule,
+  MatDialogModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule,
+  MatMenuModule,
+  MatSidenavModule,
+  MatSlideToggleModule,
+  MatSnackBar,
+  MatSnackBarContainer,
+  MatSnackBarModule,
+  MatTooltipModule
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SearchComponent} from './components/search/search.component';
@@ -54,8 +57,9 @@ import {LandingPageComponent} from './pages/landing-page/landing-page.component'
 import {ClipboardService} from './services/clipboard.service';
 import {SpaceSettingsComponent} from './components/space-settings/space-settings.component';
 import {TokenAuthInterceptor} from './helpers/token-auth.interceptor';
-import {MatCardModule} from "@angular/material/card";
-import { ThumbnailService } from './services/thumbnail.service';
+import {MatCardModule} from '@angular/material/card';
+import {ThumbnailService} from './services/thumbnail.service';
+import {CommentComponent} from './components/comment/comment.component';
 import {NoAccessPageComponent} from './pages/no-access-page/no-access-page.component';
 
 @NgModule({
@@ -82,6 +86,7 @@ import {NoAccessPageComponent} from './pages/no-access-page/no-access-page.compo
     RenameDialogComponent,
     LandingPageComponent,
     SpaceSettingsComponent,
+    CommentComponent,
     NoAccessPageComponent,
   ],
   imports: [

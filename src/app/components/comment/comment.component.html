@@ -1,0 +1,35 @@
+<div class="container">
+  <form>
+    <mat-form-field class="comment-container">
+    <textarea matInput
+              placeholder="{{staticTextService.staticTexts | getStaticText : 'leaveComment' : languageService.getLanguage()}}"
+              [ngModel]="newComment"
+              [cdkTextareaAutosize]="true" [formControl]="control"></textarea>
+      <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="newComment?.length > 0"
+              (click)="newComment = ''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </form>
+  <button mat-raised-button color="primary" (click)="postComment()" [disabled]="newComment == ''">
+    {{staticTextService?.staticTexts | getStaticText : 'comment' : languageService?.getLanguage()}}
+  </button>
+
+  <mat-card *ngFor="let comment of comments">
+    <mat-card-content>
+      {{comment?.text}}
+      <mat-card-subtitle>
+        {{comment?.author}}
+        {{comment?.creationDate.toLocaleDateString()}} {{comment?.creationDate.toLocaleTimeString()}}
+      </mat-card-subtitle>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button color="primary" mat-button *ngIf="comment.author == userService?.currentUser$?.value?.username"
+              (click)="deleteComment(comment.id)">
+        {{staticTextService?.staticTexts | getStaticText : 'delete' : languageService?.getLanguage()}}
+        <mat-icon>delete_forever</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

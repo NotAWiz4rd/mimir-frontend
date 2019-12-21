@@ -45,7 +45,8 @@ export class UserService implements CanActivate {
       spaceMetadata => {
         let spaces: SpaceMetadata[] = spaceMetadata;
         let user = new User();  // todo replace with real user
-        user.id = 42;
+        user.id = 1;
+        user.username = 'thellmann';
         user.spaces = spaces;
         this.currentUser$.next(user);
       },
