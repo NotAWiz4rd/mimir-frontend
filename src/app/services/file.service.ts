@@ -6,6 +6,7 @@ import {FolderService} from './folder.service';
 import {ClipboardService} from './clipboard.service';
 import {environment} from 'src/environments/environment';
 import {Router} from '@angular/router';
+import {Comment} from '../classes/Comment';
 
 @Injectable()
 export class FileService {
