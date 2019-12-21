@@ -60,6 +60,7 @@ import {TokenAuthInterceptor} from './helpers/token-auth.interceptor';
 import {MatCardModule} from '@angular/material/card';
 import {ThumbnailService} from './services/thumbnail.service';
 import {CommentComponent} from './components/comment/comment.component';
+import {NoAccessPageComponent} from './pages/no-access-page/no-access-page.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import {CommentComponent} from './components/comment/comment.component';
     LandingPageComponent,
     SpaceSettingsComponent,
     CommentComponent,
+    NoAccessPageComponent,
   ],
   imports: [
     BrowserModule,

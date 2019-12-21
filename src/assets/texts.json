@@ -163,5 +163,10 @@
     "logicalName": "leaveComment",
     "english": "Leave a comment",
     "german": "Kommentieren Sie"
+  },
+  {
+    "logicalName": "noAccessButton",
+    "english": "GO HOME",
+    "german": "Zurückkehren"
   }
 ]

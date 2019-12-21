@@ -1,14 +1,12 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {File} from '../classes/File';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {FolderService} from './folder.service';
 import {ClipboardService} from './clipboard.service';
 import {environment} from 'src/environments/environment';
-import {UserService} from './user.service';
+import {Router} from '@angular/router';
 import {Comment} from '../classes/Comment';
-
-const KEY = 'YOU, W3ary TRAVELLER, Sh4LL P4ss!';
 
 @Injectable()
 export class FileService {
@@ -17,14 +15,17 @@ export class FileService {
   currentFile$: BehaviorSubject<File> = new BehaviorSubject<File>(undefined);
 
   constructor(private http: HttpClient,
-              private folderService: FolderService,
-              private userService: UserService) {
+              private router: Router,
+              private folderService: FolderService) {
   }
 
   loadFile(id: number) {
-    this.http.get<File>(this.artifactBaseUrl + id).subscribe(file => {
-      this.currentFile$.next(file);
-    });
+    this.http.get<File>(this.artifactBaseUrl + id).subscribe(
+      file => {
+        this.currentFile$.next(file);
+      },
+      error => this.handleError(error)
+    );
   }
 
   delete(id: number): Observable<boolean> {
@@ -37,9 +38,9 @@ export class FileService {
   }
 
   async download(id: number) {
-    const response = await this.http.get<{ token: string }>(environment.apiUrl + 'artifact/download/'+ id).toPromise();
+    const response = await this.http.get<{ token: string }>(environment.apiUrl + 'artifact/download/' + id).toPromise();
     const downloadToken = response.token;
-    window.open(environment.apiUrl + "artifact/" + id + "/download?token=" + downloadToken);
+    window.open(environment.apiUrl + 'artifact/' + id + '/download?token=' + downloadToken);
   }
 
   rename(id: number, name: string): Observable<boolean> {
@@ -55,9 +56,18 @@ export class FileService {
    * Copies a share link for the given file to the clipboard.
    * @param id The file id
    */
-  share(id: number) {
-    let link: string = window.location.host + '/file/' + id + '?key=' + btoa(KEY);
+  async share(id: number) {
+    const shareToken = await this.http.get<{ token: string }>(this.artifactBaseUrl + 'share/' + id).toPromise();
+    const link = window.location.host + '/file/' + id + '?token=' + shareToken.token;
     ClipboardService.copyToClipboard(link);
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.status == 403) {
+      this.router.navigateByUrl('no-access');
+    } else {
+      console.error(error);
+    }
   }
 
   addComment(fileId: number, text: string): Observable<Comment> {
