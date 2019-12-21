@@ -5,7 +5,6 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {FolderService} from './folder.service';
 import {ClipboardService} from './clipboard.service';
 import {environment} from 'src/environments/environment';
-import {UserService} from './user.service';
 import {Router} from '@angular/router';
 
 @Injectable()
@@ -16,8 +15,7 @@ export class FileService {
 
   constructor(private http: HttpClient,
               private router: Router,
-              private folderService: FolderService,
-              private userService: UserService) {
+              private folderService: FolderService) {
   }
 
   loadFile(id: number) {
@@ -58,7 +56,7 @@ export class FileService {
    * @param id The file id
    */
   async share(id: number) {
-    const shareToken = await this.http.get<{ token: string }>(this.baseUrl + 'share/' + id).toPromise();
+    const shareToken = await this.http.get<{ token: string }>(this.artifactBaseUrl + 'share/' + id).toPromise();
     const link = window.location.host + '/file/' + id + '?token=' + shareToken.token;
     ClipboardService.copyToClipboard(link);
   }
