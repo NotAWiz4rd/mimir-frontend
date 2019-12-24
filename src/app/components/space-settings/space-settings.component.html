@@ -17,7 +17,7 @@
     {{staticTextService.staticTexts | getStaticText : 'currentUsers' : languageService.getLanguage()}}:
     <mat-chip-list #userList aria-label="Users">
       <mat-chip *ngFor="let user of users" [removable]="true" (removed)="removeUser(user.id)" color="accent" selected>
-        {{user.username}} - {{user.mail}}
+        {{user.name}} - {{user.mail}}
         <mat-icon matChipRemove>cancel</mat-icon>
       </mat-chip>
     </mat-chip-list>
