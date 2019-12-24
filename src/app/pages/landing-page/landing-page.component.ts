@@ -15,8 +15,7 @@ export class LandingPageComponent implements OnInit {
   value3 = false;
   scrollTo: string;
   constructor(private userService: UserService,
-              private navigationService: NavigationService,
-              private vps: ViewportScroller) {
+              private navigationService: NavigationService) {
   }
 
   ngOnInit() {
@@ -24,7 +23,7 @@ export class LandingPageComponent implements OnInit {
 
   // tslint:disable-next-line:use-life-cycle-interface
   ngAfterViewChecked() {
-    this.vps.scrollToAnchor(this.scrollTo);
+    document.getElementById(this.scrollTo).scrollIntoView({behavior: 'smooth'});
     this.scrollTo = undefined;
   }
 

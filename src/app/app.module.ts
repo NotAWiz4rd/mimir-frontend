@@ -15,6 +15,26 @@ import {SpaceBarComponent} from './components/space-bar/space-bar.component';
 import {HeaderBarComponent} from './components/header-bar/header-bar.component';
 import {LoginComponent} from './pages/login/login.component';
 import {ActionBarComponent} from './components/action-bar/action-bar.component';
+import {
+  MatAutocompleteModule,
+  MatButtonModule,
+  MatButtonToggleModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatChipsModule,
+  MatDialogModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule,
+  MatMenuModule,
+  MatSidenavModule,
+  MatSlideToggleModule,
+  MatSnackBar,
+  MatSnackBarContainer,
+  MatSnackBarModule,
+  MatToolbarModule,
+  MatTooltipModule
+} from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SearchComponent} from './components/search/search.component';
 import {SearchService} from './services/search.service';
@@ -40,26 +60,10 @@ import {LandingPageComponent} from './pages/landing-page/landing-page.component'
 import {ClipboardService} from './services/clipboard.service';
 import {SpaceSettingsComponent} from './components/space-settings/space-settings.component';
 import {TokenAuthInterceptor} from './helpers/token-auth.interceptor';
-import {
-  MatAutocompleteModule,
-  MatButtonModule,
-  MatButtonToggleModule,
-  MatCardModule,
-  MatCheckboxModule,
-  MatChipsModule,
-  MatDialogModule,
-  MatFormFieldModule,
-  MatIconModule,
-  MatInputModule,
-  MatMenuModule,
-  MatSidenavModule,
-  MatSlideToggleModule,
-  MatSnackBar,
-  MatSnackBarContainer,
-  MatSnackBarModule,
-  MatTooltipModule
-} from '@angular/material';
 import {ThumbnailService} from './services/thumbnail.service';
+import {CommentComponent} from './components/comment/comment.component';
+import {NoAccessPageComponent} from './pages/no-access-page/no-access-page.component';
+import {FooterComponent} from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +89,9 @@ import {ThumbnailService} from './services/thumbnail.service';
     RenameDialogComponent,
     LandingPageComponent,
     SpaceSettingsComponent,
+    CommentComponent,
+    NoAccessPageComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
@@ -112,6 +119,7 @@ import {ThumbnailService} from './services/thumbnail.service';
     MatSlideToggleModule,
     MatIconModule,
     MatCardModule,
+    MatToolbarModule,
     MatChipsModule,
   ],
   entryComponents: [

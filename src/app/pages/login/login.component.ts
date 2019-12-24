@@ -3,7 +3,7 @@ import {UserService} from '../../services/user.service';
 import {StaticTextService} from '../../services/static-text.service';
 import {LanguageService} from '../../services/language.service';
 import {NavigationService} from '../../services/navigation.service';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -28,6 +28,17 @@ export class LoginComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
+
+    if (this.userService.token) {
+      this.tryToLoadUser();
+    }
+  }
+
+  async tryToLoadUser() {
+    await this.userService.reloadUser();
+    if (this.userService.currentUser$.getValue() != undefined && this.userService.currentUser$.getValue().spaces != undefined) {
+      this.navigationService.navigateToSpace(this.userService.currentUser$.getValue().spaces[0].id);
+    }
   }
 
   // convenience getter for easy access to form fields
@@ -40,9 +51,9 @@ export class LoginComponent implements OnInit {
     }
     this.loading = true;
     //TODO change to: await this.userService.login(this.f.username.value, this.f.password.value)
-    await this.userService.login('thellmann', 'thellmann');
+    await this.userService.login('thellmann', 'thellmann'); // todo get user from backend
     //TODO if error -> this.loading = false  and  display error message
-    this.navigationService.navigateToSpace(2); // todo get user from backend, navigate to first space
+    this.navigationService.navigateToSpace(this.userService.currentUser$.getValue().spaces[0].id);
   }
 
   register() {
