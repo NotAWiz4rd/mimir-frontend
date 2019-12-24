@@ -2,15 +2,14 @@
   {{staticTextService.staticTexts | getStaticText : 'addUser' : languageService.getLanguage()}}:
   <form class="form">
     <mat-form-field>
-      <input matInput placeholder="E-Mail" [formControl]="emailFormControl"
-             [errorStateMatcher]="matcher">
-      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-        {{staticTextService.staticTexts | getStaticText : 'enterMail' : languageService.getLanguage()}}
+      <input matInput placeholder="Username" [formControl]="formControl">
+      <mat-error *ngIf="formControl.hasError('username') && !formControl.hasError('required')">
+        {{staticTextService.staticTexts | getStaticText : 'enterUsername' : languageService.getLanguage()}}
       </mat-error>
     </mat-form-field>
   </form>
 
-  <button mat-raised-button color="primary" (click)="addUser(emailFormControl.value)">
+  <button mat-raised-button color="primary" (click)="addUser(formControl.value)">
     {{staticTextService.staticTexts | getStaticText : 'addUser' : languageService.getLanguage()}}
   </button>
 

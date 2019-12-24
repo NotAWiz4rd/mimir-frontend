@@ -175,9 +175,9 @@
     "german": "Nutzer hinzufügen"
   },
   {
-    "logicalName": "enterMail",
-    "english": "Please enter a valid email address",
-    "german": "Bitte geben Sie eine valide E-Mail Addresse ein"
+    "logicalName": "enterUsername",
+    "english": "Please enter a valid username",
+    "german": "Bitte geben Sie einen validen Nutzernamen ein"
   },
   {
     "logicalName": "currentUsers",

@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
 import {Folder} from '../classes/Folder';
 import {Space} from '../classes/Space';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {SpaceMetadata} from '../classes/SpaceMetadata';
-import { environment } from 'src/environments/environment';
+import {environment} from 'src/environments/environment';
 import {User} from '../classes/User';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class SpaceService {
@@ -15,7 +16,7 @@ export class SpaceService {
 
   currentFolder: Folder;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
   }
 
   loadSpace(spaceId: number, uploaded: boolean = false): Observable<Space> {
@@ -47,19 +48,28 @@ export class SpaceService {
     return spaceDeletionResult;
   }
 
-  addUserToCurrentSpace(usermail: string): Observable<User[]> {
-    let userSubject: BehaviorSubject<User[]> = new BehaviorSubject<User[]>(undefined);
-    this.http.post<User[]>(this.baseUrl + this.currentSpace.id + '/adduser?mail=' + usermail, {}).subscribe(users => {
-      userSubject.next(users);
-    });
-    return userSubject;
+  async addUserToCurrentSpace(username: string) {
+    await this.http.put<string>(this.baseUrl + this.currentSpace.id + '?username=' + username, {}).toPromise();
   }
 
-  removeUserFromCurrentSpace(userId: number): Observable<User[]> {
-    let userSubject: BehaviorSubject<User[]> = new BehaviorSubject<User[]>(undefined);
-    this.http.post<User[]>(this.baseUrl + this.currentSpace.id + '/removeuser?id=' + userId, {}).subscribe(users => {
-      userSubject.next(users);
-    });
-    return userSubject;
+  async removeUserFromCurrentSpace(userId: number) {
+    await this.http.delete<User[]>(this.baseUrl + this.currentSpace.id + '/removeuser?id=' + userId, {}).toPromise();
+  }
+
+  getUsersOfCurrentSpace(): Observable<User[]> {
+    let usersSubject: BehaviorSubject<User[]> = new BehaviorSubject<User[]>(undefined);
+    this.http.get<User[]>(this.baseUrl + this.currentSpace.id + '/users').subscribe(users => {
+        usersSubject.next(users);
+      },
+      error => this.handleError(error)); // in case someone removed himself from a space
+    return usersSubject;
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.status == 403) {
+      this.router.navigateByUrl('no-access');
+    } else {
+      console.error(error);
+    }
   }
 }

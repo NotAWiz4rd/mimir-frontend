@@ -116,12 +116,4 @@ export class UserService implements CanActivate {
       console.error(error);
     }
   }
-
-  getUsersByIds(users: number[]): Observable<User[]> {
-    let userSubject: BehaviorSubject<User[]> = new BehaviorSubject<User[]>(undefined);
-    this.http.get<User[]>(environment.apiUrl + 'users/' + users).subscribe(users => {
-      userSubject.next(users);
-    });
-    return userSubject;
-  }
 }
