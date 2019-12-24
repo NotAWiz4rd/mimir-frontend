@@ -1,19 +1,19 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
+import {BehaviorSubject} from 'rxjs';
 import {User} from '../classes/User';
 import {SpaceMetadata} from '../classes/SpaceMetadata';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {environment} from 'src/environments/environment';
 import {SpaceService} from './space.service';
 
-const KEY = 'YOU, W3ary TRAVELLER, Sh4LL P4ss!'; // encrypted key is this: WU9VLCBXM2FyeSBUUkFWRUxMRVIsIFNoNExMIFA0c3Mh
 const LOCAL_STORAGE_TOKEN_KEY = 'cmspp-token';
 
 @Injectable()
 export class UserService implements CanActivate {
   currentUser$: BehaviorSubject<User> = new BehaviorSubject<User>(undefined);
   token: string;
+  shareToken: string;
 
   constructor(private http: HttpClient,
               private router: Router,
@@ -41,13 +41,16 @@ export class UserService implements CanActivate {
 
   async reloadUser() {
     let hubbleTelescope = this.http.get<SpaceMetadata[]>(environment.apiUrl + 'spaces'); // because it observes space(s)
-    hubbleTelescope.subscribe(spaceMetadata => {
-      let spaces: SpaceMetadata[] = spaceMetadata;
-      let user = new User();  // todo replace with real user
-      user.id = 42;
-      user.spaces = spaces;
-      this.currentUser$.next(user);
-    });
+    hubbleTelescope.subscribe(
+      spaceMetadata => {
+        let spaces: SpaceMetadata[] = spaceMetadata;
+        let user = new User();  // todo replace with real user
+        user.id = 1;
+        user.username = 'thellmann';
+        user.spaces = spaces;
+        this.currentUser$.next(user);
+      },
+      error => this.handleError(error));
     await hubbleTelescope.toPromise();
   }
 
@@ -76,9 +79,9 @@ export class UserService implements CanActivate {
     // checks whether we're accessing a file or folder via a direct link
     let folderId = route.params['folderId'];
     let fileId = route.params['fileId'];
-    let key = route.queryParams['key'];
-    if ((folderId != undefined || fileId != undefined) && key != undefined) {
-      verdict = atob(key) == KEY;
+    this.shareToken = route.queryParams['token'];
+    if ((folderId != undefined || fileId != undefined) && this.shareToken != undefined) {
+      verdict = true;
     }
 
     if (this.token != undefined && this.currentUser$.value == undefined) {
@@ -104,5 +107,13 @@ export class UserService implements CanActivate {
       this.router.navigateByUrl('');
     }
     return verdict;
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.status == 403) {
+      this.router.navigateByUrl('no-access');
+    } else {
+      console.error(error);
+    }
   }
 }

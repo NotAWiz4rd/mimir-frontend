@@ -1,0 +1,21 @@
+.container {
+  margin: 20px;
+}
+
+.comment-container {
+  width: 100%;
+  max-width: 533px;
+}
+
+mat-card {
+  margin-top: 10px;
+  max-width: 800px;
+}
+
+mat-card:first-of-type {
+  margin-top: 25px;
+}
+
+mat-card-content {
+  margin: 0;
+}

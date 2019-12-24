@@ -37,7 +37,6 @@ export class ContentPageComponent implements OnInit {
               public languageService: LanguageService,
               public dialog: MatDialog,
               public _snackBar: MatSnackBar) {
-
     this.route.params.subscribe(params => {
       if (this.route.toString().includes('url:\'settings\',')) { // check whether we should be showing the settings page
         this.isSettings = true;
@@ -54,6 +53,7 @@ export class ContentPageComponent implements OnInit {
         this.fileId = Number(params['fileId']);
       } else {
         this.fileId = undefined;
+        this.file = undefined;
       }
 
       if (params['folderId'] != undefined) {
@@ -68,7 +68,7 @@ export class ContentPageComponent implements OnInit {
         this.spaceId = undefined;
       }
 
-      if (this.fileId != undefined && this.spaceId == undefined && this.folderId == undefined) { // load file directly
+      if (this.fileId != undefined) { // load file directly
         this.fileService.loadFile(this.fileId);
       } else if (this.fileId == undefined && this.spaceService.currentFolder != undefined && lastFileId != undefined && this.spaceId == lastSpaceId) { // recalculate path if we go back from a file
         this.navigationService.figureOutPaths(this.spaceService.currentFolder);
@@ -120,7 +120,10 @@ export class ContentPageComponent implements OnInit {
     this.fileService.currentFile$.subscribe(file => {
       if (file != undefined) {
         this.file = file;
-        this.navigationService.namePath$.next(this.file.name);
+
+        if (this.folderId == undefined) {
+          this.navigationService.namePath$.next(this.file.name);
+        }
       }
     });
   }
@@ -177,7 +180,7 @@ export class ContentPageComponent implements OnInit {
     }
   }
 
-  doFolderAction(action: string, id: number) {
+  async doFolderAction(action: string, id: number) {
     switch (action) {
       case 'rename':
         const dialogRef = this.dialog.open(RenameDialogComponent, {
@@ -214,7 +217,7 @@ export class ContentPageComponent implements OnInit {
         this.folderService.download(id);
         break;
       case 'share':
-        this.folderService.share(id);
+        await this.folderService.share(id);
         this.openSnackBar('Link was copied to clipboard');
         break;
     }
@@ -228,7 +231,7 @@ export class ContentPageComponent implements OnInit {
     });
   }
 
-  doFileAction(action: string, id: number) {
+  async doFileAction(action: string, id: number) {
     switch (action) {
       case 'rename':
         const dialogRef = this.dialog.open(RenameDialogComponent, {
@@ -254,7 +257,7 @@ export class ContentPageComponent implements OnInit {
         this.fileService.download(id);
         break;
       case 'share':
-        this.fileService.share(id);
+        await this.fileService.share(id);
         this.openSnackBar('Link was copied to clipboard');
         break;
     }
