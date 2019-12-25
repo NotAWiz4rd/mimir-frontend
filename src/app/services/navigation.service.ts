@@ -72,8 +72,10 @@ export class NavigationService {
   }
 
   navigateSearch(currentSearchFolder: Folder, searchValue: string) {
-    if (this.spaceService.currentSpace.id != undefined) {
+    if (this.spaceService.currentSpace.id != undefined && searchValue.length > 0) {
       this.router.navigate(['space/' + this.spaceService.currentSpace.id + '/folder/' + currentSearchFolder.id, {searchValue: searchValue}]);
+    } else if (this.spaceService.currentSpace.id != undefined) {
+      this.navigateWithinSpace(currentSearchFolder.id);
     } else {
       this.router.navigate(['folder/', currentSearchFolder.id, {searchValue: searchValue}], {queryParams: {token: this.folderService.userService.shareToken}});
     }

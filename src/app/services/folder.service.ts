@@ -111,7 +111,7 @@ export class FolderService {
 
 
   getFolderFromSpace(id: number): Folder {
-    return FolderService.searchForFolder(this.spaceService.currentSpace.root, id);
+    return JSON.parse(JSON.stringify(FolderService.searchForFolder(this.spaceService.currentSpace.root, id))); // use deep copy of folder
   }
 
   private static searchForFolder(base: Folder, id: number): Folder {

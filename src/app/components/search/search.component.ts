@@ -58,4 +58,9 @@ export class SearchComponent implements OnInit, OnDestroy {
       this.namePathSubscription.unsubscribe();
     }
   }
+
+  removeSearch() {
+    this.control.setValue('');
+    this.onEnter();
+  }
 }
