@@ -1,4 +1,10 @@
 <p>
   This is the file: {{file?.name}}
 </p>
+<img *ngIf="isPicture; else showText" [src]="fileUrl" alt="file image">
+<ng-template #showText>
+  <button mat-raised-button color="primary" (click)="editText()">Edit</button>
+  <p [innerHTML]="text"></p>
+  <ckeditor [editor]="Editor" data="<p>Hello, world!</p>"></ckeditor>
+</ng-template>
 <app-comments [fileId]="file.id"></app-comments>

@@ -61,6 +61,8 @@ import {MatCardModule} from '@angular/material/card';
 import {ThumbnailService} from './services/thumbnail.service';
 import {CommentComponent} from './components/comment/comment.component';
 import {NoAccessPageComponent} from './pages/no-access-page/no-access-page.component';
+import {FileDataService} from "./services/file-data.service";
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   declarations: [
@@ -115,6 +117,7 @@ import {NoAccessPageComponent} from './pages/no-access-page/no-access-page.compo
     MatSlideToggleModule,
     MatIconModule,
     MatCardModule,
+    CKEditorModule,
   ],
   entryComponents: [
     CreateFolderDialogComponent,
@@ -135,6 +138,7 @@ import {NoAccessPageComponent} from './pages/no-access-page/no-access-page.compo
     FolderService,
     StaticTextService,
     FileService,
+    FileDataService,
     UploadService,
     ClipboardService,
     MatSnackBar,
