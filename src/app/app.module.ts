@@ -63,7 +63,6 @@ import {ThumbnailService} from './services/thumbnail.service';
 import {CommentComponent} from './components/comment/comment.component';
 import {NoAccessPageComponent} from './pages/no-access-page/no-access-page.component';
 import {FileDataService} from './services/file-data.service';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import {FooterComponent} from './components/footer/footer.component';
 import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 
