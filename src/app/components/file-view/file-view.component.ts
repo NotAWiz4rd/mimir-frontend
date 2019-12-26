@@ -11,18 +11,19 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 })
 export class FileViewComponent implements OnInit {
   public Editor = ClassicEditor;
+  public editorData;
   @Input()
   file: File;
   contentFileType: String;
   isPicture: boolean;
-  text: SafeHtml = 'test';
+  text: SafeHtml;
+  public isDisabled = false;
 
   fileUrl: string;
 
   constructor(private fileViewService: FileDataService,
               private domSanitizer: DomSanitizer) {
   }
-
 
   public onReady(editor) {
     editor.ui.getEditableElement().parentElement.insertBefore(
@@ -33,7 +34,7 @@ export class FileViewComponent implements OnInit {
 
   ngOnInit() {
     this.contentFileType = this.getFileContentType();
-    if (this.contentFileType.includes('jpg') || this.contentFileType.includes('png')){
+    if (this.contentFileType.includes('jpg') || this.contentFileType.includes('png')) {
       this.isPicture = true;
       this.setFileUrl();
     } else if (this.contentFileType.includes('txt')) {
@@ -48,9 +49,10 @@ export class FileViewComponent implements OnInit {
     });
   }
 
-  setText(): void{
+  setText(): void {
     this.fileViewService.getTextFile(this.file.id).subscribe(data => {
       this.text = this.domSanitizer.bypassSecurityTrustHtml(data);
+      this.editorData = this.text;
     });
   }
 
@@ -59,8 +61,7 @@ export class FileViewComponent implements OnInit {
     return fileName[fileName.length - 1];
   }
 
-  editText() {
-
+  toggleEditing() {
+    this.isDisabled = !this.isDisabled;
   }
-
 }

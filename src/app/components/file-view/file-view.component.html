@@ -3,11 +3,7 @@
 </p>
 <img *ngIf="isPicture; else showText" [src]="fileUrl" alt="file image">
 <ng-template #showText>
-  <button mat-raised-button color="primary" (click)="editText()">Edit</button>
-  <p [innerHTML]="text"></p>
-  <ckeditor [editor]="Editor" data="<p>Hello, world!</p>"></ckeditor>
+  <ckeditor [editor]="Editor" [data]="editorData" [disabled]="isDisabled" (ready)="onReady($event)"></ckeditor>
+  <button mat-raised-button color="primary" (click)="toggleEditing()" >Edit</button>
 </ng-template>
 <app-comments [fileId]="file.id"></app-comments>
-
-<ckeditor [editor]="Editor" data="<p>Hello, world!</p>" (ready)="onReady($event)">
-</ckeditor>
