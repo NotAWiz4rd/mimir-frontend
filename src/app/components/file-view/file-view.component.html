@@ -1,4 +1,5 @@
 <img *ngIf="isPicture; else showText" [src]="fileUrl" alt="file image">
+<!--todo adjust so that the text editor is not shown for e.g. video (and in general everything apart from texts)-->
 <ng-template #showText>
   <ckeditor [config]="editorConfig" [editor]="Editor" [(ngModel)]="editableText" [disabled]="isDisabled"
             (ready)="onReady($event)"></ckeditor>
