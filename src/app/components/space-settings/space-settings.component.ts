@@ -7,6 +7,7 @@ import {FormControl, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material';
 import {NavigationService} from '../../services/navigation.service';
 import {UserService} from '../../services/user.service';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-space-settings',
@@ -42,24 +43,8 @@ export class SpaceSettingsComponent implements OnInit {
   }
 
   async removeUser(id: number) {
-    try {
-      await this.spaceService.removeUserFromCurrentSpace(id);
-      this.getSpaceUsers();
-    } catch (e) {
-      if (e.status == 403) {
-        const otherSpaceId = this.userService.getDifferentSpaceId();
-        if (otherSpaceId != -1) {
-          this.navigationService.navigateToSpace(otherSpaceId);
-          this.userService.reloadUser();
-        } else { // if there are no other spaces available create a new one and navigate there
-          this.spaceService.createSpace(this.userService.currentUser$.getValue().name).subscribe(spaceMetaData => {
-            this.userService.addSpaceToUser(spaceMetaData);
-            this.navigationService.navigateToSpace(spaceMetaData.id);
-            this.userService.reloadUser();
-          });
-        }
-      }
-    }
+    await this.spaceService.removeUserFromCurrentSpace(id);
+    this.getSpaceUsers();
   }
 
   getSpaceUsers() {
@@ -67,12 +52,28 @@ export class SpaceSettingsComponent implements OnInit {
       if (users != undefined) {
         this.users = users;
       }
-    });
+    }, error => this.handleError(error));
   }
 
   openSnackBar(message: string) {
     this._snackBar.open(message, null, {
       duration: 1750,
     });
+  }
+
+  handleError(error: HttpErrorResponse) {
+    if (error.status == 403) {
+      const otherSpaceId = this.userService.getDifferentSpaceId();
+      if (otherSpaceId != -1) {
+        this.navigationService.navigateToSpace(otherSpaceId);
+        this.userService.reloadUser();
+      } else { // if there are no other spaces available create a new one and navigate there
+        this.spaceService.createSpace(this.userService.currentUser$.getValue().name).subscribe(spaceMetaData => {
+          this.userService.addSpaceToUser(spaceMetaData);
+          this.navigationService.navigateToSpace(spaceMetaData.id);
+          this.userService.reloadUser();
+        });
+      }
+    }
   }
 }

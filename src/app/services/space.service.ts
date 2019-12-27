@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Folder} from '../classes/Folder';
 import {Space} from '../classes/Space';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {SpaceMetadata} from '../classes/SpaceMetadata';
 import {environment} from 'src/environments/environment';
@@ -49,7 +49,7 @@ export class SpaceService {
   }
 
   async addUserToCurrentSpace(username: string) {
-      await this.http.put<string>(this.baseUrl + this.currentSpace.id + '?username=' + username, {}).toPromise();
+    await this.http.put<string>(this.baseUrl + this.currentSpace.id + '?username=' + username, {}).toPromise();
   }
 
   async removeUserFromCurrentSpace(userId: number) {
@@ -60,7 +60,8 @@ export class SpaceService {
     let usersSubject: BehaviorSubject<User[]> = new BehaviorSubject<User[]>(undefined);
     this.http.get<User[]>(this.baseUrl + this.currentSpace.id + '/users').subscribe(users => {
         usersSubject.next(users);
-      });
+      },
+      error => usersSubject.error(error));
     return usersSubject;
   }
 }
