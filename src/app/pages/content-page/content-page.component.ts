@@ -103,14 +103,17 @@ export class ContentPageComponent implements OnInit {
         });
       }
 
-      if (params['searchValue'] != undefined && this.searchValue != params['searchValue']) {
+      if (params['searchValue'] != undefined && this.searchValue != params['searchValue']) { // searchValue has changed
         this.searchValue = params['searchValue'];
         if (this.spaceService.currentFolder != undefined) {
           const filesAndFolders: [File[], Folder[]] = SearchService.collectMatchingFilesAndFolders(this.spaceService.currentFolder, this.searchValue);
           this.spaceService.currentFolder.artifacts = filesAndFolders[0];
           this.spaceService.currentFolder.folders = filesAndFolders[1];
         }
-      } else if (params['searchValue'] == undefined) {
+      } else if (params['searchValue'] == undefined) { // no search value
+        if (this.searchValue != undefined) { // coming back from a search
+          this.setCurrentFolder(this.folderService.getFolderFromSpace(this.folderId));
+        }
         this.searchValue = undefined;
       }
     });

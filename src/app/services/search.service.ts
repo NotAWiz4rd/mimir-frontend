@@ -31,7 +31,9 @@ export class SearchService {
 
   getAllSearchables(base: Folder): string[] {
     let names: string[] = [];
-    names.push(base.name);
+    if (base.name != this.spaceService.currentFolder.name) {
+      names.push(base.name);
+    }
 
     // get all filenames in base
     if (base.artifacts != null) {
@@ -65,8 +67,8 @@ export class SearchService {
         folders.push(base.folders[i]);
       }
       let filesAndFolders: [File[], Folder[]] = this.collectMatchingFilesAndFolders(base.folders[i], searchValue);
-      files.concat(filesAndFolders[0]);
-      folders.concat(filesAndFolders[1]);
+      files = files.concat(filesAndFolders[0]);
+      folders = folders.concat(filesAndFolders[1]);
     }
 
     return [files, folders];
