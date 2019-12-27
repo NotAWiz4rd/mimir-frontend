@@ -4,6 +4,9 @@ import {LanguageService} from '../../services/language.service';
 import {StaticTextService} from '../../services/static-text.service';
 import {User} from '../../classes/User';
 import {FormControl, Validators} from '@angular/forms';
+import {MatSnackBar} from '@angular/material';
+import {NavigationService} from '../../services/navigation.service';
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'app-space-settings',
@@ -19,7 +22,10 @@ export class SpaceSettingsComponent implements OnInit {
 
   constructor(public spaceService: SpaceService,
               public languageService: LanguageService,
-              public staticTextService: StaticTextService) {
+              public staticTextService: StaticTextService,
+              public _snackBar: MatSnackBar,
+              private navigationService: NavigationService,
+              private userService: UserService) {
     this.getSpaceUsers();
   }
 
@@ -27,14 +33,32 @@ export class SpaceSettingsComponent implements OnInit {
   }
 
   async addUser(username: string) {
-    await this.spaceService.addUserToCurrentSpace(username);
+    try {
+      await this.spaceService.addUserToCurrentSpace(username);
+    } catch (e) {
+      this.openSnackBar(e.message);
+    }
     this.getSpaceUsers();
   }
 
   async removeUser(id: number) {
-    await this.spaceService.removeUserFromCurrentSpace(id);
-    this.getSpaceUsers();
-
+    try {
+      await this.spaceService.removeUserFromCurrentSpace(id);
+      this.getSpaceUsers();
+    } catch (e) {
+      if (e.status == 403) {
+        const otherSpaceId = this.userService.getDifferentSpaceId();
+        if (otherSpaceId != -1) {
+          this.navigationService.navigateToSpace(otherSpaceId);
+        } else { // if there are no other spaces available create a new one and navigate there
+          this.spaceService.createSpace(this.userService.currentUser$.getValue().name).subscribe(spaceMetaData => {
+            this.userService.addSpaceToUser(spaceMetaData);
+            this.navigationService.navigateToSpace(spaceMetaData.id);
+            this.userService.reloadUser();
+          });
+        }
+      }
+    }
   }
 
   getSpaceUsers() {
@@ -42,6 +66,12 @@ export class SpaceSettingsComponent implements OnInit {
       if (users != undefined) {
         this.users = users;
       }
+    });
+  }
+
+  openSnackBar(message: string) {
+    this._snackBar.open(message, null, {
+      duration: 1750,
     });
   }
 }

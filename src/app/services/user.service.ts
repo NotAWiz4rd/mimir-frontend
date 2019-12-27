@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 import {User} from '../classes/User';
 import {SpaceMetadata} from '../classes/SpaceMetadata';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
@@ -71,6 +71,20 @@ export class UserService implements CanActivate {
   delete() {
     this.http.delete(environment.apiUrl + 'users/' + this.currentUser$.value.id);
     this.logout();
+  }
+
+  /**
+   * Returns the spaceId of a Space that the current user has access to but is not the current space.
+   * Returns -1 if none is available.
+   */
+  getDifferentSpaceId(): number {
+    const currentSpaceId = this.spaceService.currentSpace.id;
+    for (let space of this.currentUser$.getValue().spaces) {
+      if (space.id != currentSpaceId) {
+        return space.id;
+      }
+    }
+    return -1;
   }
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {

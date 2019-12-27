@@ -49,7 +49,7 @@ export class SpaceService {
   }
 
   async addUserToCurrentSpace(username: string) {
-    await this.http.put<string>(this.baseUrl + this.currentSpace.id + '?username=' + username, {}).toPromise();
+      await this.http.put<string>(this.baseUrl + this.currentSpace.id + '?username=' + username, {}).toPromise();
   }
 
   async removeUserFromCurrentSpace(userId: number) {
@@ -60,16 +60,7 @@ export class SpaceService {
     let usersSubject: BehaviorSubject<User[]> = new BehaviorSubject<User[]>(undefined);
     this.http.get<User[]>(this.baseUrl + this.currentSpace.id + '/users').subscribe(users => {
         usersSubject.next(users);
-      },
-      error => this.handleError(error)); // in case someone removed himself from a space
+      });
     return usersSubject;
-  }
-
-  private handleError(error: HttpErrorResponse) {
-    if (error.status == 403) {
-      this.router.navigateByUrl('no-access');
-    } else {
-      console.error(error);
-    }
   }
 }
