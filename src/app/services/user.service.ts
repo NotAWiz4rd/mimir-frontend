@@ -46,7 +46,7 @@ export class UserService implements CanActivate {
         let spaces: SpaceMetadata[] = spaceMetadata;
         let user = new User();  // todo replace with real user
         user.id = 1;
-        user.username = 'thellmann';
+        user.name = 'thellmann';
         user.spaces = spaces;
         this.currentUser$.next(user);
       },
@@ -71,6 +71,20 @@ export class UserService implements CanActivate {
   delete() {
     this.http.delete(environment.apiUrl + 'users/' + this.currentUser$.value.id);
     this.logout();
+  }
+
+  /**
+   * Returns the spaceId of a Space that the current user has access to but is not the current space.
+   * Returns -1 if none is available.
+   */
+  getDifferentSpaceId(): number {
+    const currentSpaceId = this.spaceService.currentSpace.id;
+    for (let space of this.currentUser$.getValue().spaces) {
+      if (space.id != currentSpaceId) {
+        return space.id;
+      }
+    }
+    return -1;
   }
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {

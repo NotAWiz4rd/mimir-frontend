@@ -21,6 +21,7 @@ import {
   MatButtonToggleModule,
   MatCardModule,
   MatCheckboxModule,
+  MatChipsModule,
   MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
@@ -124,6 +125,7 @@ import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
     MatCardModule,
     CKEditorModule,
     MatToolbarModule,
+    MatChipsModule,
   ],
   entryComponents: [
     CreateFolderDialogComponent,
