@@ -1,5 +1,34 @@
 img {
-  max-width:100%;
-  height:auto;
-  padding: 5px;
+  height: auto;
+  max-width: fit-content;
 }
+
+#wrapper {
+  display: inline-block;
+}
+
+#picture {
+  height: auto;
+  padding: 5px;
+  max-width: calc(100% - 340px);
+}
+
+#details {
+  float: right;
+  padding: 5px;
+  min-width: 200px;
+  max-width: 320px;
+}
+
+#placeholder {
+  width: 1200px;
+}
+
+#editor {
+  float: left;
+  width: 830px;
+  margin-left: 20px;
+}
+
+
+

@@ -1,10 +1,25 @@
-<p>
-  This is the file: {{file?.name}}
-</p>
-<img *ngIf="isPicture; else showText" [src]="fileUrl" alt="file image">
-<ng-template #showText>
-  <button mat-raised-button color="primary" (click)="editText()">Edit</button>
-  <p [innerHTML]="text"></p>
-  <ckeditor [editor]="Editor" data="<p>Hello, world!</p>"></ckeditor>
-</ng-template>
+<div id="wrapper">
+  <img id="picture" *ngIf="isPicture; else showText" [src]="fileUrl" alt="file image">
+  <ng-template #showText>
+    <div id="placeholder"></div>
+    <button mat-raised-button color="primary" (click)="editText()">Edit</button>
+    <p [innerHTML]="text"></p>
+    <div id="editor">
+      <ckeditor [editor]="Editor" data="<p>Hello, world!</p>"></ckeditor>
+    </div>
+  </ng-template>
+  <div id="details">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Details</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{staticTextService.staticTexts | getStaticText : 'detailsFileName' : languageService.getLanguage()}} {{file?.name}}</p>
+        <p>{{staticTextService.staticTexts | getStaticText : 'detailsAuthor' : languageService.getLanguage()}} {{file?.author}}</p>
+        <p>{{staticTextService.staticTexts | getStaticText : 'detailsCreationDate' : languageService.getLanguage()}} {{file?.creationDate}}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
 <app-comments [fileId]="file.id"></app-comments>
+
