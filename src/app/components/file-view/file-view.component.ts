@@ -20,14 +20,13 @@ export class FileViewComponent implements OnInit {
   file: File;
   contentFileType: String;
   isPicture: boolean;
-  text: SafeHtml;
-  public isDisabled = true;
-  workingText;
+  text;
+  editableText;
+  isDisabled = true;
 
   fileUrl: string;
 
   constructor(private fileViewService: FileDataService,
-              private domSanitizer: DomSanitizer,
               public reuploadService: ReuploadService,
               public spaceService: SpaceService) {
   }
@@ -58,10 +57,9 @@ export class FileViewComponent implements OnInit {
 
   setText(): void {
     this.fileViewService.getTextFile(this.file.id).subscribe(data => {
-      // this.text = this.domSanitizer.bypassSecurityTrustHtml(data);
-      console.log(data);
-      this.text = data['changingThisBreaksApplicationSecurity'];
-      this.workingText = this.text.toString();
+      this.text = data;
+      // workaround as otherwise in the ckeditor it is undefined
+      this.editableText = this.text.changingThisBreaksApplicationSecurity;
     });
   }
 
@@ -84,8 +82,9 @@ export class FileViewComponent implements OnInit {
     }
 
   expFile() {
-    const fileText = this.workingText;
+    const fileText = this.editableText;
     const fileName = this.file.name;
+    console.log('Saving file: ' + fileName + ' with text: ' + fileText);
     this.saveTextAsFile(fileText, fileName);
   }
 }
