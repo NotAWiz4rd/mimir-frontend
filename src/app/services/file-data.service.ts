@@ -50,7 +50,7 @@ export class FileDataService {
     const fileReader = new FileReader();
     const observable = new Observable(observer => {
       fileReader.onloadend = () => {
-        observer.next(this.sanitizer.bypassSecurityTrustResourceUrl(<string> fileReader.result));
+        observer.next(this.sanitizer.bypassSecurityTrustHtml(<string> fileReader.result));
         observer.complete();
       };
     });

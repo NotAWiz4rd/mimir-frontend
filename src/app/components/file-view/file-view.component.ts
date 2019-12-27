@@ -43,7 +43,7 @@ export class FileViewComponent implements OnInit {
 
   setText(): void{
     this.fileViewService.getTextFile(this.file.id).subscribe(data => {
-      this.text = this.domSanitizer.bypassSecurityTrustHtml(data);
+      this.text = data;
     });
   }
 
