@@ -170,18 +170,18 @@
     "german": "Zurückkehren"
   },
   {
-    "logicalName": "addUser",
-    "english": "Add User",
-    "german": "Nutzer hinzufügen"
+    "logicalName": "detailsFileName",
+    "english": "File name:",
+    "german": "Dateiname:"
   },
   {
-    "logicalName": "enterUsername",
-    "english": "Please enter a valid username",
-    "german": "Bitte geben Sie einen validen Nutzernamen ein"
+    "logicalName": "detailsAuthor",
+    "english": "Author:",
+    "german": "Author:"
   },
   {
-    "logicalName": "currentUsers",
-    "english": "  Users currently in this space",
-    "german": "Aktuelle Nutzer im Space"
+    "logicalName": "detailsCreationDate",
+    "english": "Creation date:",
+    "german": "Erstellungsdatum:"
   }
 ]
