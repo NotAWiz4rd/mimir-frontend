@@ -3,6 +3,8 @@ import {File} from '../../classes/File';
 import {FileDataService} from '../../services/file-data.service';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import {UploadService} from '../../services/upload.service';
+import {SpaceService} from '../../services/space.service';
 
 @Component({
   selector: 'app-file-view',
@@ -11,18 +13,24 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 })
 export class FileViewComponent implements OnInit {
   public Editor = ClassicEditor;
-  public editorData;
+  editorConfig = {
+    placeholder: 'Type the content here!',
+  };
   @Input()
   file: File;
   contentFileType: String;
   isPicture: boolean;
   text: SafeHtml;
-  public isDisabled = false;
+  public isDisabled = true;
+  sanitizedText;
+  htmlSnippet = '<div>safe text????</div><script>this.toggleEditing()</script>';
 
   fileUrl: string;
 
   constructor(private fileViewService: FileDataService,
-              private domSanitizer: DomSanitizer) {
+              private domSanitizer: DomSanitizer,
+              public uploadService: UploadService,
+              public spaceService: SpaceService) {
   }
 
   public onReady(editor) {
@@ -52,7 +60,6 @@ export class FileViewComponent implements OnInit {
   setText(): void {
     this.fileViewService.getTextFile(this.file.id).subscribe(data => {
       this.text = this.domSanitizer.bypassSecurityTrustHtml(data);
-      this.editorData = this.text;
     });
   }
 
@@ -63,5 +70,19 @@ export class FileViewComponent implements OnInit {
 
   toggleEditing() {
     this.isDisabled = !this.isDisabled;
+  }
+
+  saveTextAsFile(data, filename) {
+    if (!data) {
+      console.error('no data');
+      return;
+    }
+    const blob = new Blob([data], {type: 'text/plain'});
+    }
+
+  expFile() {
+    const fileText = this.htmlSnippet;
+    const fileName = this.file.name;
+    this.saveTextAsFile(fileText, fileName);
   }
 }
