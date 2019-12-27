@@ -92,7 +92,6 @@ import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
     LandingPageComponent,
     SpaceSettingsComponent,
     FooterComponent,
-    FooterComponent,
     CommentComponent,
     NoAccessPageComponent,
     FooterComponent,
