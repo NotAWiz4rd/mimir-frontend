@@ -11,7 +11,7 @@ export class ReuploadService {
     const formData: FormData = new FormData();
     formData.append('file', data, filename);
 
-    this.http.put(environment.apiUrl + 'artifact/' + artifactId, formData).subscribe(
+    this.http.put(environment.apiUrl + 'artifact/' + artifactId, formData).subscribe( // todo remove these (debug) logs
       val => {
         console.log('successful put', val);
       },

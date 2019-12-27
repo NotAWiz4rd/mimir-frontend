@@ -168,5 +168,20 @@
     "logicalName": "noAccessButton",
     "english": "GO HOME",
     "german": "Zurückkehren"
+  },
+  {
+    "logicalName": "cancel",
+    "english": "Cancel",
+    "german": "Abbrechen"
+  },
+  {
+    "logicalName": "save",
+    "english": "Save",
+    "german": "Speichern"
+  },
+  {
+    "logicalName": "edit",
+    "english": "Edit",
+    "german": "Editieren"
   }
 ]

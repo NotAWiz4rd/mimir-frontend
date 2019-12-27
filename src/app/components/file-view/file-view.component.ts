@@ -1,10 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {File} from '../../classes/File';
 import {FileDataService} from '../../services/file-data.service';
-import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {ReuploadService} from '../../services/reupload.service';
 import {SpaceService} from '../../services/space.service';
+import {StaticTextService} from '../../services/static-text.service';
+import {LanguageService} from '../../services/language.service';
 
 @Component({
   selector: 'app-file-view',
@@ -23,12 +24,15 @@ export class FileViewComponent implements OnInit {
   text;
   editableText;
   isDisabled = true;
+  originalText;
 
   fileUrl: string;
 
   constructor(private fileViewService: FileDataService,
               public reuploadService: ReuploadService,
-              public spaceService: SpaceService) {
+              public spaceService: SpaceService,
+              public staticTextService: StaticTextService,
+              public languageService: LanguageService) {
   }
 
   public onReady(editor) {
@@ -50,7 +54,7 @@ export class FileViewComponent implements OnInit {
   }
 
   setFileUrl(): void {
-    this.fileViewService.fetchImg(this.file.id).subscribe(base64Image => {
+    this.fileViewService.fetchImg(this.file.id).subscribe(base64Image => {  // todo add some loading message while file is being loaded, otherwise it looks like the image getting failed
       this.fileUrl = base64Image;
     });
   }
@@ -58,6 +62,7 @@ export class FileViewComponent implements OnInit {
   setText(): void {
     this.fileViewService.getTextFile(this.file.id).subscribe(data => {
       this.text = data;
+      this.originalText = data;
       // workaround as otherwise in the ckeditor it is undefined
       this.editableText = this.text.changingThisBreaksApplicationSecurity;
     });
@@ -79,12 +84,19 @@ export class FileViewComponent implements OnInit {
     }
     const blob = new Blob([data], {type: 'text/plain'});
     this.reuploadService.reupload(blob, filename, this.file.id);
-    }
+  }
 
   expFile() {
     const fileText = this.editableText;
     const fileName = this.file.name;
     console.log('Saving file: ' + fileName + ' with text: ' + fileText);
     this.saveTextAsFile(fileText, fileName);
+  }
+
+  // cancel Editing and resets text to original form
+  cancel() {
+    this.editableText = this.originalText.changingThisBreaksApplicationSecurity;
+    this.text = this.originalText;
+    this.toggleEditing();
   }
 }

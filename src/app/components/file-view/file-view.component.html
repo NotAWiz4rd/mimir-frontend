@@ -1,10 +1,12 @@
-<p>
-  This is the file: {{file?.name}}
-</p>
 <img *ngIf="isPicture; else showText" [src]="fileUrl" alt="file image">
 <ng-template #showText>
-  <ckeditor [config]="editorConfig" [editor]="Editor" [(ngModel)]="editableText" [disabled]="isDisabled" (ready)="onReady($event)"></ckeditor>
-  <button *ngIf="isDisabled" mat-raised-button color="primary" (click)="toggleEditing()" >Edit</button>
-  <button *ngIf="!isDisabled" mat-raised-button color="primary" (click)="[toggleEditing(), expFile()]">Save</button>
+  <ckeditor [config]="editorConfig" [editor]="Editor" [(ngModel)]="editableText" [disabled]="isDisabled"
+            (ready)="onReady($event)"></ckeditor>
+  <button *ngIf="isDisabled" mat-raised-button color="primary"
+          (click)="toggleEditing()">{{staticTextService?.staticTexts | getStaticText : 'edit' : languageService?.getLanguage()}}</button>
+  <button *ngIf="!isDisabled" mat-raised-button color="primary"
+          (click)="[toggleEditing(), expFile()]">{{staticTextService?.staticTexts | getStaticText : 'save' : languageService?.getLanguage()}}</button>
+  <button *ngIf="!isDisabled" mat-raised-button color="primary"
+          (click)="cancel()">{{staticTextService?.staticTexts | getStaticText : 'cancel' : languageService?.getLanguage()}}</button>
 </ng-template>
 <app-comments [fileId]="file.id"></app-comments>
