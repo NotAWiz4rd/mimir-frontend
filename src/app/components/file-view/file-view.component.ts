@@ -22,8 +22,7 @@ export class FileViewComponent implements OnInit {
   isPicture: boolean;
   text: SafeHtml;
   public isDisabled = true;
-  sanitizedText;
-  htmlSnippet = '<div>safe text????</div><script>this.toggleEditing()</script>';
+  workingText;
 
   fileUrl: string;
 
@@ -59,7 +58,9 @@ export class FileViewComponent implements OnInit {
 
   setText(): void {
     this.fileViewService.getTextFile(this.file.id).subscribe(data => {
-      this.text = this.domSanitizer.bypassSecurityTrustHtml(data);
+      // this.text = this.domSanitizer.bypassSecurityTrustHtml(data);
+      this.text = data['changingThisBreaksApplicationSecurity'];
+      this.workingText = this.text.toString();
     });
   }
 
@@ -81,7 +82,7 @@ export class FileViewComponent implements OnInit {
     }
 
   expFile() {
-    const fileText = this.htmlSnippet;
+    const fileText = this.workingText;
     const fileName = this.file.name;
     this.saveTextAsFile(fileText, fileName);
   }

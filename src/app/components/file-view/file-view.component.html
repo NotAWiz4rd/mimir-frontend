@@ -3,8 +3,8 @@
 </p>
 <img *ngIf="isPicture; else showText" [src]="fileUrl" alt="file image">
 <ng-template #showText>
-  <p [innerHTML]="this.htmlSnippet"></p>
-  <ckeditor [config]="editorConfig" [editor]="Editor" required [(ngModel)]="htmlSnippet" [disabled]="isDisabled" (ready)="onReady($event)"></ckeditor>
+  <p [innerHTML]="workingText"></p>
+  <ckeditor [config]="editorConfig" [editor]="Editor" required [(ngModel)]="workingText" [disabled]="isDisabled" (ready)="onReady($event)"></ckeditor>
   <button *ngIf="isDisabled" mat-raised-button color="primary" (click)="toggleEditing()" >Edit</button>
   <button *ngIf="!isDisabled" mat-raised-button color="primary" (click)="[toggleEditing(), expFile()]">Save</button>
 </ng-template>
