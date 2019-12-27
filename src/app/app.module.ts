@@ -21,6 +21,7 @@ import {
   MatButtonToggleModule,
   MatCardModule,
   MatCheckboxModule,
+  MatChipsModule,
   MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
@@ -119,6 +120,7 @@ import {FooterComponent} from './components/footer/footer.component';
     MatIconModule,
     MatCardModule,
     MatToolbarModule,
+    MatChipsModule,
   ],
   entryComponents: [
     CreateFolderDialogComponent,

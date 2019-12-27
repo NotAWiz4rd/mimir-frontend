@@ -51,6 +51,7 @@ export class ContentPageComponent implements OnInit {
 
       if (params['fileId'] != undefined) {
         this.fileId = Number(params['fileId']);
+        this.fileService.loadFile(this.fileId);
       } else {
         this.fileId = undefined;
         this.file = undefined;

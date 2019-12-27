@@ -1,3 +1,25 @@
-<p>
-  space-settings works for {{spaceService?.currentSpace?.name}}
-</p>
+<div class="container">
+  {{staticTextService.staticTexts | getStaticText : 'addUser' : languageService.getLanguage()}}:
+  <form class="form">
+    <mat-form-field>
+      <input matInput placeholder="Username" [formControl]="formControl">
+      <mat-error *ngIf="formControl.hasError('username') && !formControl.hasError('required')">
+        {{staticTextService.staticTexts | getStaticText : 'enterUsername' : languageService.getLanguage()}}
+      </mat-error>
+    </mat-form-field>
+  </form>
+
+  <button mat-raised-button color="primary" (click)="addUser(formControl.value)">
+    {{staticTextService.staticTexts | getStaticText : 'addUser' : languageService.getLanguage()}}
+  </button>
+
+  <div class="user-list">
+    {{staticTextService.staticTexts | getStaticText : 'currentUsers' : languageService.getLanguage()}}:
+    <mat-chip-list #userList aria-label="Users">
+      <mat-chip *ngFor="let user of users" [removable]="true" (removed)="removeUser(user.id)" color="accent" selected>
+        {{user.name}} - {{user.mail}}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+    </mat-chip-list>
+  </div>
+</div>

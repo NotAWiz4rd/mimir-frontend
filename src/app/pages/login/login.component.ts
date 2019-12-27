@@ -4,6 +4,7 @@ import {StaticTextService} from '../../services/static-text.service';
 import {LanguageService} from '../../services/language.service';
 import {NavigationService} from '../../services/navigation.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {SpaceService} from '../../services/space.service';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
               private formBuilder: FormBuilder,
               public staticTextService: StaticTextService,
               public languageService: LanguageService,
-              private navigationService: NavigationService) {
+              private navigationService: NavigationService,
+              private spaceService: SpaceService) {
   }
 
   ngOnInit() {
@@ -36,13 +38,16 @@ export class LoginComponent implements OnInit {
 
   async tryToLoadUser() {
     await this.userService.reloadUser();
-    if (this.userService.currentUser$.getValue() != undefined && this.userService.currentUser$.getValue().spaces != undefined) {
+    if (this.userService.currentUser$.getValue() != undefined && this.userService.currentUser$.getValue().spaces != undefined
+      && this.userService.currentUser$.getValue().spaces.length > 0) {
       this.navigationService.navigateToSpace(this.userService.currentUser$.getValue().spaces[0].id);
     }
   }
 
   // convenience getter for easy access to form fields
-  get f() { return this.loginForm.controls; }
+  get f() {
+    return this.loginForm.controls;
+  }
 
   async login() {
     this.submitted = true;
@@ -53,7 +58,14 @@ export class LoginComponent implements OnInit {
     //TODO change to: await this.userService.login(this.f.username.value, this.f.password.value)
     await this.userService.login('thellmann', 'thellmann'); // todo get user from backend
     //TODO if error -> this.loading = false  and  display error message
-    this.navigationService.navigateToSpace(this.userService.currentUser$.getValue().spaces[0].id);
+    if (this.userService.currentUser$.getValue().spaces.length > 0) {
+      this.navigationService.navigateToSpace(this.userService.currentUser$.getValue().spaces[0].id);
+    } else {
+      this.spaceService.createSpace(this.userService.currentUser$.getValue().name).subscribe(spaceMetaData => {
+        this.userService.addSpaceToUser(spaceMetaData);
+        this.navigationService.navigateToSpace(spaceMetaData.id);
+      });
+    }
   }
 
   register() {

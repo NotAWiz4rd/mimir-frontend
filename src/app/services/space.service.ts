@@ -4,7 +4,9 @@ import {Space} from '../classes/Space';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {SpaceMetadata} from '../classes/SpaceMetadata';
-import { environment } from 'src/environments/environment';
+import {environment} from 'src/environments/environment';
+import {User} from '../classes/User';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class SpaceService {
@@ -14,7 +16,7 @@ export class SpaceService {
 
   currentFolder: Folder;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
   }
 
   loadSpace(spaceId: number, uploaded: boolean = false): Observable<Space> {
@@ -44,5 +46,22 @@ export class SpaceService {
       });
     }
     return spaceDeletionResult;
+  }
+
+  async addUserToCurrentSpace(username: string) {
+    await this.http.put<string>(this.baseUrl + this.currentSpace.id + '?username=' + username, {}).toPromise();
+  }
+
+  async removeUserFromCurrentSpace(userId: number) {
+    await this.http.delete<User[]>(this.baseUrl + this.currentSpace.id + '/removeuser?id=' + userId, {}).toPromise();
+  }
+
+  getUsersOfCurrentSpace(): Observable<User[]> {
+    let usersSubject: BehaviorSubject<User[]> = new BehaviorSubject<User[]>(undefined);
+    this.http.get<User[]>(this.baseUrl + this.currentSpace.id + '/users').subscribe(users => {
+        usersSubject.next(users);
+      },
+      error => usersSubject.error(error));
+    return usersSubject;
   }
 }

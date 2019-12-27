@@ -168,5 +168,20 @@
     "logicalName": "noAccessButton",
     "english": "GO HOME",
     "german": "Zurückkehren"
+  },
+  {
+    "logicalName": "addUser",
+    "english": "Add User",
+    "german": "Nutzer hinzufügen"
+  },
+  {
+    "logicalName": "enterUsername",
+    "english": "Please enter a valid username",
+    "german": "Bitte geben Sie einen validen Nutzernamen ein"
+  },
+  {
+    "logicalName": "currentUsers",
+    "english": "  Users currently in this space",
+    "german": "Aktuelle Nutzer im Space"
   }
 ]
