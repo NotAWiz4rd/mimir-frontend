@@ -3,7 +3,7 @@ import {File} from '../../classes/File';
 import {FileDataService} from '../../services/file-data.service';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import {UploadService} from '../../services/upload.service';
+import {ReuploadService} from '../../services/reupload.service';
 import {SpaceService} from '../../services/space.service';
 
 @Component({
@@ -28,7 +28,7 @@ export class FileViewComponent implements OnInit {
 
   constructor(private fileViewService: FileDataService,
               private domSanitizer: DomSanitizer,
-              public uploadService: UploadService,
+              public reuploadService: ReuploadService,
               public spaceService: SpaceService) {
   }
 
@@ -59,6 +59,7 @@ export class FileViewComponent implements OnInit {
   setText(): void {
     this.fileViewService.getTextFile(this.file.id).subscribe(data => {
       // this.text = this.domSanitizer.bypassSecurityTrustHtml(data);
+      console.log(data);
       this.text = data['changingThisBreaksApplicationSecurity'];
       this.workingText = this.text.toString();
     });
@@ -79,6 +80,7 @@ export class FileViewComponent implements OnInit {
       return;
     }
     const blob = new Blob([data], {type: 'text/plain'});
+    this.reuploadService.reupload(blob, filename, this.file.id);
     }
 
   expFile() {
