@@ -50,6 +50,7 @@ export class SpaceSettingsComponent implements OnInit {
         const otherSpaceId = this.userService.getDifferentSpaceId();
         if (otherSpaceId != -1) {
           this.navigationService.navigateToSpace(otherSpaceId);
+          this.userService.reloadUser();
         } else { // if there are no other spaces available create a new one and navigate there
           this.spaceService.createSpace(this.userService.currentUser$.getValue().name).subscribe(spaceMetaData => {
             this.userService.addSpaceToUser(spaceMetaData);
