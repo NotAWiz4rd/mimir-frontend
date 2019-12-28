@@ -15,8 +15,7 @@ export class FileViewComponent implements OnInit {
   @Input()
   file: File;
   public Editor = ClassicEditor;
-  contentFileType: String;
-  isPicture: boolean;
+  fileType: String;
   text: SafeHtml = 'test';
 
   fileUrl: string = 'https://media.giphy.com/media/sSgvbe1m3n93G/source.gif';
@@ -28,12 +27,10 @@ export class FileViewComponent implements OnInit {
 
 
   ngOnInit() {
-    this.contentFileType = this.getFileContentType();
-    if (this.contentFileType.includes('jpg') || this.contentFileType.includes('png')) {
-      this.isPicture = true;
+    this.fileType = this.getFileType();
+    if (this.fileType.includes('jpg') || this.fileType.includes('png') || this.fileType.includes('pdf')) {
       this.setFileUrl();
-    } else if (this.contentFileType.includes('txt')) {
-      this.isPicture = false;
+    } else if (this.fileType.includes('txt')) {
       this.setText();
     }
   }
@@ -50,7 +47,7 @@ export class FileViewComponent implements OnInit {
     });
   }
 
-  getFileContentType(): String {
+  getFileType(): String {
     const fileName = this.file.name.split('.');
     return fileName[fileName.length - 1];
   }

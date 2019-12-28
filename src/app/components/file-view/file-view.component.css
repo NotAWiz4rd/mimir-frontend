@@ -5,12 +5,26 @@ img {
 
 #wrapper {
   display: inline-block;
+  width: 100%;
+  height: 100%;
 }
 
 #picture {
   height: auto;
   padding: 5px;
   max-width: calc(100% - 340px);
+}
+
+#editor {
+  float: left;
+  width: calc(100% - 345px);
+  height: 50vh;
+  margin-left: 20px;
+}
+#pdfView{
+  padding: 5px;
+  width: calc(100% - 340px);
+  height: 100vh;
 }
 
 #details {
@@ -20,15 +34,6 @@ img {
   max-width: 320px;
 }
 
-#placeholder {
-  width: 1200px;
-}
-
-#editor {
-  float: left;
-  width: 830px;
-  margin-left: 20px;
-}
 
 
 

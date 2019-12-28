@@ -1,12 +1,20 @@
 <div id="wrapper">
-  <img id="picture" *ngIf="isPicture; else showText" [src]="fileUrl" alt="file image">
-  <ng-template #showText>
-    <div id="placeholder"></div>
-    <button mat-raised-button color="primary" (click)="editText()">Edit</button>
-    <p [innerHTML]="text"></p>
-    <div id="editor">
-      <ckeditor [editor]="Editor" data="<p>Hello, world!</p>"></ckeditor>
-    </div>
+  <img id="picture" *ngIf="fileType === 'png' || fileType === 'jpg'; else showOther" [src]="fileUrl" alt="file image">
+  <ng-template #showOther>
+    <ng-container *ngIf="fileType === 'pdf';else showText">
+      <object id="pdfView"
+        [data]="fileUrl"
+        type="application/pdf">
+        <p>Your browser does not support PDFs.</p>
+      </object>
+    </ng-container>
+    <ng-template #showText>
+      <button mat-raised-button color="primary" (click)="editText()">Edit</button>
+      <p [innerHTML]="text"></p>
+      <div id="editor">
+        <ckeditor [editor]="Editor" data="<p>Hello, world!</p>"></ckeditor>
+      </div>
+    </ng-template>
   </ng-template>
   <div id="details">
     <mat-card>
