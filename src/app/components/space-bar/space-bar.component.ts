@@ -23,7 +23,7 @@ import {ActivatedRoute} from '@angular/router';
 export class SpaceBarComponent implements OnInit {
   SPACE_CREATION_THUMBNAIL_ID: number = -1;
 
-  @ViewChild('spaceMenu') spaceMenu: TemplateRef<any>;
+  @ViewChild('spaceMenu', { static: true }) spaceMenu: TemplateRef<any>;
   sub: Subscription;
   overlayRef: OverlayRef | null;
 
