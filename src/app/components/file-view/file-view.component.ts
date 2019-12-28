@@ -16,6 +16,7 @@ export class FileViewComponent implements OnInit {
   file: File;
   public Editor = ClassicEditor;
   fileType: String;
+  urlIsSet: Promise<boolean>;
   text: SafeHtml = 'test';
 
   fileUrl: string = 'https://media.giphy.com/media/sSgvbe1m3n93G/source.gif';
@@ -38,6 +39,7 @@ export class FileViewComponent implements OnInit {
   setFileUrl(): void {
     this.fileDataService.fetchImg(this.file.id).subscribe(base64Image => {
       this.fileUrl = base64Image;
+      this.urlIsSet = Promise.resolve(true);
     });
   }
 

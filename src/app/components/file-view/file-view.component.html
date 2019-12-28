@@ -2,11 +2,13 @@
   <img id="picture" *ngIf="fileType === 'png' || fileType === 'jpg'; else showOther" [src]="fileUrl" alt="file image">
   <ng-template #showOther>
     <ng-container *ngIf="fileType === 'pdf';else showText">
+      <ng-container *ngIf="urlIsSet | async">
       <object id="pdfView"
         [data]="fileUrl"
         type="application/pdf">
         <p>Your browser does not support PDFs.</p>
       </object>
+      </ng-container>
     </ng-container>
     <ng-template #showText>
       <button mat-raised-button color="primary" (click)="editText()">Edit</button>
