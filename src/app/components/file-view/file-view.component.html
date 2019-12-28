@@ -1,21 +1,31 @@
 <div id="wrapper">
   <img id="picture" *ngIf="fileType === 'png' || fileType === 'jpg'; else showOther" [src]="fileUrl" alt="file image">
   <ng-template #showOther>
-    <ng-container *ngIf="fileType === 'pdf';else showText">
+    <ng-container *ngIf="fileType === 'pdf';else showVideo">
       <ng-container *ngIf="urlIsSet | async">
-      <object id="pdfView"
-        [data]="fileUrl"
-        type="application/pdf">
-        <p>Your browser does not support PDFs.</p>
-      </object>
+        <object id="pdfView"
+                [data]="fileUrl"
+                type="application/pdf">
+          <p>Your browser does not support PDFs.</p>
+        </object>
       </ng-container>
     </ng-container>
-    <ng-template #showText>
-      <button mat-raised-button color="primary" (click)="editText()">Edit</button>
-      <p [innerHTML]="text"></p>
-      <div id="editor">
-        <ckeditor [editor]="Editor" data="<p>Hello, world!</p>"></ckeditor>
-      </div>
+    <ng-template #showVideo>
+      <ng-container *ngIf="fileType === 'mp4';else showText">
+        <ng-container *ngIf="urlIsSet | async">
+          <video id="video" controls (click)="toggleVideo()" #videoPlayer>
+            <source [src]="fileUrl" type="video/mp4"/>
+            Browser not supported
+          </video>
+        </ng-container>
+      </ng-container>
+      <ng-template #showText>
+        <button mat-raised-button color="primary" (click)="editText()">Edit</button>
+        <p [innerHTML]="text"></p>
+        <div id="editor">
+          <ckeditor [editor]="Editor" data="<p>Hello, world!</p>"></ckeditor>
+        </div>
+      </ng-template>
     </ng-template>
   </ng-template>
   <div id="details">
