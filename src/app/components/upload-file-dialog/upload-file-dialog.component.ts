@@ -12,7 +12,7 @@ import {SpaceService} from "../../services/space.service";
   styleUrls: ['./upload-file-dialog.component.css']
 })
 export class UploadFileDialogComponent implements OnInit {
-  @ViewChild('file') file;
+  @ViewChild('file', { static: true }) file;
   public files: Set<File> = new Set();
 
   progress;
