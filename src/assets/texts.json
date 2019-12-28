@@ -170,6 +170,21 @@
     "german": "Zurückkehren"
   },
   {
+    "logicalName": "cancel",
+    "english": "Cancel",
+    "german": "Abbrechen"
+  },
+  {
+    "logicalName": "save",
+    "english": "Save",
+    "german": "Speichern"
+  },
+  {
+    "logicalName": "edit",
+    "english": "Edit",
+    "german": "Editieren"
+  },
+  {
     "logicalName": "addUser",
     "english": "Add User",
     "german": "Nutzer hinzufügen"
@@ -181,7 +196,7 @@
   },
   {
     "logicalName": "currentUsers",
-    "english": "  Users currently in this space",
+    "english": "Users currently in this space",
     "german": "Aktuelle Nutzer im Space"
   }
 ]

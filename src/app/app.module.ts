@@ -54,6 +54,7 @@ import {UploadFileDialogComponent} from './components/upload-file-dialog/upload-
 import {MatListModule} from '@angular/material/list';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {UploadService} from './services/upload.service';
+import {ReuploadService} from './services/reupload.service';
 import {DeletionDialogComponent} from './components/deletion-dialog/deletion-dialog.component';
 import {RenameDialogComponent} from './components/rename-dialog/rename-dialog.component';
 import {LandingPageComponent} from './pages/landing-page/landing-page.component';
@@ -63,7 +64,9 @@ import {TokenAuthInterceptor} from './helpers/token-auth.interceptor';
 import {ThumbnailService} from './services/thumbnail.service';
 import {CommentComponent} from './components/comment/comment.component';
 import {NoAccessPageComponent} from './pages/no-access-page/no-access-page.component';
+import {FileDataService} from './services/file-data.service';
 import {FooterComponent} from './components/footer/footer.component';
+import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   declarations: [
@@ -89,6 +92,7 @@ import {FooterComponent} from './components/footer/footer.component';
     RenameDialogComponent,
     LandingPageComponent,
     SpaceSettingsComponent,
+    FooterComponent,
     CommentComponent,
     NoAccessPageComponent,
     FooterComponent,
@@ -119,6 +123,7 @@ import {FooterComponent} from './components/footer/footer.component';
     MatSlideToggleModule,
     MatIconModule,
     MatCardModule,
+    CKEditorModule,
     MatToolbarModule,
     MatChipsModule,
   ],
@@ -141,9 +146,11 @@ import {FooterComponent} from './components/footer/footer.component';
     FolderService,
     StaticTextService,
     FileService,
+    FileDataService,
     UploadService,
     ClipboardService,
     MatSnackBar,
+    ReuploadService
   ],
   bootstrap: [AppComponent]
 })
