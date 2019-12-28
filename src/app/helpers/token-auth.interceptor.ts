@@ -11,7 +11,7 @@ export class TokenAuthInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let token = this.userService.token;
     const shareToken = this.userService.shareToken;
-    if (shareToken && !request.url.includes('space')) { // include shareToken if it exists and we're not making some kind of space request
+    if (shareToken && !request.url.includes('/user') && !request.url.includes('space')) { // include shareToken if it exists and we're not making some kind of user or space request
       token = shareToken;
     }
 

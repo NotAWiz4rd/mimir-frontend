@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, throwError} from 'rxjs';
 import {User} from '../classes/User';
 import {SpaceMetadata} from '../classes/SpaceMetadata';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
@@ -25,13 +25,21 @@ export class UserService implements CanActivate {
     const params = new HttpParams()
       .set('username', username)
       .set('password', password);
-    const response = await this.http.get<{ token: string }>(environment.apiUrl + 'login', {params}).toPromise();
-    this.token = response.token;
-    localStorage.setItem(LOCAL_STORAGE_TOKEN_KEY, this.token);
-    await this.reloadUser();
+
+    // todo fix get request being done twice because of subscribe and promise (without breaking error detection in LoginComponent)
+    const loginObservable = this.http.get<{ token: string }>(environment.apiUrl + 'login', {params});
+    loginObservable.subscribe(response => {
+      this.token = response.token;
+      localStorage.setItem(LOCAL_STORAGE_TOKEN_KEY, this.token);
+    }, error => throwError(error));
+    await loginObservable.toPromise();
+
+    if (this.token != undefined) {
+      await this.reloadUser();
+    }
   }
 
-  addSpaceToUser(space: SpaceMetadata) { // todo propagate this to the backend
+  addSpaceToUser(space: SpaceMetadata) {
     let spaces = this.currentUser$.value.spaces;
     spaces.push(space);
     let user = this.currentUser$.value;
@@ -40,18 +48,13 @@ export class UserService implements CanActivate {
   }
 
   async reloadUser() {
-    let hubbleTelescope = this.http.get<SpaceMetadata[]>(environment.apiUrl + 'spaces'); // because it observes space(s)
-    hubbleTelescope.subscribe(
-      spaceMetadata => {
-        let spaces: SpaceMetadata[] = spaceMetadata;
-        let user = new User();  // todo replace with real user
-        user.id = 1;
-        user.name = 'thellmann';
-        user.spaces = spaces;
+    let userObservable = this.http.get<User>(environment.apiUrl + 'user');
+    userObservable.subscribe(
+      user => {
         this.currentUser$.next(user);
       },
       error => this.handleError(error));
-    await hubbleTelescope.toPromise();
+    await userObservable.toPromise();
   }
 
   logout() {
@@ -63,9 +66,8 @@ export class UserService implements CanActivate {
     localStorage.removeItem(LOCAL_STORAGE_TOKEN_KEY);
   }
 
-  register(username: string, mail: string, password: string) {
-    // todo do this properly
-    this.http.post(environment.apiUrl + 'register?receiver=' + mail + '&text=' + 'Registration successful!', {});
+  register(mail: string, password: string) {
+    // todo implement me
   }
 
   delete() {
