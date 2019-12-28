@@ -81,7 +81,17 @@ export class SpaceBarComponent implements OnInit {
     this.spaceService.delete(id).subscribe(result => {
       if (result != '') {
         this.openSnackBar(result);
-        this.userService.reloadUser();
+        const otherSpaceId = this.userService.getDifferentSpaceId();
+        if (otherSpaceId != -1) {
+          this.navigationService.navigateToSpace(otherSpaceId);
+          this.userService.reloadUser();
+        } else { // if there are no other spaces available create a new one and navigate there
+          this.spaceService.createSpace(this.userService.currentUser$.getValue().name).subscribe(spaceMetaData => {
+            this.userService.addSpaceToUser(spaceMetaData);
+            this.navigationService.navigateToSpace(spaceMetaData.id);
+            this.userService.reloadUser();
+          });
+        }
       }
     });
   }
