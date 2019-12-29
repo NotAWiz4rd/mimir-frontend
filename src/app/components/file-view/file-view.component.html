@@ -1,6 +1,6 @@
 <div id="wrapper">
   <ng-container *ngIf="srcIsReady | async ; else loading">
-    <img id="picture" *ngIf="fileType === 'png' || fileType === 'jpg'; else showOther" [src]="fileUrl" alt="file image">
+    <img id="picture" *ngIf="fileType === 'png' || fileType === 'jpg' || fileType === 'gif'; else showOther" [src]="fileUrl" alt="file image">
     <ng-template #showOther>
       <ng-container *ngIf="fileType === 'pdf';else showVideo">
         <object id="pdfView"
@@ -21,15 +21,15 @@
         <ng-template #showText>
           <ng-container *ngIf="fileType === 'txt';else showMessage">
             <div id="editor">
+              <button class="editorBtn" *ngIf="isDisabled" mat-raised-button color="primary"
+                      (click)="toggleEditing()">{{staticTextService?.staticTexts | getStaticText : 'edit' : languageService?.getLanguage()}}</button>
+              <button class="editorBtn" *ngIf="!isDisabled" mat-raised-button color="primary"
+                      (click)="[toggleEditing(), expFile()]">{{staticTextService?.staticTexts | getStaticText : 'save' : languageService?.getLanguage()}}</button>
+              <button class="editorBtn" *ngIf="!isDisabled" mat-raised-button color="primary"
+                      (click)="cancel()">{{staticTextService?.staticTexts | getStaticText : 'cancel' : languageService?.getLanguage()}}</button>
               <ckeditor [config]="editorConfig" [editor]="Editor" [(ngModel)]="editableText" [disabled]="isDisabled"
                         (ready)="onReady($event)"></ckeditor>
             </div>
-            <button *ngIf="isDisabled" mat-raised-button color="primary"
-                    (click)="toggleEditing()">{{staticTextService?.staticTexts | getStaticText : 'edit' : languageService?.getLanguage()}}</button>
-            <button *ngIf="!isDisabled" mat-raised-button color="primary"
-                    (click)="[toggleEditing(), expFile()]">{{staticTextService?.staticTexts | getStaticText : 'save' : languageService?.getLanguage()}}</button>
-            <button *ngIf="!isDisabled" mat-raised-button color="primary"
-                    (click)="cancel()">{{staticTextService?.staticTexts | getStaticText : 'cancel' : languageService?.getLanguage()}}</button>
           </ng-container>
           <ng-template #showMessage>
             <p>Viewing this file is not possible.</p>
@@ -39,7 +39,7 @@
     </ng-template>
   </ng-container>
   <ng-template #loading>
-    <img src="https://media.giphy.com/media/sSgvbe1m3n93G/source.gif">
+    <img id="loadingGif" src="https://media.giphy.com/media/sSgvbe1m3n93G/source.gif">
   </ng-template>
   <div id="details">
     <mat-card>

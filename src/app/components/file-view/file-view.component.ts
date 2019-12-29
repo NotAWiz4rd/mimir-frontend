@@ -19,16 +19,14 @@ export class FileViewComponent implements OnInit {
   };
   @Input()
   file: File;
-  @ViewChild("videoPlayer")
+  @ViewChild("videoPlayer",{static: false})
   videoPlayer: ElementRef;
   fileType: String;
   srcIsReady: Promise<boolean>;
-
   text;
   editableText;
   isDisabled = true;
   originalText;
-
   fileUrl: string;
 
   constructor(private fileDataService: FileDataService,
@@ -47,9 +45,10 @@ export class FileViewComponent implements OnInit {
 
   ngOnInit() {
     this.fileType = this.getFileType();
-    if (this.fileType === 'jpg' || this.fileType === 'png' || this.fileType === 'pdf') {
+    if (this.fileType === 'jpg' || this.fileType === 'png' || this.fileType === 'pdf' || this.fileType === 'gif') {
       this.setFileUrl();
-    } else if (this.fileType === 'mp4') {
+    } else if (this.fileType === 'mp4' || this.fileType === 'ogg') {
+      //TODO: progressive loading, so the user can watch the video even if its not completely loaded
       this.setFileUrl();
     } else if (this.fileType === 'txt') {
       this.setText();
