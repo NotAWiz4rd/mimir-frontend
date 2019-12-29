@@ -20,11 +20,16 @@
         </ng-container>
         <ng-template #showText>
           <ng-container *ngIf="fileType === 'txt';else showMessage">
-            <button mat-raised-button color="primary" (click)="editText()">Edit</button>
-            <p [innerHTML]="text"></p>
             <div id="editor">
-              <ckeditor [editor]="Editor" data="<p>Hello, world!</p>"></ckeditor>
+              <ckeditor [config]="editorConfig" [editor]="Editor" [(ngModel)]="editableText" [disabled]="isDisabled"
+                        (ready)="onReady($event)"></ckeditor>
             </div>
+            <button *ngIf="isDisabled" mat-raised-button color="primary"
+                    (click)="toggleEditing()">{{staticTextService?.staticTexts | getStaticText : 'edit' : languageService?.getLanguage()}}</button>
+            <button *ngIf="!isDisabled" mat-raised-button color="primary"
+                    (click)="[toggleEditing(), expFile()]">{{staticTextService?.staticTexts | getStaticText : 'save' : languageService?.getLanguage()}}</button>
+            <button *ngIf="!isDisabled" mat-raised-button color="primary"
+                    (click)="cancel()">{{staticTextService?.staticTexts | getStaticText : 'cancel' : languageService?.getLanguage()}}</button>
           </ng-container>
           <ng-template #showMessage>
             <p>Viewing this file is not possible.</p>

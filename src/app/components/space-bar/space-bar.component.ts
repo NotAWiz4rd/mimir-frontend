@@ -23,7 +23,7 @@ import {ActivatedRoute} from '@angular/router';
 export class SpaceBarComponent implements OnInit {
   SPACE_CREATION_THUMBNAIL_ID: number = -1;
 
-  @ViewChild('spaceMenu') spaceMenu: TemplateRef<any>;
+  @ViewChild('spaceMenu', { static: true }) spaceMenu: TemplateRef<any>;
   sub: Subscription;
   overlayRef: OverlayRef | null;
 
@@ -81,7 +81,17 @@ export class SpaceBarComponent implements OnInit {
     this.spaceService.delete(id).subscribe(result => {
       if (result != '') {
         this.openSnackBar(result);
-        this.userService.reloadUser();
+        const otherSpaceId = this.userService.getDifferentSpaceId();
+        if (otherSpaceId != -1) {
+          this.navigationService.navigateToSpace(otherSpaceId);
+          this.userService.reloadUser();
+        } else { // if there are no other spaces available create a new one and navigate there
+          this.spaceService.createSpace(this.userService.currentUser$.getValue().name).subscribe(spaceMetaData => {
+            this.userService.addSpaceToUser(spaceMetaData);
+            this.navigationService.navigateToSpace(spaceMetaData.id);
+            this.userService.reloadUser();
+          });
+        }
       }
     });
   }

@@ -57,5 +57,4 @@ export class FileDataService {
     fileReader.readAsText(blob);
     return observable;
   }
-
 }

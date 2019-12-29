@@ -6,7 +6,6 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {SpaceMetadata} from '../classes/SpaceMetadata';
 import {environment} from 'src/environments/environment';
 import {User} from '../classes/User';
-import {Router} from '@angular/router';
 
 @Injectable()
 export class SpaceService {
@@ -16,7 +15,7 @@ export class SpaceService {
 
   currentFolder: Folder;
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient) {
   }
 
   loadSpace(spaceId: number, uploaded: boolean = false): Observable<Space> {
@@ -35,16 +34,13 @@ export class SpaceService {
 
   delete(id: number): Observable<string> {
     let spaceDeletionResult = new BehaviorSubject('');
-    // todo disable deleting current space? Or navigate to other space then?
-    if (id != this.currentSpace.id) {
-      this.http.delete<string>(this.baseUrl + id).subscribe(result => {
-        if (result != null) {
-          spaceDeletionResult.next(result);
-        } else {
-          spaceDeletionResult.next('Space was deleted successfully');
-        }
-      });
-    }
+    this.http.delete<string>(this.baseUrl + id + '?force=true').subscribe(result => {
+      if (result != null) {
+        spaceDeletionResult.next(result);
+      } else {
+        spaceDeletionResult.next('Space was deleted successfully');
+      }
+    });
     return spaceDeletionResult;
   }
 
