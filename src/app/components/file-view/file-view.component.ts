@@ -14,13 +14,13 @@ import {LanguageService} from "../../services/language.service";
 export class FileViewComponent implements OnInit {
   @Input()
   file: File;
-  @ViewChild("videoPlayer") videoPlayer: ElementRef;
+  @ViewChild("videoPlayer")
+  videoPlayer: ElementRef;
   public Editor = ClassicEditor;
   fileType: String;
-  urlIsSet: Promise<boolean>;
-  text: SafeHtml = 'test';
-
-  fileUrl: string = 'https://media.giphy.com/media/sSgvbe1m3n93G/source.gif';
+  srcIsReady: Promise<boolean>;
+  text: SafeHtml;
+  fileUrl: string = '';
 
   constructor(private fileDataService: FileDataService,
               public staticTextService: StaticTextService,
@@ -30,25 +30,29 @@ export class FileViewComponent implements OnInit {
 
   ngOnInit() {
     this.fileType = this.getFileType();
-    if (this.fileType.includes('jpg') || this.fileType.includes('png') || this.fileType.includes('pdf')) {
+    if (this.fileType === 'jpg' || this.fileType === 'png' || this.fileType === 'pdf') {
       this.setFileUrl();
-    } else if (this.fileType.includes('mp4')) {
+    } else if (this.fileType === 'mp4') {
       this.setFileUrl();
-    } else if (this.fileType.includes('txt')) {
+    } else if (this.fileType === 'txt') {
       this.setText();
+    }else{
+      this.srcIsReady = Promise.resolve(true);
     }
   }
+
 
   setFileUrl(): void {
     this.fileDataService.fetchFile(this.file.id).subscribe(base64Image => {
       this.fileUrl = base64Image;
-      this.urlIsSet = Promise.resolve(true);
+      this.srcIsReady = Promise.resolve(true);
     });
   }
 
   setText(): void {
     this.fileDataService.getTextFile(this.file.id).subscribe(data => {
       this.text = data;
+      this.srcIsReady = Promise.resolve(true);
     });
   }
 
@@ -64,5 +68,4 @@ export class FileViewComponent implements OnInit {
   editText() {
 
   }
-
 }
