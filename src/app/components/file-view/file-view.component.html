@@ -32,14 +32,14 @@
             </div>
           </ng-container>
           <ng-template #showMessage>
-            <p>Viewing this file is not possible.</p>
+            <p>{{staticTextService.staticTexts | getStaticText : 'noView' : languageService.getLanguage()}}</p>
           </ng-template>
         </ng-template>
       </ng-template>
     </ng-template>
   </ng-container>
   <ng-template #loading>
-    <img id="loadingGif" src="https://media.giphy.com/media/sSgvbe1m3n93G/source.gif">
+    <img id="loadingGif" src="https://media.giphy.com/media/sSgvbe1m3n93G/source.gif" alt="loading">
   </ng-template>
   <div id="details">
     <mat-card>
@@ -47,9 +47,9 @@
         <mat-card-title>Details</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <p>{{staticTextService.staticTexts | getStaticText : 'detailsFileName' : languageService.getLanguage()}} {{file?.name}}</p>
-        <p>{{staticTextService.staticTexts | getStaticText : 'detailsAuthor' : languageService.getLanguage()}} {{file?.author}}</p>
-        <p>{{staticTextService.staticTexts | getStaticText : 'detailsCreationDate' : languageService.getLanguage()}} {{file?.creationDate}}</p>
+        <p><b>{{staticTextService.staticTexts | getStaticText : 'detailsFileName' : languageService.getLanguage()}}</b> {{file?.name}}</p>
+        <p><b>{{staticTextService.staticTexts | getStaticText : 'detailsAuthor' : languageService.getLanguage()}}</b> {{file?.author}}</p>
+        <p><b>{{staticTextService.staticTexts | getStaticText : 'detailsCreationDate' : languageService.getLanguage()}}</b> {{file?.creationDate}}</p>
       </mat-card-content>
     </mat-card>
   </div>

@@ -213,5 +213,10 @@
     "logicalName": "detailsCreationDate",
     "english": "Creation date:",
     "german": "Erstellungsdatum:"
+  },
+  {
+    "logicalName": "noView",
+    "english": "Viewing this file is not possible.",
+    "german": "Es ist nicht möglich diese Datei zu betrachten."
   }
 ]

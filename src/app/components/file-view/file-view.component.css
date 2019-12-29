@@ -26,7 +26,7 @@ img {
 
 #editor {
   float: left;
-  width: calc(100% - 345px);
+  width: calc(100% - 355px);
   height: 50vh;
   margin-left: 20px;
 }
