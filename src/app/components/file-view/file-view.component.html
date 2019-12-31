@@ -49,7 +49,7 @@
       <mat-card-content>
         <p><b>{{staticTextService.staticTexts | getStaticText : 'detailsFileName' : languageService.getLanguage()}}</b> {{file?.name}}</p>
         <p><b>{{staticTextService.staticTexts | getStaticText : 'detailsAuthor' : languageService.getLanguage()}}</b> {{file?.author}}</p>
-        <p><b>{{staticTextService.staticTexts | getStaticText : 'detailsCreationDate' : languageService.getLanguage()}}</b> {{file?.creationDate}}</p>
+        <p><b>{{staticTextService.staticTexts | getStaticText : 'detailsCreationDate' : languageService.getLanguage()}}</b> {{getConvertedDate()}}</p>
       </mat-card-content>
     </mat-card>
   </div>

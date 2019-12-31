@@ -109,4 +109,9 @@ export class FileViewComponent implements OnInit {
     this.text = this.originalText;
     this.toggleEditing();
   }
+
+  getConvertedDate(): string{
+    const date = new Date(this.file.creationDate);
+    return date.toLocaleString();
+  }
 }
