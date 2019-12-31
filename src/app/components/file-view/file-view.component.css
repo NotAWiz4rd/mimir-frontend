@@ -14,8 +14,8 @@ img {
 }
 
 #loadingGif {
-  top: 50%;
-  left: 50%;
+  position: relative;
+  padding: 5px;
 }
 
 #picture {
@@ -47,6 +47,47 @@ img {
   padding: 5px;
   min-width: 200px;
   max-width: 320px;
+}
+
+@media only screen and (max-width: 600px) {
+
+  #loadingGif {
+    position: center;
+  }
+
+  #picture {
+    height: auto;
+    width: calc(100vw - 50px);
+    padding: 0px;
+    max-width: none;
+  }
+
+  #editor {
+    float: none;
+    width: calc(100vw - 50px);
+    height: 50vh;
+    margin-left: 0px;
+    overflow: auto;
+  }
+
+  #pdfView {
+    padding: 0px;
+    width: calc(100vw - 50px);
+    height: 100vh;
+  }
+
+  #video {
+    padding: 0px;
+    width: calc(100vw - 50px);
+  }
+
+  #details {
+    float: none;
+    padding: 0px;
+    min-width: auto;
+    max-width: available;
+  }
+
 }
 
 
