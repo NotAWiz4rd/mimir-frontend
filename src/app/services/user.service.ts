@@ -6,6 +6,7 @@ import {SpaceMetadata} from '../classes/SpaceMetadata';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {environment} from 'src/environments/environment';
 import {SpaceService} from './space.service';
+import {tap} from 'rxjs/operators';
 
 const LOCAL_STORAGE_TOKEN_KEY = 'cmspp-token';
 
@@ -26,13 +27,13 @@ export class UserService implements CanActivate {
       .set('username', username)
       .set('password', password);
 
-    // todo fix get request being done twice because of subscribe and promise (without breaking error detection in LoginComponent)
-    const loginObservable = this.http.get<{ token: string }>(environment.apiUrl + 'login', {params});
-    loginObservable.subscribe(response => {
-      this.token = response.token;
-      localStorage.setItem(LOCAL_STORAGE_TOKEN_KEY, this.token);
-    }, error => throwError(error));
-    await loginObservable.toPromise();
+    await this.http.get<{ token: string }>(environment.apiUrl + 'login', {params})
+      .pipe(
+        tap(response => {
+          this.token = response.token;
+          localStorage.setItem(LOCAL_STORAGE_TOKEN_KEY, this.token);
+        }, error => throwError(error)))
+      .toPromise();
 
     if (this.token != undefined) {
       await this.reloadUser();
