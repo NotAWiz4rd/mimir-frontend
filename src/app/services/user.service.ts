@@ -63,9 +63,8 @@ export class UserService implements CanActivate {
     localStorage.removeItem(LOCAL_STORAGE_TOKEN_KEY);
   }
 
-  register(username: string, mail: string, password: string) {
-    // todo do this properly
-    this.http.post(environment.apiUrl + 'register?receiver=' + mail + '&text=' + 'Registration successful!', {});
+  async register(mail: string) {
+    await this.http.post(environment.apiUrl + 'register/mail?mail=' + mail, {}).toPromise();
   }
 
   delete() {
@@ -129,5 +128,12 @@ export class UserService implements CanActivate {
     } else {
       console.error(error);
     }
+  }
+
+  /**
+   * Confirms registration by relaying password to backend.
+   */
+  async finishRegistration(password: string, token: string) {
+    await this.http.post(environment.apiUrl + 'register/confirm', {password: password, token: token}).toPromise();
   }
 }

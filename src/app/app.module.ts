@@ -67,6 +67,8 @@ import {NoAccessPageComponent} from './pages/no-access-page/no-access-page.compo
 import {FileDataService} from './services/file-data.service';
 import {FooterComponent} from './components/footer/footer.component';
 import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
+import {RegisterPageComponent} from './pages/register-page/register-page.component';
+import {ConfirmPageComponent} from './pages/confirm-page/confirm-page.component';
 
 @NgModule({
   declarations: [
@@ -96,6 +98,8 @@ import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
     CommentComponent,
     NoAccessPageComponent,
     FooterComponent,
+    RegisterPageComponent,
+    ConfirmPageComponent,
   ],
   imports: [
     BrowserModule,

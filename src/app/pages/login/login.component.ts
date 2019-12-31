@@ -67,8 +67,4 @@ export class LoginComponent implements OnInit {
       });
     }
   }
-
-  register() {
-    this.userService.register('test', 'test', 'test');
-  }
 }
