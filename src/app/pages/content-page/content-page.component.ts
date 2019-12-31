@@ -125,7 +125,7 @@ export class ContentPageComponent implements OnInit {
       if (file != undefined) {
         this.file = file;
 
-        if (this.folderId == undefined) {
+        if (this.folderId == undefined && !this.isSettings) {
           this.navigationService.namePath$.next(this.file.name);
         }
       }

@@ -29,6 +29,12 @@ export class FolderService {
     this.http.post(this.baseUrl + '?name=' + name + '&parentId=' + parentId, {}).subscribe(result => {
       let folder = result as Folder;
       if (folder.name == name) {
+        let spaceFolder = FolderService.searchForFolder(this.spaceService.currentSpace.root, this.spaceService.currentFolder.id);
+        if (spaceFolder.folders == undefined) { // create folders as empty array if it doesnt exist, then add the new folder
+          spaceFolder.folders = [];
+          this.spaceService.currentFolder.folders = [];
+          spaceFolder.folders.push(folder);
+        }
         this.spaceService.currentFolder.folders.push(folder);
         folderWasCreated.next(true);
       }
@@ -104,9 +110,9 @@ export class FolderService {
   }
 
   async download(id: number) {
-    const response = await this.http.get<{ token: string }>(environment.apiUrl + 'folder/download/'+ id).toPromise();
+    const response = await this.http.get<{ token: string }>(environment.apiUrl + 'folder/download/' + id).toPromise();
     const downloadToken = response.token;
-    window.open(environment.apiUrl + "folder/" + id + "/download?token=" + downloadToken);
+    window.open(environment.apiUrl + 'folder/' + id + '/download?token=' + downloadToken);
   }
 
 
@@ -137,6 +143,10 @@ export class FolderService {
   }
 
   convertFolderToPaths(folder: Folder): string {
+    if (folder == null) {
+      return '';
+    }
+
     let namePath = folder.name;
     let currentFolder = folder;
     while (currentFolder != null && currentFolder.parentId != null) {
@@ -173,7 +183,7 @@ export class FolderService {
           return base.folders[i];
         }
 
-        return this.lookForNextPathBitWithin(this.spaceService.currentSpace.root.folders[i], pathBits.slice(1));
+        return this.lookForNextPathBitWithin(base.folders[i], pathBits.slice(1));
       }
     }
     // check if we're in a file

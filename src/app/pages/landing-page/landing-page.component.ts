@@ -23,8 +23,10 @@ export class LandingPageComponent implements OnInit {
 
   // tslint:disable-next-line:use-life-cycle-interface
   ngAfterViewChecked() {
-    document.getElementById(this.scrollTo).scrollIntoView({behavior: 'smooth'});
-    this.scrollTo = undefined;
+    if (document.getElementById(this.scrollTo) !== null) {
+      document.getElementById(this.scrollTo).scrollIntoView({behavior: 'smooth'});
+      this.scrollTo = null;
+    }
   }
 
   goToLogin() {
@@ -36,4 +38,3 @@ export class LandingPageComponent implements OnInit {
   }
 
 }
-
