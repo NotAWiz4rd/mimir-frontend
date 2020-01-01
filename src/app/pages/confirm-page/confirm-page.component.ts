@@ -16,11 +16,11 @@ export class ConfirmPageComponent implements OnInit {
   token: string = '';
 
   loginForm: FormGroup;
-  private error: boolean = false;
+  error: boolean = false;
 
   constructor(private route: ActivatedRoute,
               public languageService: LanguageService,
-              private staticTextService: StaticTextService,
+              public staticTextService: StaticTextService,
               private formBuilder: FormBuilder,
               private userService: UserService,
               private navigationService: NavigationService) {
