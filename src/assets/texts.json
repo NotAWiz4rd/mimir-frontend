@@ -218,5 +218,10 @@
     "logicalName": "mailError",
     "english": "An Error has occured. Please make sure that you are using an eligable E-Mail address to register for an account. If this is the case, please try again later.",
     "german": "Eine E-Mail wurde an die angegebene Adresse versandt. Sie können dieses Fenster jetzt schließen."
+  },
+  {
+    "logicalName": "registerInfoText",
+    "english": "Only Ostfalia mail addresses are currently allowed to register new accounts.",
+    "german": "Nur Ostfalia-Addressen sind aktuell zur Registration zugelassen."
   }
 ]

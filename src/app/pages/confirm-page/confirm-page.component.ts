@@ -4,6 +4,7 @@ import {LanguageService} from '../../services/language.service';
 import {StaticTextService} from '../../services/static-text.service';
 import {UserService} from '../../services/user.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {NavigationService} from '../../services/navigation.service';
 
 @Component({
   selector: 'app-confirm-page',
@@ -21,7 +22,8 @@ export class ConfirmPageComponent implements OnInit {
               public languageService: LanguageService,
               private staticTextService: StaticTextService,
               private formBuilder: FormBuilder,
-              private userService: UserService) {
+              private userService: UserService,
+              private navigationService: NavigationService) {
     this.route.params.subscribe(params => {
       if (params['mail'] != undefined) {
         this.mail = params['mail'];
@@ -45,7 +47,7 @@ export class ConfirmPageComponent implements OnInit {
         .catch(() => this.error = true)
         .then(() => {
           if (!this.error) {
-          this.userService.reloadUser() // todo properly implement error stuff
+            this.navigationService.navigateToView('login');
           }
         });
     }

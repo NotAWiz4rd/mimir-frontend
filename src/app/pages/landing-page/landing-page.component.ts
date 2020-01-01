@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../services/user.service';
 import {NavigationService} from '../../services/navigation.service';
-import { ViewportScroller } from '@angular/common';
+import {LanguageService} from '../../services/language.service';
+import {StaticTextService} from '../../services/static-text.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -14,8 +15,11 @@ export class LandingPageComponent implements OnInit {
   value2 = false;
   value3 = false;
   scrollTo: string;
+
   constructor(private userService: UserService,
-              private navigationService: NavigationService) {
+              private navigationService: NavigationService,
+              public languageService: LanguageService,
+              public staticTextService: StaticTextService) {
   }
 
   ngOnInit() {
@@ -37,4 +41,7 @@ export class LandingPageComponent implements OnInit {
     this.scrollTo = id;
   }
 
+  goToRegister() {
+    this.navigationService.navigateToView('register');
+  }
 }

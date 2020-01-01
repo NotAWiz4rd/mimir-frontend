@@ -4,6 +4,10 @@
     <mat-card-content>
       <form [formGroup]="loginForm" (ngSubmit)="register()">
         <p>
+          {{staticTextService.staticTexts | getStaticText : 'registerInfoText' : languageService.getLanguage()}}
+        </p>
+
+        <p>
           <mat-form-field>
             <input type="text" matInput placeholder="E-Mail" formControlName="mail">
           </mat-form-field>
