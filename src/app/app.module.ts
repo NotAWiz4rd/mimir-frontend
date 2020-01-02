@@ -19,9 +19,7 @@ import {
   MatAutocompleteModule,
   MatButtonModule,
   MatButtonToggleModule,
-  MatCardModule,
   MatCheckboxModule,
-  MatChipsModule,
   MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
@@ -32,7 +30,6 @@ import {
   MatSnackBar,
   MatSnackBarContainer,
   MatSnackBarModule,
-  MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -61,12 +58,15 @@ import {LandingPageComponent} from './pages/landing-page/landing-page.component'
 import {ClipboardService} from './services/clipboard.service';
 import {SpaceSettingsComponent} from './components/space-settings/space-settings.component';
 import {TokenAuthInterceptor} from './helpers/token-auth.interceptor';
+import {MatCardModule} from '@angular/material/card';
 import {ThumbnailService} from './services/thumbnail.service';
 import {CommentComponent} from './components/comment/comment.component';
 import {NoAccessPageComponent} from './pages/no-access-page/no-access-page.component';
-import {FileDataService} from './services/file-data.service';
-import {FooterComponent} from './components/footer/footer.component';
-import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
+import {FileDataService} from "./services/file-data.service";
+import {CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import {FooterComponent} from "./components/footer/footer.component";
+import {MatChipsModule} from "@angular/material/chips";
+import {MatToolbarModule} from "@angular/material/toolbar";
 
 @NgModule({
   declarations: [
@@ -92,7 +92,6 @@ import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
     RenameDialogComponent,
     LandingPageComponent,
     SpaceSettingsComponent,
-    FooterComponent,
     CommentComponent,
     NoAccessPageComponent,
     FooterComponent,
@@ -123,9 +122,9 @@ import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
     MatSlideToggleModule,
     MatIconModule,
     MatCardModule,
-    CKEditorModule,
     MatToolbarModule,
     MatChipsModule,
+    CKEditorModule,
   ],
   entryComponents: [
     CreateFolderDialogComponent,

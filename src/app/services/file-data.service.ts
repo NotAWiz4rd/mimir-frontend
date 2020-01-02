@@ -14,12 +14,12 @@ export class FileDataService {
               private sanitizer: DomSanitizer) {
   }
 
-  public fetchImg(fileId: number) : Observable<string> {
+  public fetchFile(fileId: number): Observable<string> {
     return this.downloadDataAsBase64(this.artifactBaseUrl + fileId + '/raw')
   }
 
   private downloadDataAsBase64(url: string): Observable<string> {
-    return this.http.get(url, { responseType: 'blob' }).pipe(
+    return this.http.get(url, {responseType: 'blob'}).pipe(
       flatMap(blob => {
         return this.blobToBase64(blob);
       })
@@ -30,7 +30,7 @@ export class FileDataService {
     const fileReader = new FileReader();
     const observable = new Observable(observer => {
       fileReader.onloadend = () => {
-        observer.next(this.sanitizer.bypassSecurityTrustResourceUrl(<string> fileReader.result));
+        observer.next(this.sanitizer.bypassSecurityTrustResourceUrl(<string>fileReader.result));
         observer.complete();
       };
     });
@@ -39,9 +39,9 @@ export class FileDataService {
   }
 
   public getTextFile(fileId: number): Observable<string> {
-   return this.http.get(this.artifactBaseUrl + fileId + '/raw', {responseType: 'blob'}).pipe(
+    return this.http.get(this.artifactBaseUrl + fileId + '/raw', {responseType: 'blob'}).pipe(
       flatMap(blob => {
-         return this.blobToString(blob);
+        return this.blobToString(blob);
       })
     );
   }
@@ -50,7 +50,7 @@ export class FileDataService {
     const fileReader = new FileReader();
     const observable = new Observable(observer => {
       fileReader.onloadend = () => {
-        observer.next(this.sanitizer.bypassSecurityTrustHtml(<string> fileReader.result));
+        observer.next(this.sanitizer.bypassSecurityTrustHtml(<string>fileReader.result));
         observer.complete();
       };
     });

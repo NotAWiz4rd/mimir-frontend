@@ -14,3 +14,18 @@ button {
 .material-icons {
   font-size: 40px;
 }
+
+@media only screen and (max-width: 600px) {
+  .container {
+    overflow: auto;
+  }
+
+  .logout, .settings-button {
+    margin-right: 5px;
+    float: right;
+  }
+
+  button {
+    margin: 5px;
+  }
+}
