@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpParams, HttpHeaders} from '@angular/common/http';
 import {BehaviorSubject, throwError} from 'rxjs';
 import {User} from '../classes/User';
 import {SpaceMetadata} from '../classes/SpaceMetadata';
@@ -23,11 +23,11 @@ export class UserService implements CanActivate {
   }
 
   async login(username: string, password: string) {
-    const params = new HttpParams()
-      .set('username', username)
-      .set('password', password);
+    const formData = new FormData()
+    formData.set('username', username)
+    formData.set('password', password);
 
-    await this.http.get<{ token: string }>(environment.apiUrl + 'login', {params})
+    await this.http.post<{ token: string }>(environment.apiUrl + 'login', formData)
       .pipe(
         tap(response => {
           this.token = response.token;
