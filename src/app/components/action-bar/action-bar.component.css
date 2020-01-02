@@ -14,3 +14,21 @@ app-search {
 .space-download {
   float: right;
 }
+
+@media only screen and (max-width: 600px) {
+  button {
+    margin: 5px;
+  }
+
+  app-search {
+    margin-right: 5px;
+  }
+
+  .container {
+    overflow: auto;
+  }
+
+  .space-download{
+    float: none;
+  }
+}

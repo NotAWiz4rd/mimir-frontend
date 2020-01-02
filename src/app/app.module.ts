@@ -65,8 +65,8 @@ import {ThumbnailService} from './services/thumbnail.service';
 import {CommentComponent} from './components/comment/comment.component';
 import {NoAccessPageComponent} from './pages/no-access-page/no-access-page.component';
 import {FileDataService} from './services/file-data.service';
-import {FooterComponent} from './components/footer/footer.component';
 import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
+import {FooterComponent} from './components/footer/footer.component';
 import {RegisterPageComponent} from './pages/register-page/register-page.component';
 import {ConfirmPageComponent} from './pages/confirm-page/confirm-page.component';
 
@@ -94,7 +94,6 @@ import {ConfirmPageComponent} from './pages/confirm-page/confirm-page.component'
     RenameDialogComponent,
     LandingPageComponent,
     SpaceSettingsComponent,
-    FooterComponent,
     CommentComponent,
     NoAccessPageComponent,
     FooterComponent,
@@ -127,9 +126,9 @@ import {ConfirmPageComponent} from './pages/confirm-page/confirm-page.component'
     MatSlideToggleModule,
     MatIconModule,
     MatCardModule,
-    CKEditorModule,
     MatToolbarModule,
     MatChipsModule,
+    CKEditorModule,
   ],
   entryComponents: [
     CreateFolderDialogComponent,

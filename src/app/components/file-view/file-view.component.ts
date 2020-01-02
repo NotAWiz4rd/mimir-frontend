@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {File} from '../../classes/File';
 import {FileDataService} from '../../services/file-data.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -19,16 +19,17 @@ export class FileViewComponent implements OnInit {
   };
   @Input()
   file: File;
-  contentFileType: String;
-  isPicture: boolean;
+  @ViewChild("videoPlayer",{static: false})
+  videoPlayer: ElementRef;
+  fileType: String;
+  srcIsReady: Promise<boolean>;
   text;
   editableText;
   isDisabled = true;
   originalText;
-
   fileUrl: string;
 
-  constructor(private fileViewService: FileDataService,
+  constructor(private fileDataService: FileDataService,
               public reuploadService: ReuploadService,
               public spaceService: SpaceService,
               public staticTextService: StaticTextService,
@@ -43,34 +44,43 @@ export class FileViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.contentFileType = this.getFileContentType();
-    if (this.contentFileType.includes('jpg') || this.contentFileType.includes('png')) {
-      this.isPicture = true;
+    this.fileType = this.getFileType();
+    if (this.fileType === 'jpg' || this.fileType === 'png' || this.fileType === 'pdf' || this.fileType === 'gif') {
       this.setFileUrl();
-    } else if (this.contentFileType.includes('txt')) {
-      this.isPicture = false;
+    } else if (this.fileType === 'mp4' || this.fileType === 'ogg') {
+      //TODO: progressive loading, so the user can watch the video even if its not completely loaded
+      this.setFileUrl();
+    } else if (this.fileType === 'txt') {
       this.setText();
+    }else{
+      this.srcIsReady = Promise.resolve(true);
     }
   }
 
   setFileUrl(): void {
-    this.fileViewService.fetchImg(this.file.id).subscribe(base64Image => {  // todo add some loading message while file is being loaded, otherwise it looks like the image getting failed
+    this.fileDataService.fetchFile(this.file.id).subscribe(base64Image => {
       this.fileUrl = base64Image;
+      this.srcIsReady = Promise.resolve(true);
     });
   }
 
   setText(): void {
-    this.fileViewService.getTextFile(this.file.id).subscribe(data => {
+    this.fileDataService.getTextFile(this.file.id).subscribe(data => {
       this.text = data;
       this.originalText = data;
       // workaround as otherwise in the ckeditor it is undefined
       this.editableText = this.text.changingThisBreaksApplicationSecurity;
+      this.srcIsReady = Promise.resolve(true);
     });
   }
 
-  getFileContentType(): String {
+  getFileType(): String {
     const fileName = this.file.name.split('.');
     return fileName[fileName.length - 1];
+  }
+
+  toggleVideo() {
+    this.videoPlayer.nativeElement.play();
   }
 
   toggleEditing() {
@@ -98,5 +108,10 @@ export class FileViewComponent implements OnInit {
     this.editableText = this.originalText.changingThisBreaksApplicationSecurity;
     this.text = this.originalText;
     this.toggleEditing();
+  }
+
+  getConvertedDate(): string{
+    const date = new Date(this.file.creationDate);
+    return date.toLocaleString();
   }
 }

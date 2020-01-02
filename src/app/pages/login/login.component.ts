@@ -5,6 +5,7 @@ import {LanguageService} from '../../services/language.service';
 import {NavigationService} from '../../services/navigation.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SpaceService} from '../../services/space.service';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-login',
@@ -13,16 +14,16 @@ import {SpaceService} from '../../services/space.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  loading = false;
-  submitted = false;
-  error: string | null;
+  loading: boolean = false;
+  submitted: boolean = false;
 
   constructor(private userService: UserService,
               private formBuilder: FormBuilder,
               public staticTextService: StaticTextService,
               public languageService: LanguageService,
               private navigationService: NavigationService,
-              private spaceService: SpaceService) {
+              private spaceService: SpaceService,
+              public _snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -44,27 +45,38 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  // convenience getter for easy access to form fields
-  get f() {
-    return this.loginForm.controls;
-  }
-
   async login() {
     this.submitted = true;
     if (this.loginForm.invalid) {
       return;
     }
     this.loading = true;
-    //TODO change to: await this.userService.login(this.f.username.value, this.f.password.value)
-    await this.userService.login('thellmann', 'thellmann'); // todo get user from backend
-    //TODO if error -> this.loading = false  and  display error message
+    try {
+      await this.userService.login(this.loginForm.controls.username.value, this.loginForm.controls.password.value);
+    } catch (e) {
+      this.loading = false;
+      this.openSnackBar('ERROR! Username or password was wrong.');
+    }
+    if (this.userService.currentUser$.getValue() != undefined) {
+      this.setProperSpace();
+    }
+  }
+
+  private setProperSpace() {
     if (this.userService.currentUser$.getValue().spaces.length > 0) {
       this.navigationService.navigateToSpace(this.userService.currentUser$.getValue().spaces[0].id);
-    } else {
+    } else { // create new space if user has none
       this.spaceService.createSpace(this.userService.currentUser$.getValue().name).subscribe(spaceMetaData => {
         this.userService.addSpaceToUser(spaceMetaData);
         this.navigationService.navigateToSpace(spaceMetaData.id);
       });
     }
+  }
+
+  openSnackBar(message: string) {
+    this._snackBar.open(message, null, {
+      duration: 2000,
+      panelClass: ['error-box']
+    });
   }
 }

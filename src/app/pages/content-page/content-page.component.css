@@ -12,3 +12,9 @@ app-thumbnail {
   margin: 5px;
   min-width: 70px;
 }
+
+app-file-view {
+  position:absolute;
+  left:0;
+  right:0;
+}
