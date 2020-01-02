@@ -11,10 +11,10 @@
       <p style="color: white;">Through CMS++ you can share everything with your fellow students and friends. Everybody
         has a space where the data is stored, a space is like a collaborative holy grail.</p>
     </div>
-    <button mat-stroked-button (click)="goToLogin()" color="accent">
+    <button mat-stroked-button (click)="goToLogin()" color="accent" class="margin-button">
       {{staticTextService.staticTexts | getStaticText : 'login' : languageService.getLanguage()}}
     </button>
-    <button mat-stroked-button (click)="goToRegister()" color="accent">
+    <button mat-stroked-button (click)="goToRegister()" color="accent" class="margin-button">
       {{staticTextService.staticTexts | getStaticText : 'registerText' : languageService.getLanguage()}}
     </button>
   </div>
