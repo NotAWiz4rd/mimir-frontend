@@ -223,5 +223,10 @@
     "logicalName": "registerInfoText",
     "english": "Only Ostfalia mail addresses are currently allowed to register new accounts.",
     "german": "Nur Ostfalia-Addressen sind aktuell zur Registration zugelassen."
+  },
+  {
+    "logicalName": "currentRegistration",
+    "english": "You are currently finishing the registration for ",
+    "german": "Sie schließen gerade die Registrierung für folgende Addresse ab: "
   }
 ]

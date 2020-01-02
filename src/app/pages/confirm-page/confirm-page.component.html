@@ -4,6 +4,11 @@
     <mat-card-content>
       <form [formGroup]="loginForm" (ngSubmit)="finishRegistration()">
         <p>
+          {{staticTextService.staticTexts | getStaticText : 'currentRegistration' : languageService.getLanguage()}}
+          <b>{{mail}}</b>
+        </p>
+
+        <p>
           <mat-form-field>
             <input type="password" matInput placeholder="Password" formControlName="password">
           </mat-form-field>
