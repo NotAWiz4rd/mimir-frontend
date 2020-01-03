@@ -1,0 +1,29 @@
+<div class="confirm">
+  <mat-card>
+    <mat-card-title>{{staticTextService.staticTexts | getStaticText : 'finishRegistrationText' : languageService.getLanguage()}}</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="finishRegistration()">
+        <p>
+          {{staticTextService.staticTexts | getStaticText : 'currentRegistration' : languageService.getLanguage()}}
+          <b>{{mail}}</b>
+        </p>
+
+        <p>
+          <mat-form-field>
+            <input type="password" matInput placeholder="Password" formControlName="password">
+          </mat-form-field>
+        </p>
+
+        <div class="button">
+          <button type="submit" mat-raised-button color="primary">
+            {{staticTextService.staticTexts | getStaticText : 'finishRegistrationText' : languageService.getLanguage()}}
+          </button>
+        </div>
+
+        <p class="error" *ngIf="error">
+          {{staticTextService.staticTexts | getStaticText : 'mailError' : languageService.getLanguage()}}
+        </p>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

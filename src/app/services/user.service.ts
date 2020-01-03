@@ -67,8 +67,8 @@ export class UserService implements CanActivate {
     localStorage.removeItem(LOCAL_STORAGE_TOKEN_KEY);
   }
 
-  register(mail: string, password: string) {
-    // todo implement me
+  async register(mail: string) {
+    await this.http.post(environment.apiUrl + 'register/mail?mail=' + mail, {}).toPromise();
   }
 
   delete() {
@@ -132,5 +132,15 @@ export class UserService implements CanActivate {
     } else {
       console.error(error);
     }
+  }
+
+  /**
+   * Confirms registration by relaying password to backend.
+   */
+  async finishRegistration(password: string, token: string) {
+    const formData = new FormData();
+    formData.set('token', token);
+    formData.set('password', password);
+    await this.http.post(environment.apiUrl + 'register/confirm', formData).toPromise();
   }
 }

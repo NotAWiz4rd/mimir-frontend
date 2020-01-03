@@ -8,10 +8,14 @@
     <div class="imageFan-container">
     </div>
     <div>
-      <p style="color: white;">Through CMS++ you can share everything with your fellow students and friends. Everybody has a space where the data is stored, a space is like a collaborative holy grail.</p>
+      <p style="color: white;">Through CMS++ you can share everything with your fellow students and friends. Everybody
+        has a space where the data is stored, a space is like a collaborative holy grail.</p>
     </div>
-    <button mat-stroked-button (click)="goToLogin()" color="accent">
-      Login
+    <button mat-stroked-button (click)="goToLogin()" color="accent" class="margin-button">
+      {{staticTextService.staticTexts | getStaticText : 'login' : languageService.getLanguage()}}
+    </button>
+    <button mat-stroked-button (click)="goToRegister()" color="accent" class="margin-button">
+      {{staticTextService.staticTexts | getStaticText : 'registerText' : languageService.getLanguage()}}
     </button>
   </div>
   <img class="hero-image" src="../../../assets/img/hero_gradient.png">
@@ -22,7 +26,7 @@
     </h2>
     <br>
     <div class="citation-step-3"></div>
-  </div>  
+  </div>
   <div class="checkbox-container purple">
     <h2>Have you ever used a CMS where the community aspect was lackluster?</h2>
     <br>
@@ -32,12 +36,15 @@
   <div *ngIf="value1" class="checkbox-container amber">
     <h2>Have you ever wanted to collaborate with other students through a CMS?</h2>
     <br>
-    <mat-slide-toggle id="checkbox2" [(ngModel)]="value2" (change)="scroll('checkbox3')" [color]="'primary'">SLIDE FOR YES!</mat-slide-toggle>
+    <mat-slide-toggle id="checkbox2" [(ngModel)]="value2" (change)="scroll('checkbox3')" [color]="'primary'">SLIDE FOR
+      YES!
+    </mat-slide-toggle>
   </div>
   <div *ngIf="value2" class="checkbox-container purple">
     <h2>Have you ever wanted to share your folders and files with ease?</h2>
     <br>
-    <mat-slide-toggle id="checkbox3" [(ngModel)]="value3" (change)="scroll('finalButton')">SLIDE FOR YES!</mat-slide-toggle>
+    <mat-slide-toggle id="checkbox3" [(ngModel)]="value3" (change)="scroll('finalButton')">SLIDE FOR YES!
+    </mat-slide-toggle>
   </div>
   <div *ngIf="value3" class="final-container">
     <h2>Then look no further and bask upon the glory of CMS++</h2>

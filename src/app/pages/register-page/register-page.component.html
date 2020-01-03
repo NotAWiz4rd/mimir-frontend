@@ -1,0 +1,32 @@
+<div class="register">
+  <mat-card>
+    <mat-card-title>{{staticTextService.staticTexts | getStaticText : 'registerText' : languageService.getLanguage()}}</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="register()">
+        <p>
+          {{staticTextService.staticTexts | getStaticText : 'registerInfoText' : languageService.getLanguage()}}
+        </p>
+
+        <p>
+          <mat-form-field>
+            <input type="text" matInput placeholder="E-Mail" formControlName="mail">
+          </mat-form-field>
+        </p>
+
+        <div class="button">
+          <button type="submit" mat-raised-button color="primary" [disabled]="sentMail && !error">
+            {{staticTextService.staticTexts | getStaticText : 'registerText' : languageService.getLanguage()}}
+          </button>
+        </div>
+
+        <p class="mail-sent" *ngIf="sentMail && !error">
+          {{staticTextService.staticTexts | getStaticText : 'mailSent' : languageService.getLanguage()}}
+        </p>
+
+        <p class="error" *ngIf="error">
+          {{staticTextService.staticTexts | getStaticText : 'mailError' : languageService.getLanguage()}}
+        </p>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

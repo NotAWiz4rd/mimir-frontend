@@ -73,10 +73,6 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  register() { // todo implement proper register and then do stuff
-    this.userService.register('test', 'test');
-  }
-
   openSnackBar(message: string) {
     this._snackBar.open(message, null, {
       duration: 2000,
