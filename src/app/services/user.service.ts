@@ -138,9 +138,9 @@ export class UserService implements CanActivate {
    * Confirms registration by relaying password to backend.
    */
   async finishRegistration(password: string, token: string) {
-    let params: HttpParams = new HttpParams();
-    params = params.append('password', password);
-    params = params.append('token', token);
-    await this.http.post(environment.apiUrl + 'register/confirm', {}, {params}).toPromise();
+    const formData = new FormData();
+    formData.set('token', token);
+    formData.set('password', password);
+    await this.http.post(environment.apiUrl + 'register/confirm', formData).toPromise();
   }
 }
