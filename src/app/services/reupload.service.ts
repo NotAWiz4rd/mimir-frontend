@@ -1,10 +1,12 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {environment} from 'src/environments/environment';
+import {ErrorService} from "./error.service";
 
 @Injectable()
 export class ReuploadService {
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private errorService: ErrorService) {
   }
 
   public reupload(data: Blob, filename: string, artifactId: number) {
@@ -15,9 +17,7 @@ export class ReuploadService {
       val => {
         console.log('successful put', val);
       },
-      response => {
-        console.log('error in put', response);
-      },
+      error => this.errorService.handleError(error),
       () => {
         console.log('put observable now complete');
       }

@@ -1,11 +1,13 @@
 import {Observable, Subject} from 'rxjs';
-import {HttpClient, HttpEventType, HttpRequest, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpEventType, HttpRequest, HttpResponse} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import { environment } from 'src/environments/environment';
+import {environment} from 'src/environments/environment';
+import {ErrorService} from "./error.service";
 
 @Injectable()
 export class UploadService {
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private errorService: ErrorService) {
   }
 
   public upload(files: Set<File>, folderId: number): { [p: string]: { progress: Observable<number> } } {
@@ -35,19 +37,19 @@ export class UploadService {
           // pass the percentage into the progress-stream
           progress.next(percentDone);
         } else if (event instanceof HttpResponse) {
-
           // Close the progress-stream if we get an answer form the API
           // The upload is complete
           progress.complete();
         }
+      }, error => {
+        this.errorService.handleError(error);
+        progress.error(error);
       });
-
       // Save every progress-observable in a map of all observables
       status[file.name] = {
         progress: progress.asObservable()
       };
     });
-
     // return the map of progress.observables
     return status;
   }

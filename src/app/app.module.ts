@@ -69,6 +69,7 @@ import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 import {FooterComponent} from './components/footer/footer.component';
 import {RegisterPageComponent} from './pages/register-page/register-page.component';
 import {ConfirmPageComponent} from './pages/confirm-page/confirm-page.component';
+import {ErrorService} from "./services/error.service";
 
 @NgModule({
   declarations: [
@@ -153,7 +154,8 @@ import {ConfirmPageComponent} from './pages/confirm-page/confirm-page.component'
     UploadService,
     ClipboardService,
     MatSnackBar,
-    ReuploadService
+    ReuploadService,
+    ErrorService
   ],
   bootstrap: [AppComponent]
 })

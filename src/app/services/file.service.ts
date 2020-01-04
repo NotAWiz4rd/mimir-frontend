@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {File} from '../classes/File';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {FolderService} from './folder.service';
@@ -7,6 +7,7 @@ import {ClipboardService} from './clipboard.service';
 import {environment} from 'src/environments/environment';
 import {Router} from '@angular/router';
 import {Comment} from '../classes/Comment';
+import {ErrorService} from "./error.service";
 
 @Injectable()
 export class FileService {
@@ -16,7 +17,8 @@ export class FileService {
 
   constructor(private http: HttpClient,
               private router: Router,
-              private folderService: FolderService) {
+              private folderService: FolderService,
+              private errorSerice: ErrorService) {
   }
 
   loadFile(id: number) {
@@ -24,7 +26,7 @@ export class FileService {
       file => {
         this.currentFile$.next(file);
       },
-      error => this.handleError(error)
+      error => this.errorSerice.handleError(error)
     );
   }
 
@@ -60,14 +62,6 @@ export class FileService {
     const shareToken = await this.http.get<{ token: string }>(this.artifactBaseUrl + 'share/' + id).toPromise();
     const link = window.location.host + '/file/' + id + '?token=' + shareToken.token;
     ClipboardService.copyToClipboard(link);
-  }
-
-  private handleError(error: HttpErrorResponse) {
-    if (error.status == 403) {
-      this.router.navigateByUrl('no-access');
-    } else {
-      console.error(error);
-    }
   }
 
   addComment(fileId: number, text: string): Observable<Comment> {

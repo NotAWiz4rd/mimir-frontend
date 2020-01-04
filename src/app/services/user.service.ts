@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {BehaviorSubject, throwError} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {BehaviorSubject} from 'rxjs';
 import {User} from '../classes/User';
 import {SpaceMetadata} from '../classes/SpaceMetadata';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {environment} from 'src/environments/environment';
 import {SpaceService} from './space.service';
 import {tap} from 'rxjs/operators';
+import {ErrorService} from "./error.service";
 
 const LOCAL_STORAGE_TOKEN_KEY = 'cmspp-token';
 
@@ -18,7 +19,8 @@ export class UserService implements CanActivate {
 
   constructor(private http: HttpClient,
               private router: Router,
-              private spaceService: SpaceService) {
+              private spaceService: SpaceService,
+              private errorService: ErrorService) {
     this.token = localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY);
   }
 
@@ -32,8 +34,8 @@ export class UserService implements CanActivate {
         tap(response => {
           this.token = response.token;
           localStorage.setItem(LOCAL_STORAGE_TOKEN_KEY, this.token);
-        }, error => throwError(error)))
-      .toPromise();
+        }))
+      .toPromise().catch(error => this.errorService.handleError(error));
 
     if (this.token != undefined) {
       await this.reloadUser();
@@ -53,9 +55,8 @@ export class UserService implements CanActivate {
     userObservable.subscribe(
       user => {
         this.currentUser$.next(user);
-      },
-      error => this.handleError(error));
-    await userObservable.toPromise();
+      }, error => this.errorService.handleError(error));
+    await userObservable.toPromise().catch(error => this.errorService.handleError(error));
   }
 
   logout() {
@@ -124,14 +125,6 @@ export class UserService implements CanActivate {
       this.router.navigateByUrl('');
     }
     return verdict;
-  }
-
-  private handleError(error: HttpErrorResponse) {
-    if (error.status == 403) {
-      this.router.navigateByUrl('no-access');
-    } else {
-      console.error(error);
-    }
   }
 
   /**

@@ -1,11 +1,14 @@
 import {Injectable} from '@angular/core';
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {Observable, throwError} from 'rxjs';
 import {UserService} from '../services/user.service';
+import {catchError} from "rxjs/operators";
+import {ErrorService} from "../services/error.service";
 
 @Injectable()
 export class TokenAuthInterceptor implements HttpInterceptor {
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService,
+              private errorService: ErrorService) {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -23,6 +26,8 @@ export class TokenAuthInterceptor implements HttpInterceptor {
       });
     }
 
-    return next.handle(request);
+    return next.handle(request).pipe(
+      catchError((error) => this.errorService.handleError(error))
+    );
   }
 }
