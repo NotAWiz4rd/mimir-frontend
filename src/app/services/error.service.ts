@@ -8,6 +8,7 @@ import {Router} from "@angular/router";
 @Injectable()
 export class ErrorService {
   errorText: string;
+  showText: boolean;
 
   constructor(public snackBar: MatSnackBar,
               private router: Router) {
@@ -18,6 +19,7 @@ export class ErrorService {
   }
 
   handleError(error: HttpErrorResponse) {
+    this.showText = true;
     if (error instanceof HttpErrorResponse) {
       this.errorText = 'ERROR ' + error.status;
       switch (error.status) {
@@ -35,6 +37,7 @@ export class ErrorService {
             this.errorText = this.errorText + '. Username or password was wrong.';
           } else {
             this.router.navigateByUrl('no-access');
+            this.showText = false;
           }
           break;
         case 404:
@@ -52,7 +55,9 @@ export class ErrorService {
     } else {
       this.errorText = 'Some error occurred.';
     }
-    this.showMessage(this.errorText);
+    if(this.showText){
+      this.showMessage(this.errorText);
+    }
     return throwError(error);
   }
 

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
+import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {Observable} from 'rxjs';
 import {UserService} from '../services/user.service';
 import {catchError} from "rxjs/operators";
 import {ErrorService} from "../services/error.service";
