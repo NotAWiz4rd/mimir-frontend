@@ -5,6 +5,7 @@ import {LanguageService} from '../../services/language.service';
 import {forkJoin} from 'rxjs';
 import {UploadService} from '../../services/upload.service';
 import {SpaceService} from "../../services/space.service";
+import {ErrorService} from "../../services/error.service";
 
 @Component({
   selector: 'app-upload-file-dialog',
@@ -12,9 +13,9 @@ import {SpaceService} from "../../services/space.service";
   styleUrls: ['./upload-file-dialog.component.css']
 })
 export class UploadFileDialogComponent implements OnInit {
-  @ViewChild('file', { static: true }) file;
+  @ViewChild('file', {static: true}) file;
   public files: Set<File> = new Set();
-
+  maxFileSize = 10000000;
   progress;
   showCancelButton = true;
   uploading = false;
@@ -24,7 +25,8 @@ export class UploadFileDialogComponent implements OnInit {
               public uploadService: UploadService,
               public spaceService: SpaceService,
               public staticTextService: StaticTextService,
-              public languageService: LanguageService) {
+              public languageService: LanguageService,
+              private errorService: ErrorService) {
   }
 
   ngOnInit() {
@@ -38,7 +40,11 @@ export class UploadFileDialogComponent implements OnInit {
     const files: { [key: string]: File } = this.file.nativeElement.files;
     for (let key in files) {
       if (!isNaN(parseInt(key))) {
-        this.files.add(files[key]);
+        if (files[key].size < this.maxFileSize) {
+          this.files.add(files[key]);
+        } else {
+          this.errorService.showCustomMessage('file size too big');
+        }
       }
     }
   }
@@ -61,22 +67,14 @@ export class UploadFileDialogComponent implements OnInit {
       allProgressObservables.push(this.progress[key].progress);
     }
 
-    // Adjust the state variables
-
     // The dialog should not be closed while uploading
     this.dialogRef.disableClose = true;
-    // Hide the cancel-button
     this.showCancelButton = false;
 
-    // When all progress-observables are completed...
     forkJoin(allProgressObservables).subscribe(end => {
-      // ... the dialog can be closed again...
       this.dialogRef.disableClose = false;
-      // ... the upload was successful...
       this.uploadSuccessful = true;
-      // ... and the component is no longer uploading
       this.uploading = false;
-      //close dialog
       this.dialogRef.close(true);
     });
   }
