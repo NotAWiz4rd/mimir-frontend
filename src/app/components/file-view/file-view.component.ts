@@ -76,7 +76,7 @@ export class FileViewComponent implements OnInit {
 
   getFileType(): String {
     const fileName = this.file.name.split('.');
-    return fileName[fileName.length - 1];
+    return fileName[fileName.length - 1].toLowerCase();
   }
 
   toggleVideo() {
