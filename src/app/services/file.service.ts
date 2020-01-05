@@ -18,7 +18,7 @@ export class FileService {
   constructor(private http: HttpClient,
               private router: Router,
               private folderService: FolderService,
-              private errorSerice: ErrorService) {
+              private errorService: ErrorService) {
   }
 
   loadFile(id: number) {
@@ -26,7 +26,7 @@ export class FileService {
       file => {
         this.currentFile$.next(file);
       },
-      error => this.errorSerice.handleError(error)
+      error => this.errorService.handleError(error)
     );
   }
 
