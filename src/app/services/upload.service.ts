@@ -39,6 +39,7 @@ export class UploadService {
           progress.complete();
         }
       }, error => {
+        progress.error(error);
         this.errorService.handleError(error, 'upload');
       });
       // Save every progress-observable in a map of all observables
