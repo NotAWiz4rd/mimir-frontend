@@ -14,18 +14,16 @@ export class ErrorService {
               private router: Router) {
   }
 
-  showCustomMessage(message: string){
-    this.showMessage(message);
-  }
-
-  handleError(error: HttpErrorResponse) {
+  handleError(error: HttpErrorResponse, context: string = '') {
     this.showText = true;
     if (error instanceof HttpErrorResponse) {
       this.errorText = 'ERROR ' + error.status;
       switch (error.status) {
         case 0:
-          if(!navigator.onLine){
+          if (!navigator.onLine) {
             this.errorText = this.errorText + ': You are offline'
+          } else if (context === 'upload') {
+            this.errorText = this.errorText + ': File is probably too big'
           }
           break;
         case 401:
@@ -55,7 +53,7 @@ export class ErrorService {
     } else {
       this.errorText = 'Some error occurred.';
     }
-    if(this.showText){
+    if (this.showText) {
       this.showMessage(this.errorText);
     }
     return throwError(error);

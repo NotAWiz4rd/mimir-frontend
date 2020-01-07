@@ -5,7 +5,6 @@ import {LanguageService} from '../../services/language.service';
 import {forkJoin} from 'rxjs';
 import {UploadService} from '../../services/upload.service';
 import {SpaceService} from "../../services/space.service";
-import {ErrorService} from "../../services/error.service";
 
 @Component({
   selector: 'app-upload-file-dialog',
@@ -15,7 +14,6 @@ import {ErrorService} from "../../services/error.service";
 export class UploadFileDialogComponent implements OnInit {
   @ViewChild('file', {static: true}) file;
   public files: Set<File> = new Set();
-  maxFileSize = 10000000;
   progress;
   showCancelButton = true;
   uploading = false;
@@ -25,8 +23,7 @@ export class UploadFileDialogComponent implements OnInit {
               public uploadService: UploadService,
               public spaceService: SpaceService,
               public staticTextService: StaticTextService,
-              public languageService: LanguageService,
-              private errorService: ErrorService) {
+              public languageService: LanguageService) {
   }
 
   ngOnInit() {
@@ -40,11 +37,7 @@ export class UploadFileDialogComponent implements OnInit {
     const files: { [key: string]: File } = this.file.nativeElement.files;
     for (let key in files) {
       if (!isNaN(parseInt(key))) {
-        if (files[key].size < this.maxFileSize) {
-          this.files.add(files[key]);
-        } else {
-          this.errorService.showCustomMessage('file size too big');
-        }
+        this.files.add(files[key]);
       }
     }
   }
