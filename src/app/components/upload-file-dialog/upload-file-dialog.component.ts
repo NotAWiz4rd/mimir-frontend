@@ -69,6 +69,12 @@ export class UploadFileDialogComponent implements OnInit {
       this.uploadSuccessful = true;
       this.uploading = false;
       this.dialogRef.close(true);
+    }, () => {
+      this.uploading = false;
+      this.showCancelButton = true;
+      this.dialogRef.disableClose = false;
+      this.progress = null;
+      this.files = new Set();
     });
   }
 }
