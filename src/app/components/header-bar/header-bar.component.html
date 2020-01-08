@@ -11,11 +11,13 @@
 
   <app-path [path]="currentPath"></app-path>
 
-  <button mat-raised-button color="accent" (click)="onLogoutButtonClick()" class="logout">
+  <button mat-raised-button color="accent" (click)="onLogoutButtonClick()" class="logout"
+          *ngIf="userService?.token != undefined">
     {{staticTextService.staticTexts | getStaticText : 'logout' : languageService.getLanguage()}}
   </button>
 
-  <button mat-icon-button (click)="openSettings()" class="settings-button" color="primary">
+  <button mat-icon-button (click)="openSettings()" class="settings-button" color="primary"
+          *ngIf="userService?.token != undefined">
     <i class="material-icons">
       settings_applications
     </i>

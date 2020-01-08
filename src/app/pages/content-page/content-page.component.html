@@ -1,5 +1,5 @@
 <mat-sidenav-container>
-  <mat-sidenav mode="side" disableClose opened>
+  <mat-sidenav mode="side" disableClose opened="{{userService?.token != undefined}}">
     <app-space-bar></app-space-bar>
   </mat-sidenav>
   <mat-sidenav-content>

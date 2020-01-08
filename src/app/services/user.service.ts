@@ -23,8 +23,8 @@ export class UserService implements CanActivate {
   }
 
   async login(username: string, password: string) {
-    const formData = new FormData()
-    formData.set('username', username)
+    const formData = new FormData();
+    formData.set('username', username);
     formData.set('password', password);
 
     await this.http.post<{ token: string }>(environment.apiUrl + 'login', formData)

@@ -13,6 +13,7 @@ import {FolderService} from '../../services/folder.service';
 import {DeletionDialogComponent} from '../../components/deletion-dialog/deletion-dialog.component';
 import {RenameDialogComponent} from '../../components/rename-dialog/rename-dialog.component';
 import {LanguageService} from '../../services/language.service';
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'app-content-page',
@@ -36,7 +37,8 @@ export class ContentPageComponent implements OnInit {
               private fileService: FileService,
               public languageService: LanguageService,
               public dialog: MatDialog,
-              public _snackBar: MatSnackBar) {
+              public _snackBar: MatSnackBar,
+              public userService: UserService) {
     this.route.params.subscribe(params => {
       if (this.route.toString().includes('url:\'settings\',')) { // check whether we should be showing the settings page
         this.isSettings = true;
