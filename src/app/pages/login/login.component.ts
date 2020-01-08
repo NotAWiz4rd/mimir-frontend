@@ -5,7 +5,6 @@ import {LanguageService} from '../../services/language.service';
 import {NavigationService} from '../../services/navigation.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SpaceService} from '../../services/space.service';
-import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-login',

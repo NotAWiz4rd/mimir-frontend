@@ -155,7 +155,8 @@ import {ErrorService} from "./services/error.service";
     ClipboardService,
     MatSnackBar,
     ReuploadService,
-    ErrorService
+    ErrorService,
+    GetStaticTextPipe
   ],
   bootstrap: [AppComponent]
 })

@@ -1,17 +1,24 @@
-import {Injectable} from "@angular/core";
+import {Injectable, Pipe} from "@angular/core";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {HttpErrorResponse} from "@angular/common/http";
 import {throwError} from "rxjs";
 import {Router} from "@angular/router";
+import {StaticTextService} from "./static-text.service";
+import {LanguageService} from "./language.service";
+import {GetStaticTextPipe} from "../pipes/get-static-text.pipe";
 
 
 @Injectable()
 export class ErrorService {
   errorText: string;
   showText: boolean;
+  staticText: string;
 
   constructor(public snackBar: MatSnackBar,
-              private router: Router) {
+              private router: Router,
+              public staticTextService: StaticTextService,
+              public languageService: LanguageService,
+              private staticTextPipe: GetStaticTextPipe) {
   }
 
   handleError(error: HttpErrorResponse, context: string = '') {
@@ -21,39 +28,40 @@ export class ErrorService {
       switch (error.status) {
         case 0:
           if (!navigator.onLine) {
-            this.errorText = this.errorText + ': You are offline'
+            this.staticText = 'offline';
           } else if (context === 'upload') {
-            this.errorText = this.errorText + ': File is probably too big'
+            this.staticText = 'fileTooBig';
           }
           break;
         case 401:
-          this.errorText = this.errorText + ': Unauthorized. Please login';
+          this.staticText = 'error401';
           break;
         case 403:
-          this.errorText = this.errorText + ': Forbidden';
           if (window.location.pathname === '/login') {
-            this.errorText = this.errorText + '. Username or password was wrong.';
+            this.staticText = 'error403login';
           } else {
             this.router.navigateByUrl('no-access');
             this.showText = false;
           }
           break;
         case 404:
-          this.errorText = this.errorText + ': Page Not Found';
+          this.staticText = 'error404';
           break;
         case 413:
-          this.errorText = this.errorText + ': Request Entity To Large';
+          this.staticText = 'error413';
           break;
         case 500:
-          this.errorText = this.errorText + ': Internal Server Error';
+          this.staticText = 'error500';
           break;
         case 503:
-          this.errorText = this.errorText + ': Service Unavailable';
+          this.staticText = 'error503';
       }
     } else {
-      this.errorText = 'Some error occurred.';
+      this.staticText = 'defaultError';
     }
     if (this.showText) {
+      this.errorText = this.errorText + this.staticTextPipe
+        .transform(this.staticTextService.staticTexts, this.staticText, this.languageService.getLanguage());
       this.showMessage(this.errorText);
     }
     return throwError(error);
