@@ -22,7 +22,7 @@ export class HeaderBarComponent implements OnInit {
   constructor(public staticTextService: StaticTextService,
               public languageService: LanguageService,
               private navigationService: NavigationService,
-              private userService: UserService) {
+              public userService: UserService) {
   }
 
   ngOnInit() {

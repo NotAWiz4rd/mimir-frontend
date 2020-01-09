@@ -1,5 +1,5 @@
 <mat-sidenav-container>
-  <mat-sidenav mode="side" disableClose opened>
+  <mat-sidenav mode="side" disableClose opened="{{userService?.token != undefined}}">
     <app-space-bar></app-space-bar>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -8,7 +8,8 @@
 
     <ng-container *ngIf="fileId == undefined && !isSettings && !isSpaceSettings">
       <app-action-bar [actionsDisabled]="searchValue != undefined"
-                      [isSpaceRoot]="spaceService?.currentFolder?.id == spaceService?.currentSpace?.root?.id"
+                      [isSpaceRoot]="(spaceService?.currentFolder?.id == spaceService?.currentSpace?.root?.id)
+                      && spaceService?.currentFolder?.parentId != 0"
                       (openCreateFolderDialog)="createFolderDialog()"
                       (openUploadFileDialog)="uploadFileDialog()"
                       (downloadSpaceEmitter)="downloadSpace()"></app-action-bar>
