@@ -8,7 +8,8 @@ import {version} from '../../../../package.json';
 })
 export class FooterComponent {
   public version: string = version;
-
+  public year;
   constructor() {
+    this.year = new Date().getFullYear();
   }
 }
