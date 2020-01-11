@@ -3,7 +3,6 @@ import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {StaticTextService} from '../../services/static-text.service';
 import {LanguageService} from '../../services/language.service';
 import {ClipboardService} from '../../services/clipboard.service';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-copy-url-dialog',
@@ -12,17 +11,12 @@ import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 })
 export class CopyUrlDialogComponent implements OnInit {
   link: string;
-  textGroup: FormGroup;
 
   constructor(public dialogRef: MatDialogRef<CopyUrlDialogComponent>,
               public staticTextService: StaticTextService,
               public languageService: LanguageService,
               @Inject(MAT_DIALOG_DATA) public data: any) {
     this.link = data.link;
-    this.textGroup = new FormGroup({
-      xxx: new FormControl()
-    });
-    this.textGroup.controls.xxx.disable();
   }
 
   ngOnInit() {
