@@ -16,7 +16,7 @@
     </mat-button-toggle-group>
   </div>
 
-  <h2>{{staticTextService.staticTexts | getStaticText : 'spaceSettings' : languageService.getLanguage()}}</h2>
+  <h2 class="space-settings">{{staticTextService.staticTexts | getStaticText : 'spaceSettings' : languageService.getLanguage()}}</h2>
 
   <button mat-raised-button color="primary" (click)="deleteSpace()">
     {{staticTextService.staticTexts | getStaticText : 'delete' : languageService.getLanguage()}}
