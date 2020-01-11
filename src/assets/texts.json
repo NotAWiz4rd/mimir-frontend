@@ -21,13 +21,13 @@
   },
   {
     "logicalName": "uploadFile",
-    "english": "Upload File",
-    "german": "Datei hochladen"
+    "english": "Upload",
+    "german": "Hochladen"
   },
   {
     "logicalName": "createFolder",
-    "english": "Create Folder",
-    "german": "Ordner erstellen"
+    "english": "New Folder",
+    "german": "Neuer Ordner"
   },
   {
     "logicalName": "logout",
@@ -66,8 +66,8 @@
   },
   {
     "logicalName": "uploadFile",
-    "english": "Upload File(s)",
-    "german": "Datei(en) Hochladen"
+    "english": "Upload",
+    "german": "Hochladen"
   },
   {
     "logicalName": "upload",
