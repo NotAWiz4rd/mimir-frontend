@@ -21,6 +21,8 @@ export class SpaceSettingsComponent implements OnInit {
 
   users: User[] = [];
 
+  language: string;
+
   constructor(public spaceService: SpaceService,
               public languageService: LanguageService,
               public staticTextService: StaticTextService,
@@ -31,6 +33,7 @@ export class SpaceSettingsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.language = this.languageService.getLanguageString()
   }
 
   async addUser(username: string) {
