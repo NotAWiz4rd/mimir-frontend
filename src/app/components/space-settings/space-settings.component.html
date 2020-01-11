@@ -1,6 +1,29 @@
 <div class="container">
-  {{staticTextService.staticTexts | getStaticText : 'addUser' : languageService.getLanguage()}}:
+  <h2>{{staticTextService.staticTexts | getStaticText : 'accountSettings' : languageService.getLanguage()}}</h2>
+  <div>
+    <p>
+      {{staticTextService.staticTexts | getStaticText : 'chooseLanguage' : languageService.getLanguage()}}
+    </p>
+
+    <mat-button-toggle-group #group="matButtonToggleGroup" [value]="language"
+                             (valueChange)="this.languageService.setLanguageString(group.value)">
+      <mat-button-toggle value="English">
+        English
+      </mat-button-toggle>
+      <mat-button-toggle value="German">
+        German
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  <h2>{{staticTextService.staticTexts | getStaticText : 'spaceSettings' : languageService.getLanguage()}}</h2>
+
+  <button mat-raised-button color="primary" (click)="deleteSpace()">
+    {{staticTextService.staticTexts | getStaticText : 'delete' : languageService.getLanguage()}}
+  </button>
+
   <form class="form">
+    {{staticTextService.staticTexts | getStaticText : 'addUser' : languageService.getLanguage()}}:
     <mat-form-field>
       <input matInput placeholder="Username" [formControl]="formControl">
       <mat-error *ngIf="formControl.hasError('username') && !formControl.hasError('required')">

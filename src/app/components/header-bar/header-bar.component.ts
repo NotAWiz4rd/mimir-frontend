@@ -3,6 +3,7 @@ import {LanguageService} from '../../services/language.service';
 import {NavigationService} from '../../services/navigation.service';
 import {StaticTextService} from '../../services/static-text.service';
 import {UserService} from '../../services/user.service';
+import { SpaceService } from 'src/app/services/space.service';
 
 @Component({
   selector: 'app-header-bar',
@@ -22,6 +23,7 @@ export class HeaderBarComponent implements OnInit {
   constructor(public staticTextService: StaticTextService,
               public languageService: LanguageService,
               private navigationService: NavigationService,
+              private spaceService: SpaceService,
               public userService: UserService) {
   }
 
@@ -45,7 +47,7 @@ export class HeaderBarComponent implements OnInit {
   }
 
   openSettings() {
-    this.navigationService.navigateToSettings();
+    this.navigationService.navigateToSpaceSettings(this.spaceService.currentSpace.id);
   }
 
   pathTooShort() {
