@@ -3,7 +3,6 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {File} from '../classes/File';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {FolderService} from './folder.service';
-import {ClipboardService} from './clipboard.service';
 import {environment} from 'src/environments/environment';
 import {Router} from '@angular/router';
 import {Comment} from '../classes/Comment';
@@ -56,10 +55,9 @@ export class FileService {
    * Copies a share link for the given file to the clipboard.
    * @param id The file id
    */
-  async share(id: number) {
+  async getShareLink(id: number) {
     const shareToken = await this.http.get<{ token: string }>(this.artifactBaseUrl + 'share/' + id).toPromise();
-    const link = window.location.host + '/file/' + id + '?token=' + shareToken.token;
-    ClipboardService.copyToClipboard(link);
+    return window.location.host + '/file/' + id + '?token=' + shareToken.token;
   }
 
   private handleError(error: HttpErrorResponse) {

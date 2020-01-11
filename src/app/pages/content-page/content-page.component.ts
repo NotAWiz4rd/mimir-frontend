@@ -14,6 +14,7 @@ import {DeletionDialogComponent} from '../../components/deletion-dialog/deletion
 import {RenameDialogComponent} from '../../components/rename-dialog/rename-dialog.component';
 import {LanguageService} from '../../services/language.service';
 import {UserService} from '../../services/user.service';
+import {CopyUrlDialogComponent} from '../../components/copy-url-dialog/copy-url-dialog.component';
 
 @Component({
   selector: 'app-content-page',
@@ -223,8 +224,13 @@ export class ContentPageComponent implements OnInit {
         this.folderService.download(id);
         break;
       case 'share':
-        await this.folderService.share(id);
-        this.openSnackBar('Link was copied to clipboard');
+        const link = await this.folderService.getShareLink(id);
+        const copyDialog = this.dialog.open(CopyUrlDialogComponent, {
+          width: '80%',
+          data: {
+            link
+          }
+        });
         break;
     }
   }
@@ -263,8 +269,13 @@ export class ContentPageComponent implements OnInit {
         this.fileService.download(id);
         break;
       case 'share':
-        await this.fileService.share(id);
-        this.openSnackBar('Link was copied to clipboard');
+        const link = await this.fileService.getShareLink(id);
+        const copyDialog = this.dialog.open(CopyUrlDialogComponent, {
+          width: '80%',
+          data: {
+            link
+          }
+        });
         break;
     }
   }
