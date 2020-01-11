@@ -11,22 +11,23 @@ app-search {
   margin-right: 0.5rem;
 }
 
-.spacer {
-  flex-grow: 1;
-}
-
-.container {
-  margin-top: 0.25rem;
-  margin-bottom: 0.25rem;
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .actionbar {
   border-bottom: 1px solid darkgray;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
+}
+
+.actions {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  width: 100%;
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
+.search {
+  width: 20ch;
+  display: inline-block;
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
