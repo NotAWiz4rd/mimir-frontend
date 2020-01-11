@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>
+  {{staticTextService.staticTexts | getStaticText : 'shareUrl' : languageService.getLanguage()}}
+</h1>
+<div mat-dialog-content [formGroup]="textGroup">
+  <mat-form-field>
+    <textarea [readonly]="true" matInput matTextareaAutosize formControlName="xxx" [(ngModel)]="link"></textarea>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCloseClick()">
+    {{staticTextService.staticTexts | getStaticText : 'close' : languageService.getLanguage()}}
+  </button>
+  <button mat-button (click)="copyTextToClipBoard()">
+    {{staticTextService.staticTexts | getStaticText : 'copy' : languageService.getLanguage()}}
+  </button>
+</div>

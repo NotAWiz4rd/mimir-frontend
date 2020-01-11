@@ -69,6 +69,7 @@ import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 import {FooterComponent} from './components/footer/footer.component';
 import {RegisterPageComponent} from './pages/register-page/register-page.component';
 import {ConfirmPageComponent} from './pages/confirm-page/confirm-page.component';
+import {CopyUrlDialogComponent} from './components/copy-url-dialog/copy-url-dialog.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +93,7 @@ import {ConfirmPageComponent} from './pages/confirm-page/confirm-page.component'
     ActionMenuComponent,
     DeletionDialogComponent,
     RenameDialogComponent,
+    CopyUrlDialogComponent,
     LandingPageComponent,
     SpaceSettingsComponent,
     CommentComponent,
@@ -136,6 +138,7 @@ import {ConfirmPageComponent} from './pages/confirm-page/confirm-page.component'
     UploadFileDialogComponent,
     DeletionDialogComponent,
     RenameDialogComponent,
+    CopyUrlDialogComponent,
     MatSnackBarContainer,
   ],
   providers: [

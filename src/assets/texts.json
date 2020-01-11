@@ -25,6 +25,11 @@
     "german": "Datei hochladen"
   },
   {
+    "logicalName": "shareUrl",
+    "english": "The share URL",
+    "german": "Die weitergeben URL"
+  },
+  {
     "logicalName": "createFolder",
     "english": "Create Folder",
     "german": "Ordner erstellen"
@@ -188,6 +193,16 @@
     "logicalName": "cancel",
     "english": "Cancel",
     "german": "Abbrechen"
+  },
+  {
+    "logicalName": "close",
+    "english": "Close",
+    "german": "Schließen"
+  },
+  {
+    "logicalName": "copy",
+    "english": "Copy",
+    "german": "Kopieren"
   },
   {
     "logicalName": "save",
