@@ -1,4 +1,14 @@
-<ng-container *ngFor="let pathelement of pathElements; let i = index">
-  /
-  <div (click)="navigateToElement(i)">{{pathelement}}</div>
-</ng-container>
+<div class="inline hide-mobile">
+  <ng-container *ngFor="let pathelement of pathElements; let i = index">
+    /
+    <button mat-button (click)="navigateToElement(i)">{{pathelement}}</button>
+  </ng-container>
+</div>
+
+<div class="inline hide-desktop">
+  <ng-container *ngIf="pathElements.length > 0">
+    /
+    <ng-container *ngIf="pathElements.length > 1">../</ng-container>
+    <button mat-button (click)="navigateToElement(pathElements[pathElements.length - 1])">{{pathElements[pathElements.length - 1]}}</button>
+  </ng-container>
+</div>
