@@ -1,25 +1,28 @@
 <div class="container">
-  <button mat-raised-button color="accent" (click)="onBackButtonClick()"
-          [disabled]="(backButtonDisabled || pathTooShort()) && !isSettings">
-    <ng-container *ngIf="isSettings">
-      {{staticTextService.staticTexts | getStaticText : 'back' : languageService.getLanguage()}}
-    </ng-container>
-    <ng-container *ngIf="!isSettings">
-      {{staticTextService.staticTexts | getStaticText : 'upwards' : languageService.getLanguage()}}
-    </ng-container>
-  </button>
+  <div class="headerbar">
+    <div class="headerbar__left">
+      <button mat-icon-button (click)="openSettings()" class="settings-button"
+              *ngIf="userService?.token != undefined">
+        <i class="material-icons">settings_applications</i>
+      </button>
 
-  <app-path [path]="currentPath"></app-path>
+      <button mat-flat-button color="primary" (click)="onBackButtonClick()"
+            [disabled]="(backButtonDisabled || pathTooShort()) && !isSettings" class="button-up">
+      <ng-container *ngIf="isSettings">
+        {{staticTextService.staticTexts | getStaticText : 'back' : languageService.getLanguage()}}
+        </ng-container>
+        <ng-container *ngIf="!isSettings">
+          {{staticTextService.staticTexts | getStaticText : 'upwards' : languageService.getLanguage()}}
+        </ng-container>
+        </button>
+      <app-path [path]="currentPath"></app-path>
+    </div>
 
-  <button mat-raised-button color="accent" (click)="onLogoutButtonClick()" class="logout"
-          *ngIf="userService?.token != undefined">
-    {{staticTextService.staticTexts | getStaticText : 'logout' : languageService.getLanguage()}}
-  </button>
-
-  <button mat-icon-button (click)="openSettings()" class="settings-button" color="primary"
-          *ngIf="userService?.token != undefined">
-    <i class="material-icons">
-      settings_applications
-    </i>
-  </button>
+    <div>
+      <button mat-button (click)="onLogoutButtonClick()" class="logout"
+              *ngIf="userService?.token != undefined">
+        {{staticTextService.staticTexts | getStaticText : 'logout' : languageService.getLanguage()}}
+      </button>
+    </div>
+  </div>
 </div>

@@ -2,30 +2,28 @@ button {
   margin: 10px;
 }
 
-.logout, .settings-button {
-  margin-right: 50px;
-  float: right;
+.container {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  background-color: #7e57c2; /* deeppurple */
+  color: white;
 }
 
-.container {
-  border-bottom: 1px solid darkgray;
+.headerbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerbar__left {
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .material-icons {
   font-size: 40px;
 }
 
-@media only screen and (max-width: 600px) {
-  .container {
-    overflow: auto;
-  }
-
-  .logout, .settings-button {
-    margin-right: 5px;
-    float: right;
-  }
-
-  button {
-    margin: 5px;
-  }
+button-up {
+  padding: 0;
 }
