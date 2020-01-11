@@ -30,3 +30,9 @@ app-file-view {
   flex-wrap: wrap;
   justify-content: center;
 }
+
+@media (min-width:600px) {
+  .thumbnail-grid {
+    justify-content: start;
+  }
+}
