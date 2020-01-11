@@ -14,6 +14,10 @@ app-thumbnail {
 }
 
 app-file-view {
+  margin-left: 2rem;
+  margin-right: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   position:absolute;
   left:0;
   right:0;
