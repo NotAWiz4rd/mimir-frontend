@@ -137,7 +137,12 @@
   {
     "logicalName": "accountSettings",
     "english": "Account Settings",
-    "german": "Account Einstellungen"
+    "german": "Account-Einstellungen"
+  },
+  {
+    "logicalName": "spaceSettings",
+    "english": "Space Settings",
+    "german": "Space-Einstellungen"
   },
   {
     "logicalName": "chooseLanguage",

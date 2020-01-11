@@ -31,10 +31,6 @@
     <ng-container *ngIf="isSpaceSettings">
       <app-space-settings></app-space-settings>
     </ng-container>
-
-    <ng-container *ngIf="isSettings">
-      <app-settings-page [language]="languageService.getLanguageString()"></app-settings-page>
-    </ng-container>
     <app-footer></app-footer>
   </mat-sidenav-content>
 </mat-sidenav-container>

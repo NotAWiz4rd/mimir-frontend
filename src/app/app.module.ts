@@ -39,7 +39,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SearchComponent} from './components/search/search.component';
 import {SearchService} from './services/search.service';
 import {PathComponent} from './components/path/path.component';
-import {SettingsPageComponent} from './pages/settings-page/settings-page.component';
 import {SpaceService} from './services/space.service';
 import {StaticTextService} from './services/static-text.service';
 import {ThumbnailComponent} from './components/thumbnail/thumbnail.component';
@@ -81,7 +80,6 @@ import {ConfirmPageComponent} from './pages/confirm-page/confirm-page.component'
     ActionBarComponent,
     SearchComponent,
     PathComponent,
-    SettingsPageComponent,
     ThumbnailComponent,
     FileViewComponent,
     SpaceBubbleComponent,
