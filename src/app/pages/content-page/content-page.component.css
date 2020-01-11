@@ -18,3 +18,11 @@ app-file-view {
   left:0;
   right:0;
 }
+
+.thumbnail-grid {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
