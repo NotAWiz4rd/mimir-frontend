@@ -5,4 +5,5 @@
 .bubble-description {
   font-size: small;
   text-align: center;
+  overflow: hidden;
 }
