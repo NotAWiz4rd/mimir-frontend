@@ -27,7 +27,7 @@
   {
     "logicalName": "shareUrl",
     "english": "The share URL",
-    "german": "Die weitergeben URL"
+    "german": "Die Freigabe-URL"
   },
   {
     "logicalName": "createFolder",
@@ -127,7 +127,7 @@
   {
     "logicalName": "share",
     "english": "Share",
-    "german": "Weitergeben"
+    "german": "Teilen"
   },
   {
     "logicalName": "settings",
