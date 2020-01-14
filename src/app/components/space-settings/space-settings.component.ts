@@ -21,6 +21,8 @@ export class SpaceSettingsComponent implements OnInit {
 
   users: User[] = [];
 
+  language: string;
+
   constructor(public spaceService: SpaceService,
               public languageService: LanguageService,
               public staticTextService: StaticTextService,
@@ -31,6 +33,7 @@ export class SpaceSettingsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.language = this.languageService.getLanguageString()
   }
 
   async addUser(username: string) {
@@ -75,5 +78,24 @@ export class SpaceSettingsComponent implements OnInit {
         });
       }
     }
+  }
+
+  deleteSpace() {
+    this.spaceService.delete(this.spaceService.currentSpace.id).subscribe(result => {
+      if (result != '') {
+        this.openSnackBar(result);
+        const otherSpaceId = this.userService.getDifferentSpaceId();
+        if (otherSpaceId != -1) {
+          this.navigationService.navigateToSpace(otherSpaceId);
+          this.userService.reloadUser();
+        } else { // if there are no other spaces available create a new one and navigate there
+          this.spaceService.createSpace(this.userService.currentUser$.getValue().name).subscribe(spaceMetaData => {
+            this.userService.addSpaceToUser(spaceMetaData);
+            this.navigationService.navigateToSpace(spaceMetaData.id);
+            this.userService.reloadUser();
+          });
+        }
+      }
+    });
   }
 }

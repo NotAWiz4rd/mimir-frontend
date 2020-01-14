@@ -1,15 +1,19 @@
-<div class="container">
-  <button mat-raised-button color="primary" (click)="onCreateFolderClick()" [disabled]="actionsDisabled">
-    {{staticTextService.staticTexts | getStaticText : 'createFolder' : languageService.getLanguage()}}
-  </button>
-  <button mat-raised-button color="primary" (click)="onUploadFileClick()" [disabled]="actionsDisabled">
-    {{staticTextService.staticTexts | getStaticText : 'uploadFile' : languageService.getLanguage()}}
-  </button>
+<div class="actionbar">
+  <div class="actions">
+    <button mat-button color="primary" (click)="onCreateFolderClick()" [disabled]="actionsDisabled">
+      {{staticTextService.staticTexts | getStaticText : 'createFolder' : languageService.getLanguage()}}
+    </button>
+    <button mat-button color="primary" (click)="onUploadFileClick()" [disabled]="actionsDisabled">
+      {{staticTextService.staticTexts | getStaticText : 'uploadFile' : languageService.getLanguage()}}
+    </button>
 
-  <button mat-raised-button color="primary" (click)="onDownloadSpaceClick()" [disabled]="actionsDisabled"
+    <button mat-button color="primary" (click)="onDownloadSpaceClick()" [disabled]="actionsDisabled"
           class="space-download" *ngIf="isSpaceRoot">
-    {{staticTextService.staticTexts | getStaticText : 'downloadSpace' : languageService.getLanguage()}}
-  </button>
+      {{staticTextService.staticTexts | getStaticText : 'downloadSpace' : languageService.getLanguage()}}
+    </button>
 
-  <app-search></app-search>
+    <div class="search">
+      <app-search></app-search>
+    </div>
+  </div>
 </div>

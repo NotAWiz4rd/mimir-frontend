@@ -14,14 +14,16 @@
                       (openUploadFileDialog)="uploadFileDialog()"
                       (downloadSpaceEmitter)="downloadSpace()"></app-action-bar>
 
-      <app-thumbnail *ngFor="let folder of spaceService.currentFolder?.folders" [fileName]="folder.name"
-                     [thumbnailType]="'folder'" (click)="navigateToFolder(folder.id)"
-                     (actionEmitter)="doFolderAction($event, folder.id)"></app-thumbnail>
+      <div class="thumbnail-grid">
+        <app-thumbnail *ngFor="let folder of spaceService.currentFolder?.folders" [fileName]="folder.name"
+                      [thumbnailType]="'folder'" (click)="navigateToFolder(folder.id)"
+                      (actionEmitter)="doFolderAction($event, folder.id)"></app-thumbnail>
 
-      <app-thumbnail *ngFor="let file of spaceService.currentFolder?.artifacts" [fileId]="file.id"
-                     [thumbnailType]="'file'"
-                     [fileName]="file.name" (click)="navigateToFile(file.id)"
-                     (actionEmitter)="doFileAction($event, file.id)"></app-thumbnail>
+        <app-thumbnail *ngFor="let file of spaceService.currentFolder?.artifacts" [fileId]="file.id"
+                      [thumbnailType]="'file'"
+                      [fileName]="file.name" (click)="navigateToFile(file.id)"
+                      (actionEmitter)="doFileAction($event, file.id)"></app-thumbnail>
+      </div>
     </ng-container>
 
     <ng-container *ngIf="fileId != undefined && !isSpaceSettings && !isSettings && file">
@@ -30,10 +32,6 @@
 
     <ng-container *ngIf="isSpaceSettings">
       <app-space-settings></app-space-settings>
-    </ng-container>
-
-    <ng-container *ngIf="isSettings">
-      <app-settings-page [language]="languageService.getLanguageString()"></app-settings-page>
     </ng-container>
     <app-footer></app-footer>
   </mat-sidenav-content>

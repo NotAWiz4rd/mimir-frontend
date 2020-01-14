@@ -1,3 +1,9 @@
 .material-icons {
-  font-size: 50px;
+  font-size: 40px;
+}
+
+.bubble-description {
+  font-size: small;
+  text-align: center;
+  overflow: hidden;
 }

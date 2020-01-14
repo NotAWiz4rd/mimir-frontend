@@ -4,7 +4,6 @@ import {HttpClient} from '@angular/common/http';
 import {Folder} from '../classes/Folder';
 import {Space} from '../classes/Space';
 import {SpaceService} from './space.service';
-import {ClipboardService} from './clipboard.service';
 import {environment} from 'src/environments/environment';
 import {UserService} from './user.service';
 import {Router} from '@angular/router';
@@ -204,9 +203,8 @@ export class FolderService {
    * Copies a share link for the given folder to the clipboard.
    * @param id The folder id
    */
-  async share(id: number) {
+  async getShareLink(id: number) {
     const shareToken = await this.http.get<{ token: string }>(this.baseUrl + 'share/' + id).toPromise();
-    const link = window.location.host + '/folder/' + id + '?token=' + shareToken.token;
-    ClipboardService.copyToClipboard(link);
+    return window.location.host + '/folder/' + id + '?token=' + shareToken.token;
   }
 }

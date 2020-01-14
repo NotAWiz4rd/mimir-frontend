@@ -21,13 +21,18 @@
   },
   {
     "logicalName": "uploadFile",
-    "english": "Upload File",
-    "german": "Datei hochladen"
+    "english": "Upload",
+    "german": "Hochladen"
+  },
+  {
+    "logicalName": "shareUrl",
+    "english": "The share URL",
+    "german": "Die Freigabe-URL"
   },
   {
     "logicalName": "createFolder",
-    "english": "Create Folder",
-    "german": "Ordner erstellen"
+    "english": "New Folder",
+    "german": "Neuer Ordner"
   },
   {
     "logicalName": "logout",
@@ -36,7 +41,7 @@
   },
   {
     "logicalName": "upwards",
-    "english": "Upwards!",
+    "english": "Up",
     "german": "Zurück"
   },
   {
@@ -66,8 +71,8 @@
   },
   {
     "logicalName": "uploadFile",
-    "english": "Upload File(s)",
-    "german": "Datei(en) Hochladen"
+    "english": "Upload",
+    "german": "Hochladen"
   },
   {
     "logicalName": "upload",
@@ -122,7 +127,7 @@
   {
     "logicalName": "share",
     "english": "Share",
-    "german": "Weitergeben"
+    "german": "Teilen"
   },
   {
     "logicalName": "settings",
@@ -137,7 +142,12 @@
   {
     "logicalName": "accountSettings",
     "english": "Account Settings",
-    "german": "Account Einstellungen"
+    "german": "Account-Einstellungen"
+  },
+  {
+    "logicalName": "spaceSettings",
+    "english": "Space Settings",
+    "german": "Space-Einstellungen"
   },
   {
     "logicalName": "chooseLanguage",
@@ -188,6 +198,16 @@
     "logicalName": "cancel",
     "english": "Cancel",
     "german": "Abbrechen"
+  },
+  {
+    "logicalName": "close",
+    "english": "Close",
+    "german": "Schließen"
+  },
+  {
+    "logicalName": "copy",
+    "english": "Copy",
+    "german": "Kopieren"
   },
   {
     "logicalName": "save",

@@ -1,34 +1,33 @@
 button {
-  margin: 10px;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
 }
 
 app-search {
-  float: right;
-  margin-right: 50px;
+  width: 200px;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
 }
 
-.container {
+.actionbar {
   border-bottom: 1px solid darkgray;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
-.space-download {
-  float: right;
+.actions {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  width: 100%;
+  white-space: nowrap;
+  overflow-x: auto;
 }
 
-@media only screen and (max-width: 600px) {
-  button {
-    margin: 5px;
-  }
-
-  app-search {
-    margin-right: 5px;
-  }
-
-  .container {
-    overflow: auto;
-  }
-
-  .space-download{
-    float: none;
-  }
+.search {
+  width: 20ch;
+  display: inline-block;
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
