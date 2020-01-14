@@ -69,6 +69,7 @@ import {FooterComponent} from './components/footer/footer.component';
 import {RegisterPageComponent} from './pages/register-page/register-page.component';
 import {ConfirmPageComponent} from './pages/confirm-page/confirm-page.component';
 import {CopyUrlDialogComponent} from './components/copy-url-dialog/copy-url-dialog.component';
+import {ErrorService} from "./services/error.service";
 
 @NgModule({
   declarations: [
@@ -154,7 +155,9 @@ import {CopyUrlDialogComponent} from './components/copy-url-dialog/copy-url-dial
     UploadService,
     ClipboardService,
     MatSnackBar,
-    ReuploadService
+    ReuploadService,
+    ErrorService,
+    GetStaticTextPipe
   ],
   bootstrap: [AppComponent]
 })

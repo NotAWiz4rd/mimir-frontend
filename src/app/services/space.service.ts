@@ -6,6 +6,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {SpaceMetadata} from '../classes/SpaceMetadata';
 import {environment} from 'src/environments/environment';
 import {User} from '../classes/User';
+import {ErrorService} from "./error.service";
 
 @Injectable()
 export class SpaceService {
@@ -15,7 +16,8 @@ export class SpaceService {
 
   currentFolder: Folder;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private errorService: ErrorService) {
   }
 
   loadSpace(spaceId: number, uploaded: boolean = false): Observable<Space> {

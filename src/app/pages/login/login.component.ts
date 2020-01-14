@@ -5,7 +5,6 @@ import {LanguageService} from '../../services/language.service';
 import {NavigationService} from '../../services/navigation.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SpaceService} from '../../services/space.service';
-import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-login',
@@ -22,8 +21,7 @@ export class LoginComponent implements OnInit {
               public staticTextService: StaticTextService,
               public languageService: LanguageService,
               private navigationService: NavigationService,
-              private spaceService: SpaceService,
-              public _snackBar: MatSnackBar) {
+              private spaceService: SpaceService) {
   }
 
   ngOnInit() {
@@ -51,12 +49,8 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.loading = true;
-    try {
-      await this.userService.login(this.loginForm.controls.username.value, this.loginForm.controls.password.value);
-    } catch (e) {
-      this.loading = false;
-      this.openSnackBar('ERROR! Username or password was wrong.');
-    }
+    await this.userService.login(this.loginForm.controls.username.value, this.loginForm.controls.password.value)
+      .finally(() => this.loading = false);
     if (this.userService.currentUser$.getValue() != undefined) {
       this.setProperSpace();
     }
@@ -71,12 +65,5 @@ export class LoginComponent implements OnInit {
         this.navigationService.navigateToSpace(spaceMetaData.id);
       });
     }
-  }
-
-  openSnackBar(message: string) {
-    this._snackBar.open(message, null, {
-      duration: 2000,
-      panelClass: ['error-box']
-    });
   }
 }

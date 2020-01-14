@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Folder} from '../classes/Folder';
 import {Space} from '../classes/Space';
 import {SpaceService} from './space.service';
 import {environment} from 'src/environments/environment';
 import {UserService} from './user.service';
 import {Router} from '@angular/router';
+import {ErrorService} from "./error.service";
 
 @Injectable()
 export class FolderService {
@@ -15,7 +16,8 @@ export class FolderService {
   constructor(private http: HttpClient,
               private router: Router,
               private spaceService: SpaceService,
-              public userService: UserService) {
+              public userService: UserService,
+              private errorService: ErrorService) {
   }
 
   /**
@@ -62,7 +64,7 @@ export class FolderService {
         this.spaceService.currentSpace.name = 'temp';
         this.spaceService.currentSpace$.next(this.spaceService.currentSpace);
       },
-      error => this.handleError(error));
+      error => this.errorService.handleError(error));
     return this.spaceService.currentSpace$;
   }
 
@@ -204,13 +206,5 @@ export class FolderService {
   async getShareLink(id: number) {
     const shareToken = await this.http.get<{ token: string }>(this.baseUrl + 'share/' + id).toPromise();
     return window.location.host + '/folder/' + id + '?token=' + shareToken.token;
-  }
-
-  private handleError(error: HttpErrorResponse) {
-    if (error.status == 403) {
-      this.router.navigateByUrl('no-access');
-    } else {
-      console.error(error);
-    }
   }
 }

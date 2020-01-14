@@ -268,5 +268,50 @@
     "logicalName": "currentRegistration",
     "english": "You are currently finishing the registration for ",
     "german": "Sie schließen gerade die Registrierung für folgende Addresse ab: "
+  },
+  {
+    "logicalName": "fileTooBig",
+    "english": ": File is probably too big",
+    "german": ": Datei ist wahrscheinlich zu groß"
+  },
+  {
+    "logicalName": "offline",
+    "english": ": You are offline",
+    "german": ": Du bist offline"
+  },
+  {
+    "logicalName": "error401",
+    "english": ": Unauthorized. Please login",
+    "german": ": Nicht autorisiert. Bitte einloggen"
+  },
+  {
+    "logicalName": "error403login",
+    "english": ": Forbidden. Username or password was wrong.",
+    "german": ": Zugang untersagt. Nutzername oder Passwort ist falsch."
+  },
+  {
+    "logicalName": "error404",
+    "english": ": Page Not Found",
+    "german": ": Seite nicht gefunden"
+  },
+  {
+    "logicalName": "error413",
+    "english": ": Request Entity To Large",
+    "german": ": Datei ist zu groß"
+  },
+  {
+    "logicalName": "error500",
+    "english": ": Internal Server Error",
+    "german": ": Interner Server Error"
+  },
+  {
+    "logicalName": "error503",
+    "english": ": Service Unavailable",
+    "german": ": Service nicht verfügbar"
+  },
+  {
+    "logicalName": "defaultError",
+    "english": "Some error occurred.",
+    "german": "Ein Fehler ist aufgetreten."
   }
 ]

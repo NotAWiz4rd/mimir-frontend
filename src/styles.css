@@ -13,4 +13,6 @@ body {
   background-color: red;
   color: white;
   font-weight: bold;
+  white-space: pre-line;
+  text-align: center;
 }

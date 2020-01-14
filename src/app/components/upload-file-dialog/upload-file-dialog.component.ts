@@ -12,9 +12,8 @@ import {SpaceService} from "../../services/space.service";
   styleUrls: ['./upload-file-dialog.component.css']
 })
 export class UploadFileDialogComponent implements OnInit {
-  @ViewChild('file', { static: true }) file;
+  @ViewChild('file', {static: true}) file;
   public files: Set<File> = new Set();
-
   progress;
   showCancelButton = true;
   uploading = false;
@@ -61,23 +60,21 @@ export class UploadFileDialogComponent implements OnInit {
       allProgressObservables.push(this.progress[key].progress);
     }
 
-    // Adjust the state variables
-
     // The dialog should not be closed while uploading
     this.dialogRef.disableClose = true;
-    // Hide the cancel-button
     this.showCancelButton = false;
 
-    // When all progress-observables are completed...
     forkJoin(allProgressObservables).subscribe(end => {
-      // ... the dialog can be closed again...
       this.dialogRef.disableClose = false;
-      // ... the upload was successful...
       this.uploadSuccessful = true;
-      // ... and the component is no longer uploading
       this.uploading = false;
-      //close dialog
       this.dialogRef.close(true);
+    }, () => {
+      this.uploading = false;
+      this.showCancelButton = true;
+      this.dialogRef.disableClose = false;
+      this.progress = null;
+      this.files = new Set();
     });
   }
 }
