@@ -3,6 +3,7 @@
                   matTooltip="{{space.name}}"
                   matTooltipClass="space-tooltip"
                   [matTooltipPosition]="'right'"
+                  [ngClass]="{ 'space-bubble--inactive': space.id != activeSpaceId }"
                   (click)="navigateToSpace(space.id)"></app-space-bubble>
 
 <app-space-bubble class="space-creation-bubble"

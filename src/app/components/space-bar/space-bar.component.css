@@ -12,6 +12,10 @@ app-space-bubble {
   background-color: black;
 }
 
+.space-bubble--inactive {
+  color: #757575;
+}
+
 .space-creation-bubble {
   position: absolute;
   bottom: 0;
