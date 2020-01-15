@@ -21,6 +21,7 @@ export class SpaceBarComponent implements OnInit {
   SPACE_CREATION_THUMBNAIL_ID: number = -1;
 
   spaces: SpaceMetadata[] = [];
+  activeSpaceId: number;
 
   constructor(private userService: UserService,
               private navigationService: NavigationService,
@@ -37,6 +38,11 @@ export class SpaceBarComponent implements OnInit {
         this.spaces = user.spaces;
       }
     });
+
+    if (this.spaceService.currentSpace !== undefined) {
+      this.activeSpaceId = this.spaceService.currentSpace.id;
+    }
+    this.spaceService.currentSpace$.subscribe(space => this.activeSpaceId = space.id);
   }
 
   ngOnInit() {
