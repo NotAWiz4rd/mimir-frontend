@@ -55,4 +55,8 @@ export const APP_ROUTES = [
     component: LandingPageComponent,
     pathMatch: 'full'
   },
+  {
+    path: '**',
+    redirectTo: ''
+  },
 ];
