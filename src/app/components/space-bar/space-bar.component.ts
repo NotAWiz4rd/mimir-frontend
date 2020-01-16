@@ -42,7 +42,11 @@ export class SpaceBarComponent implements OnInit {
     if (this.spaceService.currentSpace !== undefined) {
       this.activeSpaceId = this.spaceService.currentSpace.id;
     }
-    this.spaceService.currentSpace$.subscribe(space => this.activeSpaceId = space.id);
+    this.spaceService.currentSpace$.subscribe(space => {
+      if (space != undefined) {
+        this.activeSpaceId = space.id;
+      }
+    });
   }
 
   ngOnInit() {
