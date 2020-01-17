@@ -104,7 +104,6 @@ export class UserService implements CanActivate {
 
     if (this.token != undefined && this.currentUser$.value == undefined) {
       await this.reloadUser();
-      console.log(this.currentUser$.getValue());
     }
 
     let user = this.currentUser$.value;
@@ -123,8 +122,6 @@ export class UserService implements CanActivate {
     }
 
     if (verdict == false) {
-      console.log(this.token);
-      console.log(route.params);
       this.router.navigateByUrl('');
     }
     return verdict;

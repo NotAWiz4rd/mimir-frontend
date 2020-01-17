@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {environment} from 'src/environments/environment';
-import {ErrorService} from "./error.service";
+import {ErrorService} from './error.service';
 
 @Injectable()
 export class ReuploadService {
@@ -13,13 +13,12 @@ export class ReuploadService {
     const formData: FormData = new FormData();
     formData.append('file', data, filename);
 
-    this.http.put(environment.apiUrl + 'artifact/' + artifactId, formData).subscribe( // todo remove these (debug) logs
-      val => {
-        console.log('successful put', val);
+    this.http.put(environment.apiUrl + 'artifact/' + artifactId, formData).subscribe(
+      () => {
+        // add completion snackbar
       },
       error => this.errorService.handleError(error),
       () => {
-        console.log('put observable now complete');
       }
     );
 
