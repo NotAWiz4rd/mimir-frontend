@@ -31,6 +31,10 @@ export class SearchService {
 
   getAllSearchables(base: Folder): string[] {
     let names: string[] = [];
+    if (base == null || this.spaceService.currentFolder == null) {
+      return [];
+    }
+
     if (base.name != this.spaceService.currentFolder.name) {
       names.push(base.name);
     }
