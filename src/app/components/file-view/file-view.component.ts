@@ -6,6 +6,7 @@ import {ReuploadService} from '../../services/reupload.service';
 import {SpaceService} from '../../services/space.service';
 import {StaticTextService} from '../../services/static-text.service';
 import {LanguageService} from '../../services/language.service';
+import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-file-view',
@@ -19,9 +20,9 @@ export class FileViewComponent implements OnInit {
   };
   @Input()
   file: File;
-  @ViewChild("videoPlayer",{static: false})
+  @ViewChild("videoPlayer", {static: false})
   videoPlayer: ElementRef;
-  fileType: String;
+  contentType: string
   srcIsReady: Promise<boolean>;
   text;
   editableText;
@@ -33,7 +34,8 @@ export class FileViewComponent implements OnInit {
               public reuploadService: ReuploadService,
               public spaceService: SpaceService,
               public staticTextService: StaticTextService,
-              public languageService: LanguageService) {
+              public languageService: LanguageService,
+              private sanitizer: DomSanitizer) {
   }
 
   public onReady(editor) {
@@ -44,37 +46,34 @@ export class FileViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.fileType = this.getFileType();
-    if (this.fileType === 'jpg' || this.fileType === 'png' || this.fileType === 'pdf' || this.fileType === 'gif') {
-      this.setFileUrl();
-    } else if (this.fileType === 'mp4' || this.fileType === 'ogg') {
-      //TODO: progressive loading, so the user can watch the video even if its not completely loaded
-      this.setFileUrl();
-    } else if (this.fileType === 'txt') {
-      this.setText();
-    }else{
-      this.srcIsReady = Promise.resolve(true);
-    }
+    this.setContent();
   }
 
-  setFileUrl(): void {
-    this.fileDataService.fetchFile(this.file.id).subscribe(base64Image => {
-      this.fileUrl = base64Image;
-      this.srcIsReady = Promise.resolve(true);
-    });
-  }
-
-  setText(): void {
-    this.fileDataService.getTextFile(this.file.id).subscribe(data => {
-      this.text = data;
-      this.originalText = data;
-      // workaround as otherwise in the ckeditor it is undefined
-      this.editableText = this.text.changingThisBreaksApplicationSecurity;
+  setContent(): void {
+    this.fileDataService.fetchFile(this.file.id).subscribe(data => {
+      this.contentType = this.fileDataService.getContentType();
+      console.log(this.contentType);
+      if (this.contentType.includes('image')) {
+        this.fileUrl = data;
+      } else if (this.contentType.includes('video')) {
+        //TODO: progressive loading, so the user can watch the video even if its not completely loaded
+        this.fileUrl = data;
+      } else if (this.contentType.includes('text')) {
+        this.text = data;
+        this.originalText = data;
+        // workaround as otherwise in the ckeditor it is undefined
+        this.editableText = this.text.changingThisBreaksApplicationSecurity;
+      } else {
+        this.contentType = this.getFileType();
+        if (this.contentType.includes('pdf')) {
+          this.fileUrl = data;
+        }
+      }
       this.srcIsReady = Promise.resolve(true);
     });
   }
 
-  getFileType(): String {
+  getFileType(): string {
     const fileName = this.file.name.split('.');
     return fileName[fileName.length - 1].toLowerCase();
   }
@@ -110,7 +109,7 @@ export class FileViewComponent implements OnInit {
     this.toggleEditing();
   }
 
-  getConvertedDate(): string{
+  getConvertedDate(): string {
     const date = new Date(this.file.creationDate);
     return date.toLocaleString();
   }
