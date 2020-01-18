@@ -6,7 +6,6 @@ import {ReuploadService} from '../../services/reupload.service';
 import {SpaceService} from '../../services/space.service';
 import {StaticTextService} from '../../services/static-text.service';
 import {LanguageService} from '../../services/language.service';
-import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-file-view',
@@ -34,8 +33,7 @@ export class FileViewComponent implements OnInit {
               public reuploadService: ReuploadService,
               public spaceService: SpaceService,
               public staticTextService: StaticTextService,
-              public languageService: LanguageService,
-              private sanitizer: DomSanitizer) {
+              public languageService: LanguageService){
   }
 
   public onReady(editor) {
@@ -52,8 +50,7 @@ export class FileViewComponent implements OnInit {
   setContent(): void {
     this.fileDataService.fetchFile(this.file.id).subscribe(data => {
       this.contentType = this.fileDataService.getContentType();
-      console.log(this.contentType);
-      if (this.contentType.includes('image')) {
+      if (this.contentType.includes('image') || this.contentType.includes('pdf')){
         this.fileUrl = data;
       } else if (this.contentType.includes('video')) {
         //TODO: progressive loading, so the user can watch the video even if its not completely loaded
@@ -63,19 +60,9 @@ export class FileViewComponent implements OnInit {
         this.originalText = data;
         // workaround as otherwise in the ckeditor it is undefined
         this.editableText = this.text.changingThisBreaksApplicationSecurity;
-      } else {
-        this.contentType = this.getFileType();
-        if (this.contentType.includes('pdf')) {
-          this.fileUrl = data;
-        }
       }
       this.srcIsReady = Promise.resolve(true);
     });
-  }
-
-  getFileType(): string {
-    const fileName = this.file.name.split('.');
-    return fileName[fileName.length - 1].toLowerCase();
   }
 
   toggleVideo() {
