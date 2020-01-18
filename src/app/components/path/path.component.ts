@@ -1,4 +1,3 @@
-import {MediaMatcher} from '@angular/cdk/layout';
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {NavigationService} from '../../services/navigation.service';
 import {FolderService} from '../../services/folder.service';

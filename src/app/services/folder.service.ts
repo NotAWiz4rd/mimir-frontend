@@ -7,7 +7,7 @@ import {SpaceService} from './space.service';
 import {environment} from 'src/environments/environment';
 import {UserService} from './user.service';
 import {Router} from '@angular/router';
-import {ErrorService} from "./error.service";
+import {ErrorService} from './error.service';
 
 @Injectable()
 export class FolderService {
@@ -33,10 +33,9 @@ export class FolderService {
         let spaceFolder = FolderService.searchForFolder(this.spaceService.currentSpace.root, this.spaceService.currentFolder.id);
         if (spaceFolder.folders == undefined) { // create folders as empty array if it doesnt exist, then add the new folder
           spaceFolder.folders = [];
-          this.spaceService.currentFolder.folders = [];
-          spaceFolder.folders.push(folder);
         }
-        this.spaceService.currentFolder.folders.push(folder);
+        spaceFolder.folders.push(folder);
+        this.spaceService.currentFolder = spaceFolder;
         folderWasCreated.next(true);
       }
     });
@@ -115,7 +114,6 @@ export class FolderService {
     const downloadToken = response.token;
     window.open(environment.apiUrl + 'folder/' + id + '/download?token=' + downloadToken);
   }
-
 
   getFolderFromSpace(id: number): Folder {
     return JSON.parse(JSON.stringify(FolderService.searchForFolder(this.spaceService.currentSpace.root, id))); // use deep copy of folder

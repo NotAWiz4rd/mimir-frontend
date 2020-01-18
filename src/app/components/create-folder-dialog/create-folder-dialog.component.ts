@@ -27,8 +27,8 @@ export class CreateFolderDialogComponent implements OnInit {
    * Checks whether wrong stuff (e.g. a '.') is used in a folders name.
    */
   wrongName() {
-    if (this.folderName == undefined) {
-      return false;
+    if (this.folderName == undefined || this.folderName.length == 0) {
+      return true;
     }
     return this.folderName.includes('.'); // using '.' in a folders name would confuse the path and navigation
   }

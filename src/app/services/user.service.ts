@@ -7,7 +7,7 @@ import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '
 import {environment} from 'src/environments/environment';
 import {SpaceService} from './space.service';
 import {tap} from 'rxjs/operators';
-import {ErrorService} from "./error.service";
+import {ErrorService} from './error.service';
 
 const LOCAL_STORAGE_TOKEN_KEY = 'cmspp-token';
 
@@ -51,12 +51,12 @@ export class UserService implements CanActivate {
   }
 
   async reloadUser() {
-    let userObservable = this.http.get<User>(environment.apiUrl + 'user');
-    userObservable.subscribe(
-      user => {
-        this.currentUser$.next(user);
-      }, error => this.errorService.handleError(error));
-    await userObservable.toPromise().catch(error => this.errorService.handleError(error));
+    await this.http.get<User>(environment.apiUrl + 'user')
+      .pipe(
+        tap(user => {
+          this.currentUser$.next(user);
+        }, error => this.errorService.handleError(error))
+      ).toPromise();
   }
 
   logout() {
