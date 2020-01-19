@@ -1,8 +1,8 @@
 <div id="wrapper">
   <ng-container *ngIf="srcIsReady | async ; else loading">
-    <img id="picture" *ngIf="fileType === 'png' || fileType === 'jpg' || fileType === 'gif'; else showOther" [src]="fileUrl" alt="file image">
+    <img id="picture" *ngIf="contentType.includes('image'); else showOther" [src]="fileUrl" alt="file image">
     <ng-template #showOther>
-      <ng-container *ngIf="fileType === 'pdf';else showVideo">
+      <ng-container *ngIf="contentType.includes('pdf');else showVideo">
         <object id="pdfView"
                 [data]="fileUrl"
                 type="application/pdf">
@@ -10,7 +10,7 @@
         </object>
       </ng-container>
       <ng-template #showVideo>
-        <ng-container *ngIf="fileType === 'mp4';else showText">
+        <ng-container *ngIf="contentType.includes('video');else showText">
           <ng-container *ngIf="srcIsReady | async">
             <video id="video" controls (click)="toggleVideo()" #videoPlayer>
               <source [src]="fileUrl" type="video/mp4"/>
@@ -19,7 +19,7 @@
           </ng-container>
         </ng-container>
         <ng-template #showText>
-          <ng-container *ngIf="fileType === 'txt';else showMessage">
+          <ng-container *ngIf="contentType.includes('text');else showMessage">
             <div id="editor">
               <button class="editorBtn" *ngIf="isDisabled" mat-raised-button color="primary"
                       (click)="toggleEditing()">{{staticTextService?.staticTexts | getStaticText : 'edit' : languageService?.getLanguage()}}</button>
@@ -47,9 +47,15 @@
         <mat-card-title>Details</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <p><b>{{staticTextService.staticTexts | getStaticText : 'detailsFileName' : languageService.getLanguage()}}</b> {{file?.name}}</p>
-        <p><b>{{staticTextService.staticTexts | getStaticText : 'detailsAuthor' : languageService.getLanguage()}}</b> {{file?.author}}</p>
-        <p><b>{{staticTextService.staticTexts | getStaticText : 'detailsCreationDate' : languageService.getLanguage()}}</b> {{getConvertedDate()}}</p>
+        <p>
+          <b>{{staticTextService.staticTexts | getStaticText : 'detailsFileName' : languageService.getLanguage()}}</b> {{fileName}}
+        </p>
+        <p>
+          <b>{{staticTextService.staticTexts | getStaticText : 'detailsAuthor' : languageService.getLanguage()}}</b> {{file?.author}}
+        </p>
+        <p>
+          <b>{{staticTextService.staticTexts | getStaticText : 'detailsCreationDate' : languageService.getLanguage()}}</b> {{getConvertedDate()}}
+        </p>
       </mat-card-content>
     </mat-card>
   </div>

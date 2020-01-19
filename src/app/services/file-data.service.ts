@@ -8,20 +8,28 @@ import {DomSanitizer} from "@angular/platform-browser";
 
 @Injectable()
 export class FileDataService {
-  artifactBaseUrl: string = environment.apiUrl + 'artifact/';
+  private artifactBaseUrl: string = environment.apiUrl + 'artifact/';
+  private contentType: string;
 
   constructor(private http: HttpClient,
               private sanitizer: DomSanitizer) {
   }
 
   public fetchFile(fileId: number): Observable<string> {
-    return this.downloadDataAsBase64(this.artifactBaseUrl + fileId + '/raw')
+    return this.downloadDataAsBase64(this.artifactBaseUrl + fileId + '/raw');
   }
 
   private downloadDataAsBase64(url: string): Observable<string> {
     return this.http.get(url, {responseType: 'blob'}).pipe(
       flatMap(blob => {
-        return this.blobToBase64(blob);
+        this.contentType = blob.type;
+        if (this.contentType.includes('image') || this.contentType.includes('video') || this.contentType.includes('pdf')) {
+          return this.blobToBase64(blob);
+        } else if (this.contentType.includes('text')) {
+          return this.blobToString(blob);
+        } else {
+          return 'notViewable';
+        }
       })
     );
   }
@@ -38,14 +46,6 @@ export class FileDataService {
     return observable;
   }
 
-  public getTextFile(fileId: number): Observable<string> {
-    return this.http.get(this.artifactBaseUrl + fileId + '/raw', {responseType: 'blob'}).pipe(
-      flatMap(blob => {
-        return this.blobToString(blob);
-      })
-    );
-  }
-
   private blobToString(blob: Blob): Observable<any> {
     const fileReader = new FileReader();
     const observable = new Observable(observer => {
@@ -56,5 +56,9 @@ export class FileDataService {
     });
     fileReader.readAsText(blob);
     return observable;
+  }
+
+  public getContentType(): string {
+    return this.contentType;
   }
 }

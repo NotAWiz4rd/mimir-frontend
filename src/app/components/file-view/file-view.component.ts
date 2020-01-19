@@ -19,9 +19,10 @@ export class FileViewComponent implements OnInit {
   };
   @Input()
   file: File;
-  @ViewChild("videoPlayer",{static: false})
+  @ViewChild("videoPlayer", {static: false})
   videoPlayer: ElementRef;
-  fileType: String;
+  contentType: string
+  fileName: string
   srcIsReady: Promise<boolean>;
   text;
   editableText;
@@ -44,39 +45,26 @@ export class FileViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.fileType = this.getFileType();
-    if (this.fileType === 'jpg' || this.fileType === 'png' || this.fileType === 'pdf' || this.fileType === 'gif') {
-      this.setFileUrl();
-    } else if (this.fileType === 'mp4' || this.fileType === 'ogg') {
-      //TODO: progressive loading, so the user can watch the video even if its not completely loaded
-      this.setFileUrl();
-    } else if (this.fileType === 'txt') {
-      this.setText();
-    }else{
-      this.srcIsReady = Promise.resolve(true);
-    }
+    this.setFileName();
+    this.setContent();
   }
 
-  setFileUrl(): void {
-    this.fileDataService.fetchFile(this.file.id).subscribe(base64Image => {
-      this.fileUrl = base64Image;
-      this.srcIsReady = Promise.resolve(true);
-    });
-  }
-
-  setText(): void {
-    this.fileDataService.getTextFile(this.file.id).subscribe(data => {
-      this.text = data;
-      this.originalText = data;
-      // workaround as otherwise in the ckeditor it is undefined
-      this.editableText = this.text.changingThisBreaksApplicationSecurity;
+  setContent(): void {
+    this.fileDataService.fetchFile(this.file.id).subscribe(data => {
+      this.contentType = this.fileDataService.getContentType();
+      if (this.contentType.includes('image') || this.contentType.includes('pdf')) {
+        this.fileUrl = data;
+      } else if (this.contentType.includes('video')) {
+        //TODO: progressive loading, so the user can watch the video even if its not completely loaded
+        this.fileUrl = data;
+      } else if (this.contentType.includes('text')) {
+        this.text = data;
+        this.originalText = data;
+        // workaround as otherwise in the ckeditor it is undefined
+        this.editableText = this.text.changingThisBreaksApplicationSecurity;
+      }
       this.srcIsReady = Promise.resolve(true);
     });
-  }
-
-  getFileType(): String {
-    const fileName = this.file.name.split('.');
-    return fileName[fileName.length - 1].toLowerCase();
   }
 
   toggleVideo() {
@@ -110,8 +98,17 @@ export class FileViewComponent implements OnInit {
     this.toggleEditing();
   }
 
-  getConvertedDate(): string{
+  getConvertedDate(): string {
     const date = new Date(this.file.creationDate);
     return date.toLocaleString();
+  }
+
+  setFileName() {
+    this.fileName = this.file.name;
+    if (this.file.name.length > 35) {
+      if (this.file.name.split('-').length < 2 && this.file.name.split(' ').length < 2) {
+        this.fileName = this.file.name.substr(0, 35) + '\n' + this.file.name.substr(35);
+      }
+    }
   }
 }
