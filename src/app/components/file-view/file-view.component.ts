@@ -22,6 +22,7 @@ export class FileViewComponent implements OnInit {
   @ViewChild("videoPlayer", {static: false})
   videoPlayer: ElementRef;
   contentType: string
+  fileName: string
   srcIsReady: Promise<boolean>;
   text;
   editableText;
@@ -33,7 +34,7 @@ export class FileViewComponent implements OnInit {
               public reuploadService: ReuploadService,
               public spaceService: SpaceService,
               public staticTextService: StaticTextService,
-              public languageService: LanguageService){
+              public languageService: LanguageService) {
   }
 
   public onReady(editor) {
@@ -44,13 +45,14 @@ export class FileViewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.setFileName();
     this.setContent();
   }
 
   setContent(): void {
     this.fileDataService.fetchFile(this.file.id).subscribe(data => {
       this.contentType = this.fileDataService.getContentType();
-      if (this.contentType.includes('image') || this.contentType.includes('pdf')){
+      if (this.contentType.includes('image') || this.contentType.includes('pdf')) {
         this.fileUrl = data;
       } else if (this.contentType.includes('video')) {
         //TODO: progressive loading, so the user can watch the video even if its not completely loaded
@@ -99,5 +101,14 @@ export class FileViewComponent implements OnInit {
   getConvertedDate(): string {
     const date = new Date(this.file.creationDate);
     return date.toLocaleString();
+  }
+
+  setFileName() {
+    this.fileName = this.file.name;
+    if (this.file.name.length > 35) {
+      if (this.file.name.split('-').length < 2 && this.file.name.split(' ').length < 2) {
+        this.fileName = this.file.name.substr(0, 35) + '\n' + this.file.name.substr(35);
+      }
+    }
   }
 }
